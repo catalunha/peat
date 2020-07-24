@@ -15,17 +15,19 @@ class LoggedState {
   });
   factory LoggedState.initialState() {
     return LoggedState(
-        authenticationStatusLogged: AuthenticationStatusLogged.unInitialized,
-        firebaseUserLogged: null,
-        userModelLogged: null);
+      authenticationStatusLogged: AuthenticationStatusLogged.unInitialized,
+      firebaseUserLogged: null,
+      userModelLogged: null,
+    );
   }
-  LoggedState copyWith(
-      {AuthenticationStatusLogged authenticationStatus,
-      FirebaseUser firebaseUser,
-      UserModel userModelLogged}) {
+  LoggedState copyWith({
+    AuthenticationStatusLogged authenticationStatusLogged,
+    FirebaseUser firebaseUser,
+    UserModel userModelLogged,
+  }) {
     return LoggedState(
       authenticationStatusLogged:
-          authenticationStatus ?? this.authenticationStatusLogged,
+          authenticationStatusLogged ?? this.authenticationStatusLogged,
       firebaseUserLogged: firebaseUser,
       userModelLogged: userModelLogged ?? this.userModelLogged,
     );

@@ -13,7 +13,7 @@ class AuthenticationStatusLoggedAction extends ReduxAction<AppState> {
   AppState reduce() {
     return state.copyWith(
       loggedState: state.loggedState.copyWith(
-        authenticationStatus: authenticationStatusLogged,
+        authenticationStatusLogged: this.authenticationStatusLogged,
       ),
     );
   }
@@ -27,7 +27,7 @@ class LoginSuccessfulLoggedAction extends ReduxAction<AppState> {
   AppState reduce() {
     return state.copyWith(
       loggedState: state.loggedState.copyWith(
-        authenticationStatus: AuthenticationStatusLogged.authenticated,
+        authenticationStatusLogged: AuthenticationStatusLogged.authenticated,
         firebaseUser: firebaseUser,
       ),
     );
@@ -43,9 +43,9 @@ class LoginFailLoggedAction extends ReduxAction<AppState> {
   AppState reduce() {
     return state.copyWith(
       loggedState: state.loggedState.copyWith(
-        authenticationStatus: AuthenticationStatusLogged.unAuthenticated,
-        firebaseUser: null,
-      ),
+          firebaseUser: null,
+          authenticationStatusLogged:
+              AuthenticationStatusLogged.unAuthenticated),
     );
   }
 }
@@ -56,7 +56,7 @@ class LogoutSuccessfulLoggedAction extends ReduxAction<AppState> {
   AppState reduce() {
     return state.copyWith(
       loggedState: state.loggedState.copyWith(
-        authenticationStatus: AuthenticationStatusLogged.unInitialized,
+        authenticationStatusLogged: AuthenticationStatusLogged.unInitialized,
         firebaseUser: null,
       ),
     );
@@ -79,8 +79,8 @@ class LoginEmailPasswordLoggedAction extends ReduxAction<AppState> {
       store.dispatch(AuthenticationStatusLoggedAction(
           authenticationStatusLogged:
               AuthenticationStatusLogged.authenticating));
-      print(email);
-      print(password);
+      // print(email);
+      // print(password);
       final AuthResult authResult = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       firebaseUser = authResult.user;

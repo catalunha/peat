@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
       // store: appStore,
       store: store,
       child: MaterialApp(
+        theme: ThemeData.dark(),
         title: 'PEAT',
         navigatorKey: Keys.navigatorStateKey,
         initialRoute: Routes.home,

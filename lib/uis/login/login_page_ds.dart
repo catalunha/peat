@@ -5,11 +5,11 @@ import 'package:peat/states/types_states.dart';
 class LoginPageDS extends StatefulWidget {
   final Function(String) sendPasswordResetEmail;
   final Function(String, String) loginEmailPassword;
-  final AuthenticationStatusLogged authenticationStatus;
+  final AuthenticationStatusLogged authenticationStatusLogged;
   const LoginPageDS({
     Key key,
     this.loginEmailPassword,
-    this.authenticationStatus,
+    this.authenticationStatusLogged,
     this.sendPasswordResetEmail,
   }) : super(key: key);
   @override
@@ -47,7 +47,7 @@ class LoginPageDSState extends State<LoginPageDS> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('PEAT 2- Login Page'),
+          title: Center(child: Text('PEAT - Login Page')),
         ),
         body: Padding(
           padding: EdgeInsets.all(16.0),
@@ -72,35 +72,38 @@ class LoginPageDSState extends State<LoginPageDS> {
                 ),
                 ListTile(
                   title: Center(child: Text('Logar')),
+                  trailing: Icon(Icons.verified_user),
                   onTap: () {
                     validateInputsLogin();
                   },
                 ),
                 ListTile(
                   title: Center(child: Text('Pedir Reset senha via email.')),
+                  trailing: Icon(Icons.settings_backup_restore),
                   onTap: () {
                     validateInputsResetPassword();
                   },
                 ),
-                widget.authenticationStatus ==
+                widget.authenticationStatusLogged ==
                         AuthenticationStatusLogged.authenticating
                     ? Center(child: CircularProgressIndicator())
                     : Container(),
-                widget.authenticationStatus ==
+                widget.authenticationStatusLogged ==
                         AuthenticationStatusLogged.unAuthenticated
-                    ? Text('Verifique Email e a Senha por favor.')
+                    ? Center(
+                        child: Text('Verifique Email e a Senha por favor.'))
                     : Container(),
-                widget.authenticationStatus ==
+                widget.authenticationStatusLogged ==
                         AuthenticationStatusLogged.unInitialized
-                    ? Text('Estamos aguardando vc logar.')
+                    ? Center(child: Text('Estamos aguardando vc logar.'))
                     : Container(),
-                widget.authenticationStatus ==
+                widget.authenticationStatusLogged ==
                         AuthenticationStatusLogged.authenticated
-                    ? Text('Acesso liberado.')
+                    ? Center(child: Text('Acesso liberado.'))
                     : Container(),
-                widget.authenticationStatus ==
+                widget.authenticationStatusLogged ==
                         AuthenticationStatusLogged.sendPasswordReset
-                    ? Text('Veja seu email para nova senha.')
+                    ? Center(child: Text('Veja seu email para nova senha.'))
                     : Container(),
               ],
             ),

@@ -16,7 +16,7 @@ class ViewModel extends BaseModel<AppState> {
     @required this.onLoginEmailPassword,
     @required this.authenticationStatusLogged,
     @required this.onResetEmail,
-  });
+  }) : super(equals: [authenticationStatusLogged]);
   @override
   ViewModel fromStore() => ViewModel.build(
         onLoginEmailPassword: (String email, String password) {
@@ -37,11 +37,12 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ViewModel>(
+      debug: this,
       model: ViewModel(),
       builder: (BuildContext context, ViewModel viewModel) {
         return LoginPageDS(
           loginEmailPassword: viewModel.onLoginEmailPassword,
-          authenticationStatus: viewModel.authenticationStatusLogged,
+          authenticationStatusLogged: viewModel.authenticationStatusLogged,
           sendPasswordResetEmail: viewModel.onResetEmail,
         );
       },
