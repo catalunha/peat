@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "498782734240",
+    "firebase_url": "https://peat-br.firebaseio.com",
+    "project_id": "peat-br",
+    "storage_bucket": "peat-br.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498782734240:android:c6df35e57f746f16d706c5",
+        "android_client_info": {
+          "package_name": "com.peat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498782734240-o3c4ltfr7hj9mkiu7h53fh7j1d97si8b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.peat",
+            "certificate_hash": "8b399d096ae233e7d8add9ff491fc3a2f1e28abb"
+          }
+        },
+        {
+          "client_id": "498782734240-9nm395cn3oqji2k6ju5b04m0km8hrmvf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDu2ZdiB0gU74UgggBeuZKY_jl-LOP2dYQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498782734240-9nm395cn3oqji2k6ju5b04m0km8hrmvf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
