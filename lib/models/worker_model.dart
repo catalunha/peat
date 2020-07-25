@@ -4,7 +4,7 @@ class WorkerModel extends FirestoreModel {
   static final String collection = 'Worker';
   String sispat;
   String displayName;
-  String role;
+  String activity;
   String company;
   String plataformIdOnBoard;
   List<String> moduleIdList;
@@ -13,7 +13,7 @@ class WorkerModel extends FirestoreModel {
   WorkerModel(
     String id, {
     this.displayName,
-    this.role,
+    this.activity,
     this.company,
     this.sispat,
   }) : super(id);

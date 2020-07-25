@@ -48,14 +48,14 @@ class _UserEditDSState extends State<UserEditDS> {
       child: ListView(
         children: <Widget>[
           TextFormField(
-            initialValue: widget.displayName ?? '',
+            initialValue: widget.displayName,
             decoration: InputDecoration(
               labelText: 'UserName:',
             ),
             onSaved: (value) => displayName = value,
           ),
           TextFormField(
-            initialValue: widget.sispat ?? '',
+            initialValue: widget.sispat,
             decoration: InputDecoration(
               labelText: 'sispat:',
             ),
@@ -64,8 +64,8 @@ class _UserEditDSState extends State<UserEditDS> {
           ListTile(
             title: Center(child: Text('Atualizar')),
             onTap: () {
-              validateData();
               Navigator.pop(context);
+              validateData();
             },
           ),
         ],

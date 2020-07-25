@@ -18,10 +18,11 @@ class ViewModel extends BaseModel<AppState> {
         ]);
   @override
   ViewModel fromStore() => ViewModel.build(
-        displayName: state.loggedState.userModelLogged.displayName,
-        sispat: state.loggedState.userModelLogged.sispat,
+        displayName: state.loggedState.userModelLogged?.displayName ?? '',
+        sispat: state.loggedState.userModelLogged?.sispat ?? '',
         onUpdate: (String displayName, String sispat) {
           print('$displayName - $sispat');
+          // dispatch(NavigateAction.pop());
         },
       );
 }

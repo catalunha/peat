@@ -35,7 +35,7 @@ class GetUserAction extends ReduxAction<AppState> {
           userModel: UserModel(docSnap.documentID).fromMap(docSnap.data)));
     } else {
       dispatch(SetCurrentUserAction(
-          userModel: UserModel(docSnap.documentID).fromMap(docSnap.data)));
+          userModel: UserModel(null).fromMap(docSnap.data)));
     }
     return null;
   }
