@@ -1,11 +1,12 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:peat/actions/user_action.dart';
 import 'package:peat/states/app_state.dart';
 import 'package:peat/states/types_states.dart';
 
 // +++ Actions Sync
 class AuthenticationStatusLoggedAction extends ReduxAction<AppState> {
-  AuthenticationStatusLogged authenticationStatusLogged;
+  final AuthenticationStatusLogged authenticationStatusLogged;
 
   AuthenticationStatusLoggedAction({this.authenticationStatusLogged});
 
@@ -90,6 +91,7 @@ class LoginEmailPasswordLoggedAction extends ReduxAction<AppState> {
       assert(firebaseUser.uid == currentUser.uid);
       store.dispatch(LoginSuccessfulLoggedAction(firebaseUser: firebaseUser));
       print('_userLoginEmailPasswordAction: Login bem sucedido.');
+      dispatch(GetUserAction(id: currentUser.uid));
     } catch (error) {
       store.dispatch(LoginFailLoggedAction(error: error));
       print('_userLoginEmailPasswordAction: Login MAL sucedido. $error');
