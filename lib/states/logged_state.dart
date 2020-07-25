@@ -22,13 +22,13 @@ class LoggedState {
   }
   LoggedState copyWith({
     AuthenticationStatusLogged authenticationStatusLogged,
-    FirebaseUser firebaseUser,
+    FirebaseUser firebaseUserLogged,
     UserModel userModelLogged,
   }) {
     return LoggedState(
       authenticationStatusLogged:
           authenticationStatusLogged ?? this.authenticationStatusLogged,
-      firebaseUserLogged: firebaseUser,
+      firebaseUserLogged: firebaseUserLogged ?? this.firebaseUserLogged,
       userModelLogged: userModelLogged ?? this.userModelLogged,
     );
   }

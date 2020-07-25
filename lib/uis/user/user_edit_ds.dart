@@ -24,7 +24,6 @@ class _UserEditDSState extends State<UserEditDS> {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       widget.onUpdate(displayName, sispat);
-      Navigator.pop(context);
     } else {
       setState(() {});
     }
@@ -64,8 +63,8 @@ class _UserEditDSState extends State<UserEditDS> {
           ListTile(
             title: Center(child: Text('Atualizar')),
             onTap: () {
-              Navigator.pop(context);
               validateData();
+              Navigator.pop(context);
             },
           ),
         ],

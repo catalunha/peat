@@ -1,7 +1,7 @@
 import 'package:peat/models/firestore_model.dart';
 
 class UserModel extends FirestoreModel {
-  static final String collection = 'User';
+  static final String collection = 'user';
   String sispat;
   String displayName;
   String email;
@@ -18,9 +18,11 @@ class UserModel extends FirestoreModel {
 
   @override
   UserModel fromMap(Map<String, dynamic> map) {
-    if (map.containsKey('displayName')) displayName = map['displayName'];
-    if (map.containsKey('email')) email = map['email'];
-    if (map.containsKey('sispat')) sispat = map['sispat'];
+    if (map != null) {
+      if (map.containsKey('displayName')) displayName = map['displayName'];
+      if (map.containsKey('email')) email = map['email'];
+      if (map.containsKey('sispat')) sispat = map['sispat'];
+    }
     return this;
   }
 

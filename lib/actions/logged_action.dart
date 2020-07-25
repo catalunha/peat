@@ -1,6 +1,7 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:peat/actions/user_action.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:peat/models/user_model.dart';
 import 'package:peat/states/app_state.dart';
 import 'package:peat/states/types_states.dart';
 
@@ -29,7 +30,7 @@ class LoginSuccessfulLoggedAction extends ReduxAction<AppState> {
     return state.copyWith(
       loggedState: state.loggedState.copyWith(
         authenticationStatusLogged: AuthenticationStatusLogged.authenticated,
-        firebaseUser: firebaseUser,
+        firebaseUserLogged: firebaseUser,
       ),
     );
   }
@@ -44,7 +45,7 @@ class LoginFailLoggedAction extends ReduxAction<AppState> {
   AppState reduce() {
     return state.copyWith(
       loggedState: state.loggedState.copyWith(
-          firebaseUser: null,
+          firebaseUserLogged: null,
           authenticationStatusLogged:
               AuthenticationStatusLogged.unAuthenticated),
     );
@@ -58,12 +59,25 @@ class LogoutSuccessfulLoggedAction extends ReduxAction<AppState> {
     return state.copyWith(
       loggedState: state.loggedState.copyWith(
         authenticationStatusLogged: AuthenticationStatusLogged.unInitialized,
-        firebaseUser: null,
+        firebaseUserLogged: null,
       ),
     );
   }
 }
 
+class SetUserModelLoggedAction extends ReduxAction<AppState> {
+  final UserModel userModel;
+
+  SetUserModelLoggedAction({this.userModel});
+  @override
+  AppState reduce() {
+    return state.copyWith(
+      loggedState: state.loggedState.copyWith(
+        userModelLogged: userModel,
+      ),
+    );
+  }
+}
 // +++ Actions Async
 
 class LoginEmailPasswordLoggedAction extends ReduxAction<AppState> {
@@ -90,8 +104,9 @@ class LoginEmailPasswordLoggedAction extends ReduxAction<AppState> {
       final FirebaseUser currentUser = await _auth.currentUser();
       assert(firebaseUser.uid == currentUser.uid);
       store.dispatch(LoginSuccessfulLoggedAction(firebaseUser: firebaseUser));
-      print('_userLoginEmailPasswordAction: Login bem sucedido.');
-      dispatch(GetUserAction(id: currentUser.uid));
+      print(
+          '_userLoginEmailPasswordAction: Login bem sucedido. ${currentUser.uid}');
+      dispatch(GetUserModelLoggedAction(id: currentUser.uid));
     } catch (error) {
       store.dispatch(LoginFailLoggedAction(error: error));
       print('_userLoginEmailPasswordAction: Login MAL sucedido. $error');
@@ -147,6 +162,28 @@ class OnAuthStateChangedLoggedAction extends ReduxAction<AppState> {
         store.dispatch(LoginSuccessfulLoggedAction(firebaseUser: firebaseUser));
       }
     });
+    return null;
+  }
+}
+
+class GetUserModelLoggedAction extends ReduxAction<AppState> {
+  final String id;
+
+  GetUserModelLoggedAction({this.id});
+  @override
+  Future<AppState> reduce() async {
+    print('GetUserAction...');
+    Firestore firestore = Firestore.instance;
+
+    final docRef = firestore.collection(UserModel.collection).document(id);
+    final docSnap = await docRef.get();
+
+    if (docSnap.exists) {
+      dispatch(SetUserModelLoggedAction(
+          userModel: UserModel(docSnap.documentID).fromMap(docSnap.data)));
+    } else {
+      dispatch(SetUserModelLoggedAction(userModel: UserModel(null)));
+    }
     return null;
   }
 }

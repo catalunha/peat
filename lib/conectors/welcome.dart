@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:peat/conectors/home/home_page.dart';
 import 'package:peat/conectors/login/login_page.dart';
 import 'package:peat/states/app_state.dart';
+import 'package:peat/states/types_states.dart';
 
 class ViewModel extends BaseModel<AppState> {
   bool logged;
@@ -10,7 +11,10 @@ class ViewModel extends BaseModel<AppState> {
   ViewModel.build({@required this.logged}) : super(equals: [logged]);
   @override
   ViewModel fromStore() => ViewModel.build(
-      logged: state.loggedState.firebaseUserLogged == null ? false : true);
+      logged: state.loggedState.authenticationStatusLogged ==
+              AuthenticationStatusLogged.authenticated
+          ? true
+          : false);
 }
 
 class Welcome extends StatelessWidget {
