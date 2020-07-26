@@ -5,6 +5,8 @@ import 'package:peat/conectors/welcome.dart';
 class Routes {
   static final home = '/';
   static final userEdit = '/userEdit';
+  static final plataformList = '/plataformList';
+  static final plataformEdit = '/plataformEdit';
 
   static final routes = {
     // home: (BuildContext context) => UserExceptionDialog<AppState>(
@@ -12,6 +14,8 @@ class Routes {
     //     ),
     home: (BuildContext context) => Welcome(),
     userEdit: (BuildContext context) => UserEdit(),
+    plataformList: (BuildContext context) => PlataformList(),
+    // plataformEdit: (BuildContext context) => PlataformEdit(),
   };
 }
 

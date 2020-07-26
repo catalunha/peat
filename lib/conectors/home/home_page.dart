@@ -7,26 +7,35 @@ class ViewModel extends BaseModel<AppState> {
   String id;
   String displayName;
   String email;
-  bool userInPlataform;
+  bool userOnBoard;
+  String userPlataformIdOnBoard;
+  dynamic userDateTimeOnBoard;
   ViewModel();
   ViewModel.build({
     @required this.id,
     @required this.displayName,
     @required this.email,
-    @required this.userInPlataform,
+    @required this.userOnBoard,
+    @required this.userPlataformIdOnBoard,
+    @required this.userDateTimeOnBoard,
   }) : super(equals: [
           id,
           displayName,
           email,
-          userInPlataform,
+          userOnBoard,
+          userPlataformIdOnBoard,
+          userDateTimeOnBoard,
         ]);
   @override
   ViewModel fromStore() => ViewModel.build(
         id: state.loggedState.firebaseUserLogged.uid,
         displayName: state.loggedState.userModelLogged?.displayName ?? '',
         email: state.loggedState.userModelLogged?.email ?? '',
-        userInPlataform:
+        userOnBoard:
             state.loggedState.userModelLogged?.plataformIdOnBoard != null,
+        userPlataformIdOnBoard:
+            state.loggedState.userModelLogged?.plataformIdOnBoard,
+        userDateTimeOnBoard: state.loggedState.userModelLogged?.dateTimeOnBoard,
       );
 }
 
@@ -40,7 +49,9 @@ class HomePage extends StatelessWidget {
         id: viewModel.id,
         displayName: viewModel.displayName,
         email: viewModel.email,
-        userInPlataform: viewModel.userInPlataform,
+        userOnBoard: viewModel.userOnBoard,
+        userPlataformIdOnBoard: viewModel.userPlataformIdOnBoard,
+        userDateTimeOnBoard: viewModel.userDateTimeOnBoard,
       ),
     );
   }
