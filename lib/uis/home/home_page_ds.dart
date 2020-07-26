@@ -6,12 +6,14 @@ class HomePageDS extends StatelessWidget {
   final String id;
   final String displayName;
   final String email;
+  final bool userInPlataform;
 
   const HomePageDS({
     Key key,
     this.id,
     this.displayName,
     this.email,
+    this.userInPlataform,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,8 @@ class HomePageDS extends StatelessWidget {
         title: Text('PEAT'),
         actions: [
           IconButton(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.person,
+                color: userInPlataform ? Colors.green : Colors.red),
             tooltip:
                 'User: $displayName\nEMail: $email\nId: ${id.substring(0, 5)}',
             onPressed: () {
@@ -33,6 +36,7 @@ class HomePageDS extends StatelessWidget {
       body: ListView(
         children: [
           ListTile(
+            enabled: userInPlataform,
             leading: Icon(Icons.person),
             title: Text('$displayName'),
             subtitle: Text('email: $email\nid: ${id.substring(0, 5)}'),

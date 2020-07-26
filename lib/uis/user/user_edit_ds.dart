@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class UserEditDS extends StatefulWidget {
+  final String email;
   final String displayName;
   final String sispat;
   final Function(String, String) onUpdate;
 
   const UserEditDS({
+    this.email,
     Key key,
     this.displayName,
     this.sispat,
@@ -46,6 +48,9 @@ class _UserEditDSState extends State<UserEditDS> {
       key: formKey,
       child: ListView(
         children: <Widget>[
+          ListTile(
+            title: Text('Email:${widget.email}'),
+          ),
           TextFormField(
             initialValue: widget.displayName,
             decoration: InputDecoration(
