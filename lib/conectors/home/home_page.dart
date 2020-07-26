@@ -20,8 +20,8 @@ class ViewModel extends BaseModel<AppState> {
   @override
   ViewModel fromStore() => ViewModel.build(
         id: state.loggedState.firebaseUserLogged.uid,
-        displayName: state.loggedState.firebaseUserLogged?.displayName ?? '',
-        email: state.loggedState.firebaseUserLogged.email,
+        displayName: state.loggedState.userModelLogged?.displayName ?? '',
+        email: state.loggedState.userModelLogged.email,
       );
 }
 

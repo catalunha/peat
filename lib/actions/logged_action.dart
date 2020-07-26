@@ -65,12 +65,37 @@ class LogoutSuccessfulLoggedAction extends ReduxAction<AppState> {
   }
 }
 
-class SetUserModelLoggedAction extends ReduxAction<AppState> {
+class CurrentUserModelLoggedAction extends ReduxAction<AppState> {
   final UserModel userModel;
 
-  SetUserModelLoggedAction({this.userModel});
+  CurrentUserModelLoggedAction({this.userModel});
   @override
   AppState reduce() {
+    return state.copyWith(
+      loggedState: state.loggedState.copyWith(
+        userModelLogged: userModel,
+      ),
+    );
+  }
+}
+
+class SetUserModelLoggedAction extends ReduxAction<AppState> {
+  final String displayName;
+  final String sispat;
+
+  SetUserModelLoggedAction({this.displayName, this.sispat});
+  @override
+  Future<AppState> reduce() async {
+    print('AddUserModelLoggedAction...');
+    Firestore firestore = Firestore.instance;
+    UserModel userModel = state.loggedState.userModelLogged;
+
+    userModel.displayName = displayName;
+    userModel.sispat = sispat;
+    await firestore
+        .collection(UserModel.collection)
+        .document(userModel.id)
+        .setData(userModel.toMap(), merge: true);
     return state.copyWith(
       loggedState: state.loggedState.copyWith(
         userModelLogged: userModel,
@@ -179,10 +204,12 @@ class GetUserModelLoggedAction extends ReduxAction<AppState> {
     final docSnap = await docRef.get();
 
     if (docSnap.exists) {
-      dispatch(SetUserModelLoggedAction(
+      dispatch(CurrentUserModelLoggedAction(
           userModel: UserModel(docSnap.documentID).fromMap(docSnap.data)));
     } else {
-      dispatch(SetUserModelLoggedAction(userModel: UserModel(null)));
+      dispatch(CurrentUserModelLoggedAction(
+          userModel: UserModel(id)
+              .fromMap({'email': state.loggedState.firebaseUserLogged.email})));
     }
     return null;
   }

@@ -1,5 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:peat/actions/logged_action.dart';
 import 'package:peat/states/app_state.dart';
 import 'package:peat/uis/user/user_edit_ds.dart';
 
@@ -22,7 +23,10 @@ class ViewModel extends BaseModel<AppState> {
         sispat: state.loggedState.userModelLogged?.sispat ?? '',
         onUpdate: (String displayName, String sispat) {
           print('$displayName - $sispat');
-          // dispatch(NavigateAction.pop());
+          dispatch(SetUserModelLoggedAction(
+            displayName: displayName,
+            sispat: sispat,
+          ));
         },
       );
 }
