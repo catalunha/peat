@@ -32,7 +32,7 @@ class HomePageDS extends StatelessWidget {
             icon: Icon(Icons.person,
                 color: userOnBoard ? Colors.green : Colors.red),
             tooltip:
-                'Name: $displayName\nOnBoard: $userPlataformOnBoard\nEMail: $email\nId: ${id.substring(0, 5)}',
+                'Name: $displayName\nSISPAT:$sispat\nemail: $email\nPlataforma OnBoard: $userPlataformOnBoard\nData OnBoard: ${userDateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userDateTimeOnBoard) : userDateTimeOnBoard}\nid: ${id.substring(0, 5)}',
             onPressed: () {
               Navigator.pushNamed(context, Routes.userEdit);
             },
