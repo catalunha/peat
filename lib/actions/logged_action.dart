@@ -36,7 +36,7 @@ class LoginSuccessfulLoggedAction extends ReduxAction<AppState> {
   }
 
   @override
-  void after() => dispatch(GetUserModelLoggedAction(id: firebaseUser.uid));
+  void after() => dispatch(GetDocsUserModelLoggedAction(id: firebaseUser.uid));
 }
 
 class LoginFailLoggedAction extends ReduxAction<AppState> {
@@ -68,6 +68,21 @@ class LogoutSuccessfulLoggedAction extends ReduxAction<AppState> {
   }
 }
 
+class SetUserInPlataformLoggedAction extends ReduxAction<AppState> {
+  final String id;
+  SetUserInPlataformLoggedAction({this.id});
+  @override
+  AppState reduce() {
+    UserModel userModel = state.loggedState.userModelLogged;
+    userModel.plataformIdOnBoard = id;
+    return state.copyWith(
+      loggedState: state.loggedState.copyWith(
+        userModelLogged: userModel,
+      ),
+    );
+  }
+}
+
 class CurrentUserModelLoggedAction extends ReduxAction<AppState> {
   final UserModel userModel;
 
@@ -82,23 +97,58 @@ class CurrentUserModelLoggedAction extends ReduxAction<AppState> {
   }
 }
 
-class SetUserModelLoggedAction extends ReduxAction<AppState> {
+class SetDocUserModelLoggedAction extends ReduxAction<AppState> {
   final String displayName;
   final String sispat;
+  final String plataformIdOnBoard;
+  final dynamic dateTimeOnBoard;
 
-  SetUserModelLoggedAction({this.displayName, this.sispat});
+  SetDocUserModelLoggedAction({
+    this.displayName,
+    this.sispat,
+    this.plataformIdOnBoard,
+    this.dateTimeOnBoard,
+  });
   @override
   Future<AppState> reduce() async {
-    print('AddUserModelLoggedAction...');
+    print('SetDocUserModelLoggedAction...');
     Firestore firestore = Firestore.instance;
     UserModel userModel = state.loggedState.userModelLogged;
 
     userModel.displayName = displayName;
     userModel.sispat = sispat;
+    userModel.plataformIdOnBoard = plataformIdOnBoard;
+    userModel.dateTimeOnBoard = dateTimeOnBoard;
     await firestore
         .collection(UserModel.collection)
         .document(userModel.id)
         .setData(userModel.toMap(), merge: true);
+    return state.copyWith(
+      loggedState: state.loggedState.copyWith(
+        userModelLogged: userModel,
+      ),
+    );
+  }
+}
+
+class UpdateDocUserModelLoggedAction extends ReduxAction<AppState> {
+  final String plataformIdOnBoard;
+  final dynamic dateTimeOnBoard;
+
+  UpdateDocUserModelLoggedAction({
+    this.plataformIdOnBoard,
+    this.dateTimeOnBoard,
+  });
+  @override
+  Future<AppState> reduce() async {
+    print('UpdateDocUserModelLoggedAction...');
+    Firestore firestore = Firestore.instance;
+    UserModel userModel = state.loggedState.userModelLogged;
+    userModel.plataformIdOnBoard = plataformIdOnBoard;
+    userModel.dateTimeOnBoard = dateTimeOnBoard;
+    final colRef =
+        firestore.collection(UserModel.collection).document(userModel.id);
+    await colRef.updateData(userModel.toMap());
     return state.copyWith(
       loggedState: state.loggedState.copyWith(
         userModelLogged: userModel,
@@ -132,6 +182,7 @@ class LoginEmailPasswordLoggedAction extends ReduxAction<AppState> {
       final FirebaseUser currentUser = await _auth.currentUser();
       assert(firebaseUser.uid == currentUser.uid);
       store.dispatch(LoginSuccessfulLoggedAction(firebaseUser: firebaseUser));
+
       print(
           '_userLoginEmailPasswordAction: Login bem sucedido. ${currentUser.uid}');
     } catch (error) {
@@ -168,7 +219,12 @@ class LogoutLoggedAction extends ReduxAction<AppState> {
     print('_userLogoutAction...');
     final FirebaseAuth _auth = FirebaseAuth.instance;
     try {
+      store.dispatch(UpdateDocUserModelLoggedAction(
+        dateTimeOnBoard: null,
+        plataformIdOnBoard: null,
+      ));
       await _auth.signOut();
+
       store.dispatch(LogoutSuccessfulLoggedAction());
       print('_userLogoutAction: Logout finalizado.');
     } catch (error) {
@@ -193,13 +249,13 @@ class OnAuthStateChangedLoggedAction extends ReduxAction<AppState> {
   }
 }
 
-class GetUserModelLoggedAction extends ReduxAction<AppState> {
+class GetDocsUserModelLoggedAction extends ReduxAction<AppState> {
   final String id;
 
-  GetUserModelLoggedAction({this.id});
+  GetDocsUserModelLoggedAction({this.id});
   @override
   Future<AppState> reduce() async {
-    print('GetUserAction...');
+    print('GetDocsUserModelLoggedAction...$id');
     Firestore firestore = Firestore.instance;
 
     final docRef = firestore.collection(UserModel.collection).document(id);

@@ -1,7 +1,7 @@
 import 'package:peat/models/firestore_model.dart';
 
 class PlataformModel extends FirestoreModel {
-  static final String collection = 'Plataform';
+  static final String collection = 'plataform';
   String codigo;
   String description;
   bool arquived;

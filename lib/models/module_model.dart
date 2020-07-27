@@ -1,7 +1,7 @@
 import 'package:peat/models/firestore_model.dart';
 
 class ModuleModel extends FirestoreModel {
-  static final String collection = 'Module';
+  static final String collection = 'module';
   String codigo; //ciclo01modulo01
   String name;
   String urlFolder;

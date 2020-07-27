@@ -1,7 +1,7 @@
 import 'package:peat/models/firestore_model.dart';
 
 class GroupModel extends FirestoreModel {
-  static final String collection = 'Group';
+  static final String collection = 'group';
 
   String codigo; //p65.200121.01
   String moduleId;

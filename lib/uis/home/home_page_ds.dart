@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:peat/conectors/components/logout_button.dart';
 import 'package:peat/routes.dart';
 
 class HomePageDS extends StatelessWidget {
   final String id;
   final String displayName;
+  final String sispat;
   final String email;
   final bool userOnBoard;
-  final String userPlataformIdOnBoard;
+  final String userPlataformOnBoard;
   final dynamic userDateTimeOnBoard;
 
   const HomePageDS({
@@ -16,8 +18,9 @@ class HomePageDS extends StatelessWidget {
     this.displayName,
     this.email,
     this.userOnBoard,
-    this.userPlataformIdOnBoard,
+    this.userPlataformOnBoard,
     this.userDateTimeOnBoard,
+    this.sispat,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class HomePageDS extends StatelessWidget {
             icon: Icon(Icons.person,
                 color: userOnBoard ? Colors.green : Colors.red),
             tooltip:
-                'User: $displayName\nEMail: $email\nId: ${id.substring(0, 5)}',
+                'Name: $displayName\nOnBoard: $userPlataformOnBoard\nEMail: $email\nId: ${id.substring(0, 5)}',
             onPressed: () {
               Navigator.pushNamed(context, Routes.userEdit);
             },
@@ -43,13 +46,13 @@ class HomePageDS extends StatelessWidget {
             enabled: userOnBoard,
             leading: Icon(Icons.person),
             title: Text('$displayName'),
-            subtitle: Text('email: $email\nid: ${id.substring(0, 5)}'),
+            subtitle: Text(
+                'SISPAT:$sispat\nemail: $email\nPlataforma OnBoard: $userPlataformOnBoard\nData OnBoard: ${userDateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userDateTimeOnBoard) : userDateTimeOnBoard}\nid: ${id.substring(0, 5)}'),
             onTap: () {},
           ),
           ListTile(
             leading: Icon(Icons.place),
-            title: Text('Plataforma: $userPlataformIdOnBoard'),
-            subtitle: Text('DataOnBoard: $userDateTimeOnBoard'),
+            title: Text('Plataformas'),
             onTap: () => Navigator.pushNamed(context, Routes.plataformList),
           ),
         ],

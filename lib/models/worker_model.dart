@@ -1,7 +1,7 @@
 import 'package:peat/models/firestore_model.dart';
 
 class WorkerModel extends FirestoreModel {
-  static final String collection = 'Worker';
+  static final String collection = 'worker';
   String sispat;
   String displayName;
   String activity;

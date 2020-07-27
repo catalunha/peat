@@ -24,7 +24,7 @@ class SetPlataformCurrentSyncPlataformAction extends ReduxAction<AppState> {
 }
 
 // +++ Actions Async
-class GetPlatatormListAsyncPlataformAction extends ReduxAction<AppState> {
+class GetDocsPlatatormListAsyncPlataformAction extends ReduxAction<AppState> {
   @override
   Future<AppState> reduce() async {
     print('GetListPlatatormAction...');
@@ -75,5 +75,5 @@ class SetDocPlataformCurrentAsyncPlataformAction extends ReduxAction<AppState> {
   }
 
   @override
-  void after() => dispatch(GetPlatatormListAsyncPlataformAction());
+  void after() => dispatch(GetDocsPlatatormListAsyncPlataformAction());
 }

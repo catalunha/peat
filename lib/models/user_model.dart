@@ -22,6 +22,13 @@ class UserModel extends FirestoreModel {
       if (map.containsKey('displayName')) displayName = map['displayName'];
       if (map.containsKey('email')) email = map['email'];
       if (map.containsKey('sispat')) sispat = map['sispat'];
+      if (map.containsKey('plataformIdOnBoard'))
+        plataformIdOnBoard = map['plataformIdOnBoard'];
+      dateTimeOnBoard =
+          map.containsKey('dateTimeOnBoard') && map['dateTimeOnBoard'] != null
+              ? DateTime.fromMillisecondsSinceEpoch(
+                  map['dateTimeOnBoard'].millisecondsSinceEpoch)
+              : null;
     }
     return this;
   }
@@ -32,6 +39,11 @@ class UserModel extends FirestoreModel {
     if (displayName != null) data['displayName'] = this.displayName;
     if (email != null) data['email'] = this.email;
     if (sispat != null) data['sispat'] = this.sispat;
+    // if (plataformIdOnBoard != null)
+    data['plataformIdOnBoard'] = this.plataformIdOnBoard;
+    // if (dateTimeOnBoard != null)
+    data['dateTimeOnBoard'] = this.dateTimeOnBoard;
+
     return data;
   }
 
