@@ -64,7 +64,7 @@ class HomePage extends StatelessWidget {
       debug: this,
       model: ViewModel(),
       onInit: (store) =>
-          store.dispatch(GetDocsPlatatormListAsyncPlataformAction()),
+          store.dispatch(GetDocsPlataformListAsyncPlataformAction()),
       builder: (BuildContext context, ViewModel viewModel) => HomePageDS(
         id: viewModel.id,
         displayName: viewModel.displayName,

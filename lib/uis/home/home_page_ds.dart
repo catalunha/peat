@@ -55,6 +55,11 @@ class HomePageDS extends StatelessWidget {
             title: Text('Plataformas'),
             onTap: () => Navigator.pushNamed(context, Routes.plataformList),
           ),
+          ListTile(
+            leading: Icon(Icons.record_voice_over),
+            title: Text('Modulos'),
+            onTap: () => Navigator.pushNamed(context, Routes.moduleList),
+          ),
         ],
       ),
     );

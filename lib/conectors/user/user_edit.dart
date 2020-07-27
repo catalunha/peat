@@ -75,7 +75,7 @@ class UserEdit extends StatelessWidget {
       debug: this,
       model: ViewModel(),
       onInit: (store) =>
-          store.dispatch(GetDocsPlatatormListAsyncPlataformAction()),
+          store.dispatch(GetDocsPlataformListAsyncPlataformAction()),
       builder: (BuildContext context, ViewModel viewModel) => UserEditDS(
         email: viewModel.email,
         displayName: viewModel.displayName,

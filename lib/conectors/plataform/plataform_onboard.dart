@@ -34,7 +34,7 @@ class PlataformOnBoard extends StatelessWidget {
       debug: this,
       model: ViewModel(),
       onInit: (store) =>
-          store.dispatch(GetDocsPlatatormListAsyncPlataformAction()),
+          store.dispatch(GetDocsPlataformListAsyncPlataformAction()),
       builder: (context, viewModel) => PlataformOnBoardDS(
         plataformList: viewModel.plataformList,
         onSetUserInPlataform: viewModel.onSetUserInPlataform,

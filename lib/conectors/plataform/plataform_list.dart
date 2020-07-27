@@ -34,7 +34,7 @@ class PlataformList extends StatelessWidget {
       debug: this,
       model: ViewModel(),
       onInit: (store) =>
-          store.dispatch(GetDocsPlatatormListAsyncPlataformAction()),
+          store.dispatch(GetDocsPlataformListAsyncPlataformAction()),
       builder: (context, viewModel) => PlataformListDS(
         plataformList: viewModel.plataformList,
         onEditPlataformCurrent: viewModel.onEditPlataformCurrent,
