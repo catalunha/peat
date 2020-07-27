@@ -48,8 +48,9 @@ class HomePageDS extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.place),
-            title: Text('userPlataformIdOnBoard: $userPlataformIdOnBoard'),
-            subtitle: Text('userDateTimeOnBoard: $userDateTimeOnBoard'),
+            title: Text('Plataforma: $userPlataformIdOnBoard'),
+            subtitle: Text('DataOnBoard: $userDateTimeOnBoard'),
+            onTap: () => Navigator.pushNamed(context, Routes.plataformList),
           ),
         ],
       ),

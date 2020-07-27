@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peat/conectors/plataform/plataform_list.dart';
 import 'package:peat/conectors/user/user_edit.dart';
 import 'package:peat/conectors/welcome.dart';
 
