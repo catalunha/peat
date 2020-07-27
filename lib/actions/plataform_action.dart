@@ -4,10 +4,10 @@ import 'package:peat/models/plataform_model.dart';
 import 'package:peat/states/app_state.dart';
 
 // +++ Actions Sync
-class SetPlataformCurrentAction extends ReduxAction<AppState> {
+class SetPlataformCurrentSyncPlataformAction extends ReduxAction<AppState> {
   final String id;
 
-  SetPlataformCurrentAction(this.id);
+  SetPlataformCurrentSyncPlataformAction(this.id);
 
   @override
   AppState reduce() {
@@ -24,7 +24,7 @@ class SetPlataformCurrentAction extends ReduxAction<AppState> {
 }
 
 // +++ Actions Async
-class GetListPlatatormAction extends ReduxAction<AppState> {
+class GetPlatatormListAsyncPlataformAction extends ReduxAction<AppState> {
   @override
   Future<AppState> reduce() async {
     print('GetListPlatatormAction...');
@@ -43,4 +43,37 @@ class GetListPlatatormAction extends ReduxAction<AppState> {
       ),
     );
   }
+}
+
+class SetDocPlataformCurrentAsyncPlataformAction extends ReduxAction<AppState> {
+  final String codigo;
+  final String description;
+  final bool arquived;
+
+  SetDocPlataformCurrentAsyncPlataformAction({
+    this.codigo,
+    this.description,
+    this.arquived,
+  });
+  @override
+  Future<AppState> reduce() async {
+    print('SetDocPlataformCurrentAsyncPlataformAction...');
+    Firestore firestore = Firestore.instance;
+    PlataformModel plataformModel = state.plataformState.plataformCurrent;
+    plataformModel.codigo = codigo;
+    plataformModel.description = description;
+    plataformModel.arquived = arquived;
+    await firestore
+        .collection(PlataformModel.collection)
+        .document(plataformModel.id)
+        .setData(plataformModel.toMap(), merge: true);
+    return state.copyWith(
+      plataformState: state.plataformState.copyWith(
+        plataformCurrent: plataformModel,
+      ),
+    );
+  }
+
+  @override
+  void after() => dispatch(GetPlatatormListAsyncPlataformAction());
 }

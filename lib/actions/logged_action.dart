@@ -34,6 +34,9 @@ class LoginSuccessfulLoggedAction extends ReduxAction<AppState> {
       ),
     );
   }
+
+  @override
+  void after() => dispatch(GetUserModelLoggedAction(id: firebaseUser.uid));
 }
 
 class LoginFailLoggedAction extends ReduxAction<AppState> {
@@ -131,7 +134,6 @@ class LoginEmailPasswordLoggedAction extends ReduxAction<AppState> {
       store.dispatch(LoginSuccessfulLoggedAction(firebaseUser: firebaseUser));
       print(
           '_userLoginEmailPasswordAction: Login bem sucedido. ${currentUser.uid}');
-      dispatch(GetUserModelLoggedAction(id: currentUser.uid));
     } catch (error) {
       store.dispatch(LoginFailLoggedAction(error: error));
       print('_userLoginEmailPasswordAction: Login MAL sucedido. $error');

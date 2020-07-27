@@ -20,7 +20,8 @@ class ViewModel extends BaseModel<AppState> {
   ViewModel fromStore() => ViewModel.build(
         plataformList: state.plataformState.plataformList,
         onEditPlataformCurrent: (String id) {
-          dispatch(SetPlataformCurrentAction(id));
+          dispatch(SetPlataformCurrentSyncPlataformAction(id));
+          // dispatch(NavigateAction.pop());
           dispatch(NavigateAction.pushNamed(Routes.plataformEdit));
         },
       );
@@ -32,7 +33,7 @@ class PlataformList extends StatelessWidget {
     return StoreConnector<AppState, ViewModel>(
       debug: this,
       model: ViewModel(),
-      onInit: (store) => store.dispatch(GetListPlatatormAction()),
+      onInit: (store) => store.dispatch(GetPlatatormListAsyncPlataformAction()),
       builder: (context, viewModel) => PlataformListDS(
         plataformList: viewModel.plataformList,
         onEditPlataformCurrent: viewModel.onEditPlataformCurrent,
