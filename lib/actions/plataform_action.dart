@@ -4,6 +4,24 @@ import 'package:peat/models/plataform_model.dart';
 import 'package:peat/states/app_state.dart';
 
 // +++ Actions Sync
+class SetPlataformCurrentAction extends ReduxAction<AppState> {
+  final String id;
+
+  SetPlataformCurrentAction(this.id);
+
+  @override
+  AppState reduce() {
+    PlataformModel plataformModel = id == null
+        ? PlataformModel(null)
+        : state.plataformState.plataformList
+            .firstWhere((element) => element.id == id);
+    return state.copyWith(
+      plataformState: state.plataformState.copyWith(
+        plataformCurrent: plataformModel,
+      ),
+    );
+  }
+}
 
 // +++ Actions Async
 class GetListPlatatormAction extends ReduxAction<AppState> {

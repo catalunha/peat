@@ -18,7 +18,7 @@ class UserEditDS extends StatefulWidget {
 }
 
 class _UserEditDSState extends State<UserEditDS> {
-  static final formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   String displayName;
   String sispat;
 
@@ -35,7 +35,7 @@ class _UserEditDSState extends State<UserEditDS> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Update User'),
+          title: Text('Atualizar Usuário'),
         ),
         body: Padding(
           padding: EdgeInsets.all(16.0),
@@ -54,14 +54,14 @@ class _UserEditDSState extends State<UserEditDS> {
           TextFormField(
             initialValue: widget.displayName,
             decoration: InputDecoration(
-              labelText: 'UserName:',
+              labelText: 'Nome completo:',
             ),
             onSaved: (value) => displayName = value,
           ),
           TextFormField(
             initialValue: widget.sispat,
             decoration: InputDecoration(
-              labelText: 'sispat:',
+              labelText: 'SISPAT:',
             ),
             onSaved: (value) => sispat = value,
           ),
