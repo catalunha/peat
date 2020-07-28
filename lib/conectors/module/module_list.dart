@@ -5,6 +5,7 @@ import 'package:peat/models/module_model.dart';
 import 'package:peat/routes.dart';
 import 'package:peat/states/app_state.dart';
 import 'package:peat/uis/module/module_list_ds.dart';
+import 'package:peat/uis/worker/worker_list_ds.dart';
 
 class ViewModel extends BaseModel<AppState> {
   List<ModuleModel> moduleList;

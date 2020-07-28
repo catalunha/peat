@@ -22,6 +22,9 @@ class WorkerModel extends FirestoreModel {
   WorkerModel fromMap(Map<String, dynamic> map) {
     if (map.containsKey('displayName')) displayName = map['displayName'];
     if (map.containsKey('sispat')) sispat = map['sispat'];
+    if (map.containsKey('activity')) activity = map['activity'];
+    if (map.containsKey('company')) company = map['company'];
+    if (map.containsKey('arquived')) arquived = map['arquived'];
     return this;
   }
 
@@ -30,6 +33,9 @@ class WorkerModel extends FirestoreModel {
     final Map<String, dynamic> data = Map<String, dynamic>();
     if (displayName != null) data['displayName'] = this.displayName;
     if (sispat != null) data['sispat'] = this.sispat;
+    if (activity != null) data['activity'] = this.activity;
+    if (company != null) data['company'] = this.company;
+    if (arquived != null) data['arquived'] = this.arquived;
     return data;
   }
 

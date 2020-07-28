@@ -51,7 +51,7 @@ class HomePageDS extends StatelessWidget {
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.people),
+            leading: Icon(Icons.work),
             title: Text('Analistas'),
             onTap: () => Navigator.pushNamed(context, Routes.userList),
           ),
@@ -64,6 +64,11 @@ class HomePageDS extends StatelessWidget {
             leading: Icon(Icons.record_voice_over),
             title: Text('Modulos'),
             onTap: () => Navigator.pushNamed(context, Routes.moduleList),
+          ),
+          ListTile(
+            leading: Icon(Icons.people),
+            title: Text('Trabalhadores'),
+            onTap: () => Navigator.pushNamed(context, Routes.workerList),
           ),
         ],
       ),

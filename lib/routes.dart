@@ -6,6 +6,8 @@ import 'package:peat/conectors/plataform/plataform_list.dart';
 import 'package:peat/conectors/user/user_list.dart';
 import 'package:peat/conectors/user/user_logged_edit.dart';
 import 'package:peat/conectors/welcome.dart';
+import 'package:peat/conectors/worker/worker_edit.dart';
+import 'package:peat/conectors/worker/worker_list.dart';
 
 class Routes {
   static final home = '/';
@@ -15,6 +17,8 @@ class Routes {
   static final plataformEdit = '/plataformEdit';
   static final moduleList = '/moduleList';
   static final moduleEdit = '/moduleEdit';
+  static final workerList = '/workerList';
+  static final workerEdit = '/workerEdit';
 
   static final routes = {
     // home: (BuildContext context) => UserExceptionDialog<AppState>(
@@ -27,6 +31,8 @@ class Routes {
     plataformEdit: (BuildContext context) => PlataformEdit(),
     moduleList: (BuildContext context) => ModuleList(),
     moduleEdit: (BuildContext context) => ModuleEdit(),
+    workerList: (BuildContext context) => WorkerList(),
+    workerEdit: (BuildContext context) => WorkerEdit(),
   };
 }
 
