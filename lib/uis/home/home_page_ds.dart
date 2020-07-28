@@ -51,6 +51,11 @@ class HomePageDS extends StatelessWidget {
             onTap: () {},
           ),
           ListTile(
+            leading: Icon(Icons.people),
+            title: Text('Analistas'),
+            onTap: () => Navigator.pushNamed(context, Routes.userList),
+          ),
+          ListTile(
             leading: Icon(Icons.place),
             title: Text('Plataformas'),
             onTap: () => Navigator.pushNamed(context, Routes.plataformList),

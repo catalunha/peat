@@ -3,12 +3,14 @@ import 'package:peat/conectors/module/module_edit.dart';
 import 'package:peat/conectors/module/module_list.dart';
 import 'package:peat/conectors/plataform/plataform_edit.dart';
 import 'package:peat/conectors/plataform/plataform_list.dart';
-import 'package:peat/conectors/user/user_edit.dart';
+import 'package:peat/conectors/user/user_list.dart';
+import 'package:peat/conectors/user/user_logged_edit.dart';
 import 'package:peat/conectors/welcome.dart';
 
 class Routes {
   static final home = '/';
   static final userEdit = '/userEdit';
+  static final userList = '/userList';
   static final plataformList = '/plataformList';
   static final plataformEdit = '/plataformEdit';
   static final moduleList = '/moduleList';
@@ -19,7 +21,8 @@ class Routes {
     //       child: Welcome(),
     //     ),
     home: (BuildContext context) => Welcome(),
-    userEdit: (BuildContext context) => UserEdit(),
+    userEdit: (BuildContext context) => UserLoggedEdit(),
+    userList: (BuildContext context) => UserList(),
     plataformList: (BuildContext context) => PlataformList(),
     plataformEdit: (BuildContext context) => PlataformEdit(),
     moduleList: (BuildContext context) => ModuleList(),

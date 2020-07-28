@@ -4,7 +4,7 @@ import 'package:peat/actions/logged_action.dart';
 import 'package:peat/actions/plataform_action.dart';
 import 'package:peat/models/plataform_model.dart';
 import 'package:peat/states/app_state.dart';
-import 'package:peat/uis/user/user_edit_ds.dart';
+import 'package:peat/uis/user/user_logged_edit_ds.dart';
 
 class ViewModel extends BaseModel<AppState> {
   String email;
@@ -68,7 +68,7 @@ class ViewModel extends BaseModel<AppState> {
       );
 }
 
-class UserEdit extends StatelessWidget {
+class UserLoggedEdit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ViewModel>(
@@ -76,7 +76,7 @@ class UserEdit extends StatelessWidget {
       model: ViewModel(),
       onInit: (store) =>
           store.dispatch(GetDocsPlataformListAsyncPlataformAction()),
-      builder: (BuildContext context, ViewModel viewModel) => UserEditDS(
+      builder: (BuildContext context, ViewModel viewModel) => UserLoggedEditDS(
         email: viewModel.email,
         displayName: viewModel.displayName,
         sispat: viewModel.sispat,

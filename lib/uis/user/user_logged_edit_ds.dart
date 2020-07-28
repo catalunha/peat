@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:peat/conectors/plataform/plataform_onboard.dart';
 
-class UserEditDS extends StatefulWidget {
+class UserLoggedEditDS extends StatefulWidget {
   final String email;
   final String displayName;
   final String sispat;
@@ -11,7 +11,7 @@ class UserEditDS extends StatefulWidget {
 
   final Function(String, String, dynamic) onUpdate;
 
-  const UserEditDS({
+  const UserLoggedEditDS({
     this.email,
     Key key,
     this.displayName,
@@ -21,10 +21,10 @@ class UserEditDS extends StatefulWidget {
     this.dateTimeOnBoard,
   }) : super(key: key);
   @override
-  _UserEditDSState createState() => _UserEditDSState();
+  _UserLoggedEditDSState createState() => _UserLoggedEditDSState();
 }
 
-class _UserEditDSState extends State<UserEditDS> {
+class _UserLoggedEditDSState extends State<UserLoggedEditDS> {
   final formKey = GlobalKey<FormState>();
   String displayName;
   String sispat;
