@@ -42,14 +42,12 @@ class HomePageDS extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          // ListTile(
-          //   enabled: userOnBoard,
-          //   leading: Icon(Icons.person),
-          //   title: Text('$displayName'),
-          //   subtitle: Text(
-          //       'SISPAT:$sispat\nemail: $email\nPlataforma OnBoard: $userPlataformOnBoard\nData OnBoard: ${userDateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userDateTimeOnBoard) : userDateTimeOnBoard}\nid: ${id.substring(0, 5)}'),
-          //   onTap: () {},
-          // ),
+          ListTile(
+            enabled: false,
+            title: Text('$displayName'),
+            subtitle: Text(
+                'SISPAT:$sispat\nemail: $email\nPlataforma OnBoard: $userPlataformOnBoard\nData OnBoard: ${userDateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userDateTimeOnBoard) : userDateTimeOnBoard}\nid: ${id.substring(0, 5)}'),
+          ),
           ListTile(
             leading: Icon(
               Icons.work,
