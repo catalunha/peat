@@ -50,7 +50,7 @@ class _UserLoggedEditDSState extends State<UserLoggedEditDS> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Atualizar Usuário'),
+        title: Text('Atualizar dados do usuário'),
       ),
       body: Padding(
         padding: EdgeInsets.all(2.0),

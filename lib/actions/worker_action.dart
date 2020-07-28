@@ -62,6 +62,7 @@ class SetDocWorkerCurrentAsyncWorkerAction extends ReduxAction<AppState> {
   Future<AppState> reduce() async {
     print('SetDocWorkerCurrentAsyncWorkerAction...');
     Firestore firestore = Firestore.instance;
+
     WorkerModel workerModel = state.workerState.workerCurrent;
     workerModel.sispat = sispat;
     workerModel.displayName = displayName;
@@ -82,4 +83,47 @@ class SetDocWorkerCurrentAsyncWorkerAction extends ReduxAction<AppState> {
 
   @override
   void after() => dispatch(GetDocsWorkerListAsyncWorkerAction());
+}
+
+class BatchedDocsWorkerListOnBoardAsyncWorkerAction
+    extends ReduxAction<AppState> {
+  final List<String> sispatList;
+  final bool inBoard;
+
+  BatchedDocsWorkerListOnBoardAsyncWorkerAction({
+    this.inBoard,
+    this.sispatList,
+  });
+  @override
+  Future<AppState> reduce() async {
+    print('BatchedDocsWorkerListOnBoardAsyncWorkerAction...');
+    Firestore firestore = Firestore.instance;
+
+    var batch = firestore.batch();
+
+    for (var sispat in sispatList) {
+      var a = await firestore
+          .collection(WorkerModel.collection)
+          .where('sispat', isEqualTo: sispat)
+          .limit(1)
+          .getDocuments();
+      if (a.documents?.length != null && a.documents.length > 0) {
+        var b = a.documents[0];
+        if (b.exists) {
+          var c = firestore
+              .collection(WorkerModel.collection)
+              .document(b.documentID);
+          batch.updateData(c, {
+            'plataformIdOnBoard': inBoard
+                ? state.loggedState.userModelLogged.plataformIdOnBoard
+                : null
+          });
+        }
+      }
+    }
+
+    await batch.commit();
+
+    return null;
+  }
 }

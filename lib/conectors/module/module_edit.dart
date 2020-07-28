@@ -44,6 +44,7 @@ class ViewModel extends BaseModel<AppState> {
             urlFolder: urlFolder,
             arquived: false,
           ));
+          dispatch(NavigateAction.pop());
         },
         onUpdate: (String codigo, String description, String urlFolder,
             bool arquived) {
@@ -53,8 +54,9 @@ class ViewModel extends BaseModel<AppState> {
             codigo: codigo,
             description: description,
             urlFolder: urlFolder,
-            arquived: false,
+            arquived: arquived,
           ));
+          dispatch(NavigateAction.pop());
         },
       );
 }

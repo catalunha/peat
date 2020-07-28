@@ -23,6 +23,7 @@ class ModuleListDS extends StatelessWidget {
         itemBuilder: (context, index) {
           final module = moduleList[index];
           return ListTile(
+            selected: module.arquived,
             title: Text('${module.codigo}'),
             subtitle: Text('${module.description}\n${module.urlFolder}'),
             trailing: IconButton(

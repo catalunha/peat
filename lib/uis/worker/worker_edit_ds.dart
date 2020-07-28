@@ -59,7 +59,9 @@ class _WorkerEditDSState extends State<WorkerEditDS> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.isCreateOrUpdate ? 'Criar modulo' : 'Editar modulo'),
+        title: Text(widget.isCreateOrUpdate
+            ? 'Cadastrar trabalhador'
+            : 'Editar trabalhador'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16),
@@ -107,15 +109,17 @@ class _WorkerEditDSState extends State<WorkerEditDS> {
             ),
             onSaved: (newValue) => _activity = newValue,
           ),
-          SwitchListTile(
-            value: _arquived,
-            title: Text('Arquivar modulo'),
-            onChanged: (value) {
-              setState(() {
-                _arquived = value;
-              });
-            },
-          ),
+          widget.isCreateOrUpdate
+              ? Container()
+              : SwitchListTile(
+                  value: _arquived,
+                  title: Text('Arquivar trabalhador'),
+                  onChanged: (value) {
+                    setState(() {
+                      _arquived = value;
+                    });
+                  },
+                ),
         ],
       ),
     );

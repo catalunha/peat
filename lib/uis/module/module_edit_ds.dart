@@ -60,7 +60,6 @@ class _ModuleEditDSState extends State<ModuleEditDS> {
         child: Icon(Icons.cloud_upload),
         onPressed: () {
           validateData();
-          Navigator.pop(context);
         },
       ),
     );
@@ -92,15 +91,17 @@ class _ModuleEditDSState extends State<ModuleEditDS> {
             ),
             onSaved: (newValue) => _urlFolder = newValue,
           ),
-          SwitchListTile(
-            value: _arquived,
-            title: Text('Arquivar modulo'),
-            onChanged: (value) {
-              setState(() {
-                _arquived = value;
-              });
-            },
-          ),
+          widget.isCreateOrUpdate
+              ? Container()
+              : SwitchListTile(
+                  value: _arquived,
+                  title: Text('Arquivar modulo'),
+                  onChanged: (value) {
+                    setState(() {
+                      _arquived = value;
+                    });
+                  },
+                ),
         ],
       ),
     );

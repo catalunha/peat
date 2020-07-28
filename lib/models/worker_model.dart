@@ -25,6 +25,8 @@ class WorkerModel extends FirestoreModel {
     if (map.containsKey('activity')) activity = map['activity'];
     if (map.containsKey('company')) company = map['company'];
     if (map.containsKey('arquived')) arquived = map['arquived'];
+    if (map.containsKey('plataformIdOnBoard'))
+      plataformIdOnBoard = map['plataformIdOnBoard'];
     return this;
   }
 
@@ -36,6 +38,8 @@ class WorkerModel extends FirestoreModel {
     if (activity != null) data['activity'] = this.activity;
     if (company != null) data['company'] = this.company;
     if (arquived != null) data['arquived'] = this.arquived;
+    if (plataformIdOnBoard != null)
+      data['plataformIdOnBoard'] = this.plataformIdOnBoard;
     return data;
   }
 

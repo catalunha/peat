@@ -12,7 +12,6 @@ class ViewModel extends BaseModel<AppState> {
   String company;
   bool arquived;
   String plataformIdOnBoard;
-  List<String> moduleIdList;
   bool isCreateOrUpdate;
   Function(String, String, String, String) onCreate;
   Function(String, String, String, String, bool) onUpdate;
@@ -24,7 +23,6 @@ class ViewModel extends BaseModel<AppState> {
     @required this.company,
     @required this.arquived,
     @required this.plataformIdOnBoard,
-    @required this.moduleIdList,
     @required this.isCreateOrUpdate,
     @required this.onCreate,
     @required this.onUpdate,
@@ -35,7 +33,6 @@ class ViewModel extends BaseModel<AppState> {
           company,
           arquived,
           plataformIdOnBoard,
-          moduleIdList,
           isCreateOrUpdate,
         ]);
   @override
@@ -46,8 +43,7 @@ class ViewModel extends BaseModel<AppState> {
         company: state.workerState.workerCurrent.company,
         arquived: state.workerState.workerCurrent?.arquived ?? false,
         plataformIdOnBoard: state.workerState.workerCurrent.plataformIdOnBoard,
-        moduleIdList: state.workerState.workerCurrent?.moduleIdList ?? [],
-        isCreateOrUpdate: state.moduleState.moduleCurrent?.id == null,
+        isCreateOrUpdate: state.workerState.workerCurrent?.id == null,
         onCreate: (String sispat, String displayName, String activity,
             String company) {
           dispatch(SetDocWorkerCurrentAsyncWorkerAction(

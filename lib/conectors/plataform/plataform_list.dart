@@ -21,7 +21,6 @@ class ViewModel extends BaseModel<AppState> {
         plataformList: state.plataformState.plataformList,
         onEditPlataformCurrent: (String id) {
           dispatch(SetPlataformCurrentSyncPlataformAction(id));
-          // dispatch(NavigateAction.pop());
           dispatch(NavigateAction.pushNamed(Routes.plataformEdit));
         },
       );

@@ -58,7 +58,6 @@ class _PlataformEditDSState extends State<PlataformEditDS> {
         child: Icon(Icons.cloud_upload),
         onPressed: () {
           validateData();
-          Navigator.pop(context);
         },
       ),
     );
@@ -83,15 +82,17 @@ class _PlataformEditDSState extends State<PlataformEditDS> {
             ),
             onSaved: (newValue) => _description = newValue,
           ),
-          SwitchListTile(
-            value: _arquived,
-            title: Text('Arquivar esta plataforma'),
-            onChanged: (value) {
-              setState(() {
-                _arquived = value;
-              });
-            },
-          ),
+          widget.isCreateOrUpdate
+              ? Container()
+              : SwitchListTile(
+                  value: _arquived,
+                  title: Text('Arquivar esta plataforma'),
+                  onChanged: (value) {
+                    setState(() {
+                      _arquived = value;
+                    });
+                  },
+                ),
         ],
       ),
     );

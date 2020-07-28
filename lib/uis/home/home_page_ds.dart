@@ -42,17 +42,19 @@ class HomePageDS extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          // ListTile(
+          //   enabled: userOnBoard,
+          //   leading: Icon(Icons.person),
+          //   title: Text('$displayName'),
+          //   subtitle: Text(
+          //       'SISPAT:$sispat\nemail: $email\nPlataforma OnBoard: $userPlataformOnBoard\nData OnBoard: ${userDateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userDateTimeOnBoard) : userDateTimeOnBoard}\nid: ${id.substring(0, 5)}'),
+          //   onTap: () {},
+          // ),
           ListTile(
-            enabled: userOnBoard,
-            leading: Icon(Icons.person),
-            title: Text('$displayName'),
-            subtitle: Text(
-                'SISPAT:$sispat\nemail: $email\nPlataforma OnBoard: $userPlataformOnBoard\nData OnBoard: ${userDateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userDateTimeOnBoard) : userDateTimeOnBoard}\nid: ${id.substring(0, 5)}'),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: Icon(Icons.work),
-            title: Text('Analistas'),
+            leading: Icon(
+              Icons.work,
+            ),
+            title: Text('Usuários'),
             onTap: () => Navigator.pushNamed(context, Routes.userList),
           ),
           ListTile(
@@ -69,6 +71,12 @@ class HomePageDS extends StatelessWidget {
             leading: Icon(Icons.people),
             title: Text('Trabalhadores'),
             onTap: () => Navigator.pushNamed(context, Routes.workerList),
+          ),
+          ListTile(
+            enabled: userOnBoard,
+            leading: Icon(Icons.list),
+            title: Text('Check PeopleOnBoard'),
+            onTap: () => Navigator.pushNamed(context, Routes.workerOnBoard),
           ),
         ],
       ),

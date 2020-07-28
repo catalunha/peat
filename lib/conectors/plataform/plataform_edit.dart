@@ -40,8 +40,7 @@ class ViewModel extends BaseModel<AppState> {
             description: description,
             arquived: false,
           ));
-          // dispatch(NavigateAction.pushNamed(Routes.plataformList));
-          // dispatch(GetPlatatormListAsyncPlataformAction());
+          dispatch(NavigateAction.pop());
         },
         onUpdate: (String codigo, String description, bool arquived) {
           print('PlataformEdit.onUpdate');
@@ -49,10 +48,9 @@ class ViewModel extends BaseModel<AppState> {
           dispatch(SetDocPlataformCurrentAsyncPlataformAction(
             codigo: codigo,
             description: description,
-            arquived: false,
+            arquived: arquived,
           ));
-          // dispatch(NavigateAction.pushNamed(Routes.plataformList));
-          // dispatch(GetPlatatormListAsyncPlataformAction());
+          dispatch(NavigateAction.pop());
         },
       );
 }

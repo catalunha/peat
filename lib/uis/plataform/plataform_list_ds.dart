@@ -22,6 +22,7 @@ class PlataformListDS extends StatelessWidget {
         itemBuilder: (context, index) {
           final plataform = plataformList[index];
           return ListTile(
+            selected: plataform.arquived,
             title: Text('${plataform.codigo}'),
             subtitle: Text('${plataform.description}'),
             onTap: () {
