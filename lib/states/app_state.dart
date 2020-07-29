@@ -1,3 +1,4 @@
+import 'package:peat/states/group_state.dart';
 import 'package:peat/states/logged_state.dart';
 import 'package:peat/states/module_state.dart';
 import 'package:peat/states/plataform_state.dart';
@@ -10,6 +11,7 @@ class AppState {
   final PlataformState plataformState;
   final ModuleState moduleState;
   final WorkerState workerState;
+  final GroupState groupState;
 
   AppState({
     this.loggedState,
@@ -17,6 +19,7 @@ class AppState {
     this.plataformState,
     this.moduleState,
     this.workerState,
+    this.groupState,
   });
 
   static AppState initialState() => AppState(
@@ -25,6 +28,7 @@ class AppState {
         plataformState: PlataformState.initialState(),
         moduleState: ModuleState.initialState(),
         workerState: WorkerState.initialState(),
+        groupState: GroupState.initialState(),
       );
   AppState copyWith({
     LoggedState loggedState,
@@ -32,6 +36,7 @@ class AppState {
     PlataformState plataformState,
     ModuleState moduleState,
     WorkerState workerState,
+    GroupState groupState,
   }) =>
       AppState(
         loggedState: loggedState ?? this.loggedState,
@@ -39,6 +44,7 @@ class AppState {
         plataformState: plataformState ?? this.plataformState,
         moduleState: moduleState ?? this.moduleState,
         workerState: workerState ?? this.workerState,
+        groupState: groupState ?? this.groupState,
       );
   @override
   int get hashCode =>
@@ -46,12 +52,14 @@ class AppState {
       loggedState.hashCode ^
       userState.hashCode ^
       plataformState.hashCode ^
-      moduleState.hashCode;
+      moduleState.hashCode ^
+      groupState.hashCode;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is AppState &&
+          groupState == other.groupState &&
           workerState == other.workerState &&
           loggedState == other.loggedState &&
           userState == other.userState &&

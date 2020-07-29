@@ -29,6 +29,7 @@ class UserModel extends FirestoreModel {
               ? DateTime.fromMillisecondsSinceEpoch(
                   map['dateTimeOnBoard'].millisecondsSinceEpoch)
               : null;
+      if (map.containsKey('arquived')) arquived = map['arquived'];
     }
     return this;
   }
@@ -43,6 +44,7 @@ class UserModel extends FirestoreModel {
     data['plataformIdOnBoard'] = this.plataformIdOnBoard;
     // if (dateTimeOnBoard != null)
     data['dateTimeOnBoard'] = this.dateTimeOnBoard;
+    if (arquived != null) data['arquived'] = this.arquived;
 
     return data;
   }

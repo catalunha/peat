@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:peat/conectors/group/group_edit.dart';
+import 'package:peat/conectors/group/group_list.dart';
 import 'package:peat/conectors/module/module_edit.dart';
 import 'package:peat/conectors/module/module_list.dart';
 import 'package:peat/conectors/plataform/plataform_edit.dart';
@@ -21,6 +23,8 @@ class Routes {
   static final workerList = '/workerList';
   static final workerEdit = '/workerEdit';
   static final workerOnBoard = '/workerOnBoard';
+  static final groupList = '/groupList';
+  static final groupEdit = '/groupEdit';
 
   static final routes = {
     // home: (BuildContext context) => UserExceptionDialog<AppState>(
@@ -36,6 +40,8 @@ class Routes {
     workerList: (BuildContext context) => WorkerList(),
     workerEdit: (BuildContext context) => WorkerEdit(),
     workerOnBoard: (BuildContext context) => WorkerOnBoard(),
+    groupList: (BuildContext context) => GroupList(),
+    groupEdit: (BuildContext context) => GroupEdit(),
   };
 }
 
