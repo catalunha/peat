@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:peat/conectors/module/module_select.dart';
 
 class GroupEditDS extends StatefulWidget {
   final String codigo;
@@ -10,6 +11,7 @@ class GroupEditDS extends StatefulWidget {
   final String localCourse;
   final String urlFolder;
   final String urlPhoto;
+  final String moduleId;
   final bool opened;
   final bool success;
   final bool arquived;
@@ -35,6 +37,7 @@ class GroupEditDS extends StatefulWidget {
     this.localCourse,
     this.opened,
     this.success,
+    this.moduleId,
   }) : super(key: key);
   @override
   _GroupEditDSState createState() => _GroupEditDSState();
@@ -207,6 +210,17 @@ class _GroupEditDSState extends State<GroupEditDS> {
       key: formKey,
       child: ListView(
         children: [
+          ListTile(
+            title: Text('${widget.moduleId}'),
+            subtitle: Text('Qual modulo para este grupo'),
+            trailing: Icon(Icons.search),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => ModuleSelect(),
+              );
+            },
+          ),
           TextFormField(
             initialValue: widget.codigo,
             decoration: InputDecoration(
@@ -273,14 +287,14 @@ class _GroupEditDSState extends State<GroupEditDS> {
           TextFormField(
             initialValue: widget.urlFolder,
             decoration: InputDecoration(
-              labelText: 'Pasta de relatorios do encontro',
+              labelText: 'Link da pasta de relatorios do encontro',
             ),
             onSaved: (newValue) => _urlFolder = newValue,
           ),
           TextFormField(
             initialValue: widget.urlPhoto,
             decoration: InputDecoration(
-              labelText: 'Foto do grupo no encontro',
+              labelText: 'Link da foto do grupo no encontro',
             ),
             onSaved: (newValue) => _urlPhoto = newValue,
           ),

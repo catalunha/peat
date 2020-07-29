@@ -13,7 +13,7 @@ class WorkerListDS extends StatelessWidget {
     this.onEditWorkerCurrent,
     this.plataformList,
   }) : super(key: key);
-  String plataform(String plataformId) {
+  String plataformIdCodigo(String plataformId) {
     String _return;
     if (plataformId != null) {
       PlataformModel plataformModel =
@@ -37,7 +37,7 @@ class WorkerListDS extends StatelessWidget {
             selected: worker.arquived,
             title: Text('${worker.displayName}'),
             subtitle: Text(
-                'SISPAT: ${worker.sispat}\nEmpresa: ${worker.company}\nFunção: ${worker.activity}\nPlataforma OnBoard: ${plataform(worker.plataformIdOnBoard)}\nModulos: ${worker.moduleIdList?.length ?? null}'),
+                'SISPAT: ${worker.sispat}\nEmpresa: ${worker.company}\nFunção: ${worker.activity}\nPlataforma OnBoard: ${plataformIdCodigo(worker.plataformIdOnBoard)}\nModulos: ${worker.moduleIdList?.length ?? null}'),
             onTap: () {
               onEditWorkerCurrent(worker.id);
             },

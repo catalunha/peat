@@ -1,6 +1,8 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:peat/actions/group_action.dart';
+import 'package:peat/actions/module_action.dart';
+import 'package:peat/models/module_model.dart';
 import 'package:peat/states/app_state.dart';
 import 'package:peat/uis/group/group_edit_ds.dart';
 
@@ -13,6 +15,7 @@ class ViewModel extends BaseModel<AppState> {
   String localCourse;
   String urlFolder;
   String urlPhoto;
+  String moduleId;
   bool opened;
   bool success;
   bool arquived;
@@ -31,6 +34,7 @@ class ViewModel extends BaseModel<AppState> {
     @required this.localCourse,
     @required this.urlFolder,
     @required this.urlPhoto,
+    @required this.moduleId,
     @required this.opened,
     @required this.success,
     @required this.arquived,
@@ -46,11 +50,24 @@ class ViewModel extends BaseModel<AppState> {
           localCourse,
           urlFolder,
           urlPhoto,
+          moduleId,
           opened,
           success,
           arquived,
           isCreateOrUpdate,
         ]);
+  String _moduleId() {
+    String _return;
+    ModuleModel moduleModel;
+    if (state.groupState.groupCurrent.moduleId != null) {
+      moduleModel = state.moduleState.moduleList.firstWhere(
+          (element) => element.id == state.groupState.groupCurrent.moduleId);
+      _return = moduleModel.codigo;
+    }
+
+    return _return;
+  }
+
   @override
   ViewModel fromStore() => ViewModel.build(
         codigo: state.groupState.groupCurrent.codigo,
@@ -61,6 +78,7 @@ class ViewModel extends BaseModel<AppState> {
         localCourse: state.groupState.groupCurrent.localCourse,
         urlFolder: state.groupState.groupCurrent.urlFolder,
         urlPhoto: state.groupState.groupCurrent.urlPhoto,
+        moduleId: _moduleId(),
         opened: state.groupState.groupCurrent?.opened ?? true,
         success: state.groupState.groupCurrent?.success ?? false,
         arquived: state.groupState.groupCurrent?.arquived ?? false,
@@ -135,6 +153,7 @@ class GroupEdit extends StatelessWidget {
     return StoreConnector<AppState, ViewModel>(
       debug: this,
       model: ViewModel(),
+      onInit: (store) => store.dispatch(GetDocsModuleListAsyncModuleAction()),
       builder: (context, viewModel) => GroupEditDS(
         codigo: viewModel.codigo,
         number: viewModel.number,
@@ -144,6 +163,7 @@ class GroupEdit extends StatelessWidget {
         localCourse: viewModel.localCourse,
         urlFolder: viewModel.urlFolder,
         urlPhoto: viewModel.urlPhoto,
+        moduleId: viewModel.moduleId,
         opened: viewModel.opened,
         success: viewModel.success,
         arquived: viewModel.arquived,

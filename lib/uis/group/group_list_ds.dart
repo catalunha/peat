@@ -1,17 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:peat/models/group_model.dart';
+import 'package:peat/models/module_model.dart';
+import 'package:peat/models/plataform_model.dart';
+import 'package:peat/models/user_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class GroupListDS extends StatelessWidget {
   final List<GroupModel> groupList;
+  final List<ModuleModel> moduleList;
+  final List<PlataformModel> plataformList;
+  final UserModel userModel;
   final Function(String) onEditGroupCurrent;
 
   const GroupListDS({
     Key key,
     this.groupList,
     this.onEditGroupCurrent,
+    this.moduleList,
+    this.plataformList,
+    this.userModel,
   }) : super(key: key);
+  String moduleIdCodigo(String moduleId) {
+    String _return;
+    if (moduleId != null) {
+      ModuleModel moduleModel =
+          moduleList.firstWhere((element) => element.id == moduleId);
+      _return = moduleModel.codigo;
+    }
+    return _return + ' || ' + moduleId.substring(0, 5);
+  }
+
+  String plataformIdCodigo(String plataformId) {
+    String _return;
+    if (plataformId != null) {
+      PlataformModel plataformModel =
+          plataformList.firstWhere((element) => element.id == plataformId);
+      _return = plataformModel.codigo;
+    }
+    return _return + ' || ' + plataformId.substring(0, 5);
+  }
+
+  String userIdData(String userId) {
+    String _return = 'Erro no userId';
+    if (userId == userModel.id) {
+      _return = '${userModel.displayName} || ${userModel.id.substring(0, 5)}';
+    }
+    return _return;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +63,7 @@ class GroupListDS extends StatelessWidget {
             selected: group.arquived,
             title: Text('${group.codigo}'),
             subtitle: Text(
-                '\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${group.userId.substring(0, 5)}\nplataformId: ${group.plataformId.substring(0, 5)}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userDateTimeOnBoard)}'),
+                '\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${userIdData(group.userId)}\nplataformId: ${plataformIdCodigo(group.plataformId)}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userDateTimeOnBoard)}\nmoduleId: ${moduleIdCodigo(group.moduleId)} '),
             leading: IconButton(
               icon: Icon(Icons.link),
               tooltip: group.urlPhoto,

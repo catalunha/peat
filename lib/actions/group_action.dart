@@ -64,7 +64,6 @@ class SetDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   final String description;
   final bool opened;
   final bool success;
-  final String moduleId;
   final List<dynamic> workerIdList;
   final dynamic created;
   final bool arquived;
@@ -82,7 +81,6 @@ class SetDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
     this.description,
     this.opened,
     this.success,
-    this.moduleId,
     this.workerIdList,
     this.created,
     this.arquived,
@@ -105,7 +103,6 @@ class SetDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
     groupModel.description = description;
     groupModel.opened = opened;
     groupModel.success = success;
-    groupModel.moduleId = moduleId;
     groupModel.workerIdList = workerIdList;
     groupModel.created = FieldValue.serverTimestamp();
     groupModel.arquived = arquived;
@@ -122,4 +119,19 @@ class SetDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
 
   @override
   void after() => dispatch(GetDocsGroupListAsyncGroupAction());
+}
+
+class SetModuleTheGroupSyncGroupAction extends ReduxAction<AppState> {
+  final String id;
+  SetModuleTheGroupSyncGroupAction({this.id});
+  @override
+  AppState reduce() {
+    GroupModel groupModel = state.groupState.groupCurrent;
+    groupModel.moduleId = id;
+    return state.copyWith(
+      groupState: state.groupState.copyWith(
+        groupCurrent: groupModel,
+      ),
+    );
+  }
 }
