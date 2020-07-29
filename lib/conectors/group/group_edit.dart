@@ -16,6 +16,7 @@ class ViewModel extends BaseModel<AppState> {
   String urlFolder;
   String urlPhoto;
   String moduleId;
+  List<dynamic> workerIdList;
   bool opened;
   bool success;
   bool arquived;
@@ -35,6 +36,7 @@ class ViewModel extends BaseModel<AppState> {
     @required this.urlFolder,
     @required this.urlPhoto,
     @required this.moduleId,
+    @required this.workerIdList,
     @required this.opened,
     @required this.success,
     @required this.arquived,
@@ -51,6 +53,7 @@ class ViewModel extends BaseModel<AppState> {
           urlFolder,
           urlPhoto,
           moduleId,
+          workerIdList,
           opened,
           success,
           arquived,
@@ -79,6 +82,7 @@ class ViewModel extends BaseModel<AppState> {
         urlFolder: state.groupState.groupCurrent.urlFolder,
         urlPhoto: state.groupState.groupCurrent.urlPhoto,
         moduleId: _moduleId(),
+        workerIdList: state.groupState.groupCurrent.workerIdList,
         opened: state.groupState.groupCurrent?.opened ?? true,
         success: state.groupState.groupCurrent?.success ?? false,
         arquived: state.groupState.groupCurrent?.arquived ?? false,
@@ -164,6 +168,7 @@ class GroupEdit extends StatelessWidget {
         urlFolder: viewModel.urlFolder,
         urlPhoto: viewModel.urlPhoto,
         moduleId: viewModel.moduleId,
+        workerIdList: viewModel.workerIdList,
         opened: viewModel.opened,
         success: viewModel.success,
         arquived: viewModel.arquived,

@@ -64,7 +64,6 @@ class SetDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   final String description;
   final bool opened;
   final bool success;
-  final List<dynamic> workerIdList;
   final dynamic created;
   final bool arquived;
   SetDocGroupCurrentAsyncGroupAction({
@@ -81,7 +80,6 @@ class SetDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
     this.description,
     this.opened,
     this.success,
-    this.workerIdList,
     this.created,
     this.arquived,
   });
@@ -103,7 +101,6 @@ class SetDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
     groupModel.description = description;
     groupModel.opened = opened;
     groupModel.success = success;
-    groupModel.workerIdList = workerIdList;
     groupModel.created = FieldValue.serverTimestamp();
     groupModel.arquived = arquived;
     await firestore
@@ -133,5 +130,27 @@ class SetModuleTheGroupSyncGroupAction extends ReduxAction<AppState> {
         groupCurrent: groupModel,
       ),
     );
+  }
+}
+
+class SetWorkerTheGroupSyncGroupAction extends ReduxAction<AppState> {
+  final String id;
+  SetWorkerTheGroupSyncGroupAction({this.id});
+  @override
+  AppState reduce() {
+    GroupModel groupModel = state.groupState.groupCurrent;
+    if (groupModel.workerIdList == null) groupModel.workerIdList = [];
+    if (!groupModel.workerIdList.contains(id)) {
+      groupModel.workerIdList.add(id);
+      print('groupModel.workerIdList1: ${groupModel.workerIdList}');
+      return state.copyWith(
+        groupState: state.groupState.copyWith(
+          groupCurrent: groupModel,
+        ),
+      );
+    } else {
+      print('groupModel.workerIdList2: ${groupModel.workerIdList}');
+      return null;
+    }
   }
 }

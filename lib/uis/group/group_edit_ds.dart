@@ -1,6 +1,8 @@
+import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:peat/conectors/module/module_select.dart';
+import 'package:peat/conectors/worker/worker_select.dart';
 
 class GroupEditDS extends StatefulWidget {
   final String codigo;
@@ -12,6 +14,8 @@ class GroupEditDS extends StatefulWidget {
   final String urlFolder;
   final String urlPhoto;
   final String moduleId;
+  final List<dynamic> workerIdList;
+
   final bool opened;
   final bool success;
   final bool arquived;
@@ -38,6 +42,7 @@ class GroupEditDS extends StatefulWidget {
     this.opened,
     this.success,
     this.moduleId,
+    this.workerIdList,
   }) : super(key: key);
   @override
   _GroupEditDSState createState() => _GroupEditDSState();
@@ -219,6 +224,18 @@ class _GroupEditDSState extends State<GroupEditDS> {
                 context: context,
                 builder: (context) => ModuleSelect(),
               );
+            },
+          ),
+          ListTile(
+            title: Text(
+                '${widget.workerIdList != null ? widget.workerIdList.length : null}'),
+            subtitle: Text('Quais trabalhadores neste grupo'),
+            trailing: Icon(Icons.search),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => WorkerSelect(),
+              ).then((value) => setState(() {}));
             },
           ),
           TextFormField(

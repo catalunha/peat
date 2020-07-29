@@ -30,7 +30,9 @@ class GetDocsWorkerListAsyncWorkerAction extends ReduxAction<AppState> {
     print('GetDocsWorkerListAsyncWorkerAction...');
     Firestore firestore = Firestore.instance;
 
-    final collRef = firestore.collection(WorkerModel.collection);
+    final collRef = firestore.collection(WorkerModel.collection).where(
+        'plataformIdOnBoard',
+        isEqualTo: state.loggedState.userModelLogged.plataformIdOnBoard);
     final docsSnap = await collRef.getDocuments();
 
     final listDocs = docsSnap.documents

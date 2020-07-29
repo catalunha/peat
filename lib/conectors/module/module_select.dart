@@ -6,7 +6,6 @@ import 'package:peat/models/module_model.dart';
 
 import 'package:peat/states/app_state.dart';
 import 'package:peat/uis/module/module_select_ds.dart';
-import 'package:peat/uis/plataform/plataform_onboard_ds.dart';
 
 class ViewModel extends BaseModel<AppState> {
   List<ModuleModel> moduleList;

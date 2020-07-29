@@ -66,15 +66,15 @@ class HomePageDS extends StatelessWidget {
             onTap: () => Navigator.pushNamed(context, Routes.moduleList),
           ),
           ListTile(
-            leading: Icon(Icons.people),
-            title: Text('Trabalhadores'),
-            onTap: () => Navigator.pushNamed(context, Routes.workerList),
-          ),
-          ListTile(
             enabled: userOnBoard,
             leading: Icon(Icons.directions_boat),
             title: Text('Check PeopleOnBoard'),
             onTap: () => Navigator.pushNamed(context, Routes.workerOnBoard),
+          ),
+          ListTile(
+            leading: Icon(Icons.people),
+            title: Text('Trabalhadores'),
+            onTap: () => Navigator.pushNamed(context, Routes.workerList),
           ),
           ListTile(
             enabled: userOnBoard,
