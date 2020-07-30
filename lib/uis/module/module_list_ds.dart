@@ -25,7 +25,8 @@ class ModuleListDS extends StatelessWidget {
           return ListTile(
             selected: module.arquived,
             title: Text('${module.codigo}'),
-            subtitle: Text('${module.description}\n${module.urlFolder}'),
+            subtitle: Text(
+                '${module.description}\n${module.urlFolder}\n${module.id.substring(0, 5)}'),
             trailing: IconButton(
               icon: Icon(Icons.link),
               tooltip: module.urlFolder,

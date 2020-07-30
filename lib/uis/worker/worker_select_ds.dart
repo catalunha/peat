@@ -34,8 +34,7 @@ class _WorkerSelectDSState extends State<WorkerSelectDS> {
                   ? widget.groupCurrent.workerIdList.contains(worker.id)
                   : false,
               title: Text('${worker.displayName} ${worker.id}'),
-              subtitle:
-                  Text('${worker.sispat} ${widget.groupCurrent?.workerIdList}'),
+              subtitle: Text('${worker.sispat}'),
               onTap: () {
                 widget.onSetWorkerTheGroup(
                     worker.id,

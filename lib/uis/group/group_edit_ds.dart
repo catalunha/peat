@@ -229,7 +229,7 @@ class _GroupEditDSState extends State<GroupEditDS> {
       WorkerModel workerModel =
           widget.workerList.firstWhere((element) => element.id == workerId);
       _return =
-          '${workerModel.sispat}, ${workerModel.displayName}, ${workerModel.company}, ${workerModel.activity}. ';
+          '${workerModel.id.substring(0, 5)},${workerModel.sispat}, ${workerModel.displayName}, ${workerModel.company}, ${workerModel.activity}. ';
     }
     return _return;
   }
@@ -250,40 +250,44 @@ class _GroupEditDSState extends State<GroupEditDS> {
               );
             },
           ),
-          ListTile(
-            title: Text(
-                '${widget.workerIdList != null && widget.workerIdList.isNotEmpty ? widget.workerIdList.length : null}'),
-            subtitle: Text('Quais trabalhadores neste grupo'),
-            trailing: Icon(Icons.search),
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (context) => WorkerSelect(),
-              ).then((value) => setState(() {}));
-            },
-          ),
-          Container(
-            width: double.infinity,
-            height: 100,
-            child: ListView.builder(
-              itemCount: widget.workerIdList.length,
-              itemBuilder: (context, index) {
-                String workerId = widget.workerIdList[index];
-                return ListTile(
-                  title: Text('${_workerIdData(workerId)}'),
-                  trailing: IconButton(
-                      icon: Icon(Icons.restore_from_trash),
-                      onPressed: () {
-                        widget.onRemoveWorkerTheGroup(
-                          workerId,
-                          false,
-                        );
-                        setState(() {});
-                      }),
-                );
-              },
-            ),
-          ),
+          widget.moduleId != null && widget.moduleId.isNotEmpty
+              ? ListTile(
+                  title: Text(
+                      '${widget.workerIdList != null && widget.workerIdList.isNotEmpty ? widget.workerIdList.length : null}'),
+                  subtitle: Text('Quais trabalhadores neste grupo'),
+                  trailing: Icon(Icons.search),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => WorkerSelect(),
+                    ).then((value) => setState(() {}));
+                  },
+                )
+              : Container(),
+          widget.workerIdList != null
+              ? Container(
+                  width: double.infinity,
+                  height: 100,
+                  child: ListView.builder(
+                    itemCount: widget.workerIdList.length,
+                    itemBuilder: (context, index) {
+                      String workerId = widget.workerIdList[index];
+                      return ListTile(
+                        title: Text('${_workerIdData(workerId)}'),
+                        trailing: IconButton(
+                            icon: Icon(Icons.restore_from_trash),
+                            onPressed: () {
+                              widget.onRemoveWorkerTheGroup(
+                                workerId,
+                                false,
+                              );
+                              setState(() {});
+                            }),
+                      );
+                    },
+                  ),
+                )
+              : Container(),
           TextFormField(
             initialValue: widget.codigo,
             decoration: InputDecoration(

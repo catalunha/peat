@@ -27,6 +27,8 @@ class GroupListDS extends StatefulWidget {
 }
 
 class _GroupListDSState extends State<GroupListDS> {
+  int abertos = 0;
+
   String moduleIdCodigo(String moduleId) {
     String _return;
     if (moduleId != null) {
@@ -66,10 +68,10 @@ class _GroupListDSState extends State<GroupListDS> {
           bottom: TabBar(
             tabs: [
               Tab(
-                text: 'Abertos',
+                text: 'Agendados',
               ),
               Tab(
-                text: 'Fechados',
+                text: 'Encerrados',
               )
             ],
           ),

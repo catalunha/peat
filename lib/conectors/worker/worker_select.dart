@@ -25,20 +25,23 @@ class ViewModel extends BaseModel<AppState> {
     List<WorkerModel> workerListClean = [];
     workerListClean.addAll(state.workerState.workerList);
     print('workerListClean: $workerListClean');
-    for (var i = 0; i < workerListClean.length; i++) {
-      if (workerListClean[i].moduleIdList != null &&
-          workerListClean[i].moduleIdList.isNotEmpty) {
-        if (workerListClean[i]
-            .moduleIdList
-            .contains(state.groupState.groupCurrent.moduleId)) {
-          workerListClean.removeAt(i);
-        }
+    //Remove todos que ja estao cadastrados para fazer este modulo nos grupos abertos e fechados
+    workerListClean.removeWhere((element) {
+      if (element.moduleIdList != null && element.moduleIdList.isNotEmpty) {
+        return element.moduleIdList
+            .contains(state.groupState.groupCurrent.moduleId);
+      } else {
+        return null;
       }
-    }
+    });
+    //remove todos os que ja estao cadastrados em outras grupos deste mesmo modulo
     for (var group in state.groupState.groupList) {
       if (group.workerIdList != null && group.workerIdList.isNotEmpty) {
         for (var worker in group.workerIdList) {
-          workerListClean.removeWhere((element) => element.id == worker);
+          workerListClean.removeWhere((element) {
+            return element.id == worker &&
+                group.moduleId == state.groupState.groupCurrent.moduleId;
+          });
         }
       }
     }

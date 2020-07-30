@@ -24,7 +24,8 @@ class PlataformListDS extends StatelessWidget {
           return ListTile(
             selected: plataform.arquived,
             title: Text('${plataform.codigo}'),
-            subtitle: Text('${plataform.description}'),
+            subtitle: Text(
+                '${plataform.description}\n${plataform.id.substring(0, 5)}'),
             onTap: () {
               onEditPlataformCurrent(plataform.id);
             },
