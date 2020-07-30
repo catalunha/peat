@@ -2,7 +2,9 @@ import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:peat/actions/group_action.dart';
 import 'package:peat/actions/module_action.dart';
+import 'package:peat/actions/worker_action.dart';
 import 'package:peat/models/module_model.dart';
+import 'package:peat/models/worker_model.dart';
 import 'package:peat/states/app_state.dart';
 import 'package:peat/uis/group/group_edit_ds.dart';
 
@@ -25,6 +27,11 @@ class ViewModel extends BaseModel<AppState> {
       bool, bool) onCreate;
   Function(String, String, String, dynamic, dynamic, String, String, String,
       bool, bool, bool) onUpdate;
+  Function() onEditPop;
+  Function(String, bool) onRemoveWorkerTheGroup;
+
+  List<WorkerModel> workerList;
+
   ViewModel();
   ViewModel.build({
     @required this.codigo,
@@ -43,6 +50,9 @@ class ViewModel extends BaseModel<AppState> {
     @required this.isCreateOrUpdate,
     @required this.onCreate,
     @required this.onUpdate,
+    @required this.onEditPop,
+    @required this.onRemoveWorkerTheGroup,
+    @required this.workerList,
   }) : super(equals: [
           codigo,
           number,
@@ -58,6 +68,7 @@ class ViewModel extends BaseModel<AppState> {
           success,
           arquived,
           isCreateOrUpdate,
+          workerList,
         ]);
   String _moduleId() {
     String _return;
@@ -148,6 +159,16 @@ class ViewModel extends BaseModel<AppState> {
           ));
           dispatch(NavigateAction.pop());
         },
+        onEditPop: () {
+          dispatch(GetDocsGroupListAsyncGroupAction());
+          dispatch(NavigateAction.pop());
+        },
+        onRemoveWorkerTheGroup: (String id, bool addOrRemove) {
+          print('id:$id addOrRemove:$addOrRemove');
+          dispatch(SetWorkerTheGroupSyncGroupAction(
+              id: id, addOrRemove: addOrRemove));
+        },
+        workerList: state.workerState.workerList ?? [],
       );
 }
 
@@ -157,7 +178,10 @@ class GroupEdit extends StatelessWidget {
     return StoreConnector<AppState, ViewModel>(
       debug: this,
       model: ViewModel(),
-      onInit: (store) => store.dispatch(GetDocsModuleListAsyncModuleAction()),
+      onInit: (store) {
+        store.dispatch(GetDocsWorkerListAsyncWorkerAction());
+        store.dispatch(GetDocsModuleListAsyncModuleAction());
+      },
       builder: (context, viewModel) => GroupEditDS(
         codigo: viewModel.codigo,
         number: viewModel.number,
@@ -175,6 +199,9 @@ class GroupEdit extends StatelessWidget {
         isCreateOrUpdate: viewModel.isCreateOrUpdate,
         onCreate: viewModel.onCreate,
         onUpdate: viewModel.onUpdate,
+        onEditPop: viewModel.onEditPop,
+        onRemoveWorkerTheGroup: viewModel.onRemoveWorkerTheGroup,
+        workerList: viewModel.workerList,
       ),
     );
   }

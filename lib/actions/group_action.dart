@@ -11,7 +11,7 @@ class SetGroupCurrentSyncGroupAction extends ReduxAction<AppState> {
 
   @override
   AppState reduce() {
-    print('SetGroupCurrentSyncGroupAction...');
+    print('SetGroupCurrentSyncGroupAction...$id');
     GroupModel groupModel = id == null
         ? GroupModel(null)
         : state.groupState.groupList.firstWhere((element) => element.id == id);
@@ -35,7 +35,6 @@ class GetDocsGroupListAsyncGroupAction extends ReduxAction<AppState> {
         .where('userId', isEqualTo: state.loggedState.userModelLogged.id)
         .where('plataformId',
             isEqualTo: state.loggedState.userModelLogged.plataformIdOnBoard)
-        // .where('opened',isEqualTo: true)
         .where('arquived', isEqualTo: false);
     final docsSnap = await collRef.getDocuments();
 
@@ -135,22 +134,36 @@ class SetModuleTheGroupSyncGroupAction extends ReduxAction<AppState> {
 
 class SetWorkerTheGroupSyncGroupAction extends ReduxAction<AppState> {
   final String id;
-  SetWorkerTheGroupSyncGroupAction({this.id});
+  final bool addOrRemove;
+  SetWorkerTheGroupSyncGroupAction({
+    this.id,
+    this.addOrRemove,
+  });
   @override
   AppState reduce() {
     GroupModel groupModel = state.groupState.groupCurrent;
     if (groupModel.workerIdList == null) groupModel.workerIdList = [];
-    if (!groupModel.workerIdList.contains(id)) {
-      groupModel.workerIdList.add(id);
-      print('groupModel.workerIdList1: ${groupModel.workerIdList}');
+    if (addOrRemove) {
+      if (!groupModel.workerIdList.contains(id)) {
+        groupModel.workerIdList.add(id);
+        print('groupModel.workerIdList1: ${groupModel.workerIdList}');
+        return state.copyWith(
+          groupState: state.groupState.copyWith(
+            groupCurrent: groupModel,
+          ),
+        );
+      } else {
+        print('groupModel.workerIdList2: ${groupModel.workerIdList}');
+        return null;
+      }
+    } else {
+      groupModel.workerIdList.remove(id);
+      print('groupModel.workerIdList3: ${groupModel.workerIdList}');
       return state.copyWith(
         groupState: state.groupState.copyWith(
           groupCurrent: groupModel,
         ),
       );
-    } else {
-      print('groupModel.workerIdList2: ${groupModel.workerIdList}');
-      return null;
     }
   }
 }

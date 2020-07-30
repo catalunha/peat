@@ -2,32 +2,48 @@ import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:peat/actions/group_action.dart';
 import 'package:peat/actions/worker_action.dart';
+import 'package:peat/models/group_model.dart';
 import 'package:peat/models/worker_model.dart';
 
 import 'package:peat/states/app_state.dart';
 import 'package:peat/uis/worker/worker_select_ds.dart';
 
 class ViewModel extends BaseModel<AppState> {
-  List<WorkerModel> workerList;
-  Function(String) onSetWorkerTheGroup;
+  List<WorkerModel> workerListClean;
+  GroupModel groupCurrent;
+  Function(String, bool) onSetWorkerTheGroup;
   ViewModel();
   ViewModel.build({
-    @required this.workerList,
+    @required this.workerListClean,
+    @required this.groupCurrent,
     @required this.onSetWorkerTheGroup,
   }) : super(equals: [
-          workerList,
+          groupCurrent,
+          workerListClean,
         ]);
-  _workerList() {
-    return state.workerState.workerList;
+  _workerListClean() {
+    List<WorkerModel> workerListClean = [];
+    workerListClean.addAll(state.workerState.workerList);
+    print('workerListClean: $workerListClean');
+    for (var group in state.groupState.groupList) {
+      if (group.workerIdList != null && group.workerIdList.isNotEmpty) {
+        for (var worker in group.workerIdList) {
+          workerListClean.removeWhere((element) => element.id == worker);
+        }
+      }
+    }
+    return workerListClean;
   }
 
   @override
   ViewModel fromStore() => ViewModel.build(
-        workerList: _workerList(),
-        onSetWorkerTheGroup: (String id) {
-          print('id:$id');
-          dispatch(SetWorkerTheGroupSyncGroupAction(id: id));
-          dispatch(NavigateAction.pop());
+        workerListClean: _workerListClean(),
+        groupCurrent: state.groupState.groupCurrent,
+        onSetWorkerTheGroup: (String id, bool addOrRemove) {
+          print('id:$id addOrRemove:$addOrRemove');
+          dispatch(SetWorkerTheGroupSyncGroupAction(
+              id: id, addOrRemove: addOrRemove));
+          // dispatch(NavigateAction.pop());
         },
       );
 }
@@ -40,7 +56,8 @@ class WorkerSelect extends StatelessWidget {
       model: ViewModel(),
       onInit: (store) => store.dispatch(GetDocsWorkerListAsyncWorkerAction()),
       builder: (context, viewModel) => WorkerSelectDS(
-        workerList: viewModel.workerList,
+        workerListClean: viewModel.workerListClean,
+        groupCurrent: viewModel.groupCurrent,
         onSetWorkerTheGroup: viewModel.onSetWorkerTheGroup,
       ),
     );

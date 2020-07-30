@@ -43,8 +43,8 @@ class WorkerModel extends FirestoreModel {
     return data;
   }
 
-  @override
-  String toString() {
-    return this.toMap().toString();
-  }
+  // @override
+  // String toString() {
+  //   return this.toMap().toString();
+  // }
 }

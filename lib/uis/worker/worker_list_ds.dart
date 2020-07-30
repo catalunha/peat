@@ -37,7 +37,7 @@ class WorkerListDS extends StatelessWidget {
             selected: worker.arquived,
             title: Text('${worker.displayName}'),
             subtitle: Text(
-                'SISPAT: ${worker.sispat}\nEmpresa: ${worker.company}\nFunção: ${worker.activity}\nPlataforma OnBoard: ${plataformIdCodigo(worker.plataformIdOnBoard)}\nModulos: ${worker.moduleIdList?.length ?? null}'),
+                'id:${worker.id.substring(0, 5)}\nSISPAT: ${worker.sispat}\nEmpresa: ${worker.company}\nFunção: ${worker.activity}\nPlataforma OnBoard: ${plataformIdCodigo(worker.plataformIdOnBoard)}\nModulos: ${worker.moduleIdList?.length ?? null}'),
             onTap: () {
               onEditWorkerCurrent(worker.id);
             },

@@ -38,6 +38,8 @@ class GetDocsWorkerListAsyncWorkerAction extends ReduxAction<AppState> {
     final listDocs = docsSnap.documents
         .map((docSnap) => WorkerModel(docSnap.documentID).fromMap(docSnap.data))
         .toList();
+    print('GetDocsWorkerListAsyncWorkerAction...$listDocs');
+
     return state.copyWith(
       workerState: state.workerState.copyWith(
         workerList: listDocs,

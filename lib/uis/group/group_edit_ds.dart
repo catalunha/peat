@@ -1,8 +1,8 @@
-import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:peat/conectors/module/module_select.dart';
 import 'package:peat/conectors/worker/worker_select.dart';
+import 'package:peat/models/worker_model.dart';
 
 class GroupEditDS extends StatefulWidget {
   final String codigo;
@@ -24,6 +24,9 @@ class GroupEditDS extends StatefulWidget {
       String, bool, bool) onCreate;
   final Function(String, String, String, dynamic, dynamic, String, String,
       String, bool, bool, bool) onUpdate;
+  final Function() onEditPop;
+  final Function(String, bool) onRemoveWorkerTheGroup;
+  final List<WorkerModel> workerList;
 
   const GroupEditDS({
     Key key,
@@ -43,6 +46,9 @@ class GroupEditDS extends StatefulWidget {
     this.success,
     this.moduleId,
     this.workerIdList,
+    this.onEditPop,
+    this.onRemoveWorkerTheGroup,
+    this.workerList,
   }) : super(key: key);
   @override
   _GroupEditDSState createState() => _GroupEditDSState();
@@ -196,6 +202,10 @@ class _GroupEditDSState extends State<GroupEditDS> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.isCreateOrUpdate ? 'Criar grupo' : 'Editar grupo'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => widget.onEditPop(),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.all(16),
@@ -208,6 +218,20 @@ class _GroupEditDSState extends State<GroupEditDS> {
         },
       ),
     );
+  }
+
+  _workerIdData(String workerId) {
+    String _return = workerId;
+    if (workerId != null &&
+        widget.workerList != null &&
+        widget.workerList.isNotEmpty) {
+      print('workerId: $workerId ... widget.workerList.: ${widget.workerList}');
+      WorkerModel workerModel =
+          widget.workerList.firstWhere((element) => element.id == workerId);
+      _return =
+          '${workerModel.sispat}, ${workerModel.displayName}, ${workerModel.company}, ${workerModel.activity}. ';
+    }
+    return _return;
   }
 
   Widget form() {
@@ -228,7 +252,7 @@ class _GroupEditDSState extends State<GroupEditDS> {
           ),
           ListTile(
             title: Text(
-                '${widget.workerIdList != null ? widget.workerIdList.length : null}'),
+                '${widget.workerIdList != null && widget.workerIdList.isNotEmpty ? widget.workerIdList.length : null}'),
             subtitle: Text('Quais trabalhadores neste grupo'),
             trailing: Icon(Icons.search),
             onTap: () {
@@ -237,6 +261,28 @@ class _GroupEditDSState extends State<GroupEditDS> {
                 builder: (context) => WorkerSelect(),
               ).then((value) => setState(() {}));
             },
+          ),
+          Container(
+            width: double.infinity,
+            height: 100,
+            child: ListView.builder(
+              itemCount: widget.workerIdList.length,
+              itemBuilder: (context, index) {
+                String workerId = widget.workerIdList[index];
+                return ListTile(
+                  title: Text('${_workerIdData(workerId)}'),
+                  trailing: IconButton(
+                      icon: Icon(Icons.restore_from_trash),
+                      onPressed: () {
+                        widget.onRemoveWorkerTheGroup(
+                          workerId,
+                          false,
+                        );
+                        setState(() {});
+                      }),
+                );
+              },
+            ),
           ),
           TextFormField(
             initialValue: widget.codigo,

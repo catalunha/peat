@@ -6,6 +6,6 @@ abstract class FirestoreModel {
   FirestoreModel fromMap(Map<String, dynamic> map);
   @override
   String toString() {
-    return toMap().toString();
+    return id + ':' + toMap().toString();
   }
 }
