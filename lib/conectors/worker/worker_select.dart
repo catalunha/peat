@@ -27,11 +27,16 @@ class ViewModel extends BaseModel<AppState> {
     print('workerListClean: $workerListClean');
     //Remove todos que ja estao cadastrados para fazer este modulo nos grupos abertos e fechados
     workerListClean.removeWhere((element) {
+      print('workerListClean0: ${element.id}');
       if (element.moduleIdList != null && element.moduleIdList.isNotEmpty) {
+        print('workerListClean1: ${element.id}');
+        print('workerListClean2: ${state.groupState.groupCurrent.moduleId}');
+        print(
+            'workerListClean3: ${element.moduleIdList.contains(state.groupState.groupCurrent.moduleId)}');
         return element.moduleIdList
             .contains(state.groupState.groupCurrent.moduleId);
       } else {
-        return null;
+        return false;
       }
     });
     //remove todos os que ja estao cadastrados em outras grupos deste mesmo modulo
