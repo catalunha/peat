@@ -157,6 +157,12 @@ class ViewModel extends BaseModel<AppState> {
             success: success,
             arquived: arquived,
           ));
+          if (arquived) {
+            dispatch(BatchedDocsWorkerListInModuleAsyncWorkerAction(
+              workerIdList: state.groupState.groupCurrent.workerIdList,
+              moduleId: state.groupState.groupCurrent.moduleId,
+            ));
+          }
           dispatch(NavigateAction.pop());
         },
         onEditPop: () {

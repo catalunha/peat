@@ -131,3 +131,34 @@ class BatchedDocsWorkerListOnBoardAsyncWorkerAction
     return null;
   }
 }
+
+class BatchedDocsWorkerListInModuleAsyncWorkerAction
+    extends ReduxAction<AppState> {
+  final List<dynamic> workerIdList;
+  final String moduleId;
+
+  BatchedDocsWorkerListInModuleAsyncWorkerAction({
+    this.workerIdList,
+    this.moduleId,
+  });
+  @override
+  Future<AppState> reduce() async {
+    print('BatchedDocsWorkerListInModuleAsyncWorkerAction...');
+    Firestore firestore = Firestore.instance;
+
+    var batch = firestore.batch();
+
+    for (var workerId in workerIdList) {
+      var c = firestore
+          .collection(WorkerModel.collection)
+          .document(workerId.toString());
+      batch.updateData(c, {
+        'moduleIdList': FieldValue.arrayUnion([moduleId])
+      });
+    }
+
+    await batch.commit();
+
+    return null;
+  }
+}

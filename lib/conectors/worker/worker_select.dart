@@ -25,6 +25,16 @@ class ViewModel extends BaseModel<AppState> {
     List<WorkerModel> workerListClean = [];
     workerListClean.addAll(state.workerState.workerList);
     print('workerListClean: $workerListClean');
+    for (var i = 0; i < workerListClean.length; i++) {
+      if (workerListClean[i].moduleIdList != null &&
+          workerListClean[i].moduleIdList.isNotEmpty) {
+        if (workerListClean[i]
+            .moduleIdList
+            .contains(state.groupState.groupCurrent.moduleId)) {
+          workerListClean.removeAt(i);
+        }
+      }
+    }
     for (var group in state.groupState.groupList) {
       if (group.workerIdList != null && group.workerIdList.isNotEmpty) {
         for (var worker in group.workerIdList) {
@@ -42,7 +52,9 @@ class ViewModel extends BaseModel<AppState> {
         onSetWorkerTheGroup: (String id, bool addOrRemove) {
           print('id:$id addOrRemove:$addOrRemove');
           dispatch(SetWorkerTheGroupSyncGroupAction(
-              id: id, addOrRemove: addOrRemove));
+            id: id,
+            addOrRemove: addOrRemove,
+          ));
           // dispatch(NavigateAction.pop());
         },
       );
