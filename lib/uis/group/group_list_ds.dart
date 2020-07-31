@@ -118,46 +118,8 @@ class _GroupListDSState extends State<GroupListDS> {
                     title: Text('${group.codigo}'),
                     subtitle: Text(
                         '\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${userIdData(group.userId)}\nplataformId: ${plataformIdCodigo(group.plataformId)}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userDateTimeOnBoard)}\nmoduleId: ${moduleIdCodigo(group.moduleId)}\nworkerIdList: ${workerIdListData(group.workerIdList)} '),
-                    trailing: PopupMenuButton<int>(
-                      icon: Icon(Icons.link),
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                          value: 1,
-                          child: Text("urlPhoto"),
-                        ),
-                        PopupMenuItem(
-                          value: 2,
-                          child: Text("urlFolder"),
-                        ),
-                      ],
-                      onSelected: (value) {
-                        if (value == 1) {
-                          setState(() {
-                            _launched = _launchInBrowser(group.urlPhoto);
-                          });
-                        } else {
-                          setState(() {
-                            _launched = _launchInBrowser(group.urlFolder);
-                          });
-                        }
-                      },
-                    ),
-
-                    // trailing: IconButton(
+                    // trailing: PopupMenuButton<int>(
                     //   icon: Icon(Icons.link),
-                    //   tooltip: group.urlPhoto,
-                    //   onPressed: () => setState(() {
-                    //     _launched = _launchInBrowser(group.urlPhoto);
-                    //   }),
-                    //   // onPressed: () async {
-                    //   //   if (group?.urlPhoto != null) {
-                    //   //     if (await canLaunch(group.urlPhoto)) {
-                    //   //       await launch(group.urlPhoto);
-                    //   //     }
-                    //   //   }
-                    //   // },
-                    // ),
-                    // leading: PopupMenuButton<int>(
                     //   itemBuilder: (context) => [
                     //     PopupMenuItem(
                     //       value: 1,
@@ -170,39 +132,23 @@ class _GroupListDSState extends State<GroupListDS> {
                     //   ],
                     //   onSelected: (value) {
                     //     if (value == 1) {
-                    //       Future<void> a() async {
-                    //         if (group?.urlPhoto != null) {
-                    //           if (await canLaunch(group.urlPhoto)) {
-                    //             await launch(group.urlPhoto);
-                    //           }
-                    //         }
-                    //       }
-
-                    //       a();
+                    //       setState(() {
+                    //         _launched = _launchInBrowser(group.urlPhoto);
+                    //       });
                     //     } else {
-                    //       Future<void> b() async {
-                    //         if (group?.urlFolder != null) {
-                    //           if (await canLaunch(group.urlFolder)) {
-                    //             await launch(group.urlFolder);
-                    //           }
-                    //         }
-                    //       }
-
-                    //       b();
+                    //       setState(() {
+                    //         _launched = _launchInBrowser(group.urlFolder);
+                    //       });
                     //     }
                     //   },
                     // ),
+
                     // trailing: IconButton(
                     //   icon: Icon(Icons.link),
-                    //   tooltip: group.urlFolder,
-                    //   onPressed: () async {
-                    //     if (group?.urlFolder != null) {
-                    //       if (await canLaunch(group.urlFolder)) {
-                    //         await launch(group.urlFolder);
-                    //       }
-                    //     }
-                    //   },
-                    // ),
+                    //   tooltip: group.urlPhoto,
+                    //   onPressed: () => setState(() {
+                    //     _launched = _launchInBrowser(group.urlPhoto);
+                    //   }),
                     onTap: () {
                       widget.onEditGroupCurrent(group.id);
                     },

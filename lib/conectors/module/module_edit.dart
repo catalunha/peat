@@ -38,11 +38,10 @@ class ViewModel extends BaseModel<AppState> {
         onCreate: (String codigo, String description, String urlFolder) {
           print('ModuleEdit.onCreate');
           print('$codigo | $description');
-          dispatch(SetDocModuleCurrentAsyncModuleAction(
+          dispatch(CreateDocModuleCurrentAsyncModuleAction(
             codigo: codigo,
             description: description,
             urlFolder: urlFolder,
-            arquived: false,
           ));
           dispatch(NavigateAction.pop());
         },
@@ -50,7 +49,7 @@ class ViewModel extends BaseModel<AppState> {
             bool arquived) {
           print('ModuleEdit.onUpdate');
           print('$codigo | $description | $arquived');
-          dispatch(SetDocModuleCurrentAsyncModuleAction(
+          dispatch(UpdateDocModuleCurrentAsyncModuleAction(
             codigo: codigo,
             description: description,
             urlFolder: urlFolder,

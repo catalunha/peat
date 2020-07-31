@@ -13,6 +13,7 @@ class ModuleModel extends FirestoreModel {
     this.codigo,
     this.description,
     this.urlFolder,
+    this.arquived,
   }) : super(id);
   @override
   ModuleModel fromMap(Map<String, dynamic> map) {
@@ -33,8 +34,12 @@ class ModuleModel extends FirestoreModel {
     return data;
   }
 
-  @override
-  String toString() {
-    return this.toMap().toString();
+  ModuleModel copy() {
+    return ModuleModel(
+      this.id,
+      description: this.description,
+      urlFolder: this.urlFolder,
+      arquived: this.arquived,
+    );
   }
 }

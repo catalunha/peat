@@ -1,3 +1,4 @@
+import 'package:async_redux/async_redux.dart';
 import 'package:peat/states/group_state.dart';
 import 'package:peat/states/logged_state.dart';
 import 'package:peat/states/module_state.dart';
@@ -6,6 +7,7 @@ import 'package:peat/states/user_state.dart';
 import 'package:peat/states/worker_state.dart';
 
 class AppState {
+  final Wait wait;
   final LoggedState loggedState;
   final UserState userState;
   final PlataformState plataformState;
@@ -14,6 +16,7 @@ class AppState {
   final GroupState groupState;
 
   AppState({
+    this.wait,
     this.loggedState,
     this.userState,
     this.plataformState,
@@ -23,6 +26,7 @@ class AppState {
   });
 
   static AppState initialState() => AppState(
+        wait: Wait(),
         loggedState: LoggedState.initialState(),
         userState: UserState.initialState(),
         plataformState: PlataformState.initialState(),
@@ -31,6 +35,7 @@ class AppState {
         groupState: GroupState.initialState(),
       );
   AppState copyWith({
+    Wait wait,
     LoggedState loggedState,
     UserState userState,
     PlataformState plataformState,
@@ -39,6 +44,7 @@ class AppState {
     GroupState groupState,
   }) =>
       AppState(
+        wait: wait ?? this.wait,
         loggedState: loggedState ?? this.loggedState,
         userState: userState ?? this.userState,
         plataformState: plataformState ?? this.plataformState,
@@ -48,6 +54,7 @@ class AppState {
       );
   @override
   int get hashCode =>
+      wait.hashCode ^
       workerState.hashCode ^
       loggedState.hashCode ^
       userState.hashCode ^
@@ -59,6 +66,7 @@ class AppState {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is AppState &&
+          wait == other.wait &&
           groupState == other.groupState &&
           workerState == other.workerState &&
           loggedState == other.loggedState &&

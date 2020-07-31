@@ -13,7 +13,7 @@ class ViewModel extends BaseModel<AppState> {
   }) : super(equals: []);
   @override
   ViewModel fromStore() => ViewModel.build(logout: () {
-        return dispatch(LogoutLoggedAction());
+        return dispatch(LogoutAsyncLoggedAction());
       });
 }
 

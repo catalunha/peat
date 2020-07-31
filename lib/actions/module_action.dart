@@ -44,13 +44,47 @@ class GetDocsModuleListAsyncModuleAction extends ReduxAction<AppState> {
   }
 }
 
-class SetDocModuleCurrentAsyncModuleAction extends ReduxAction<AppState> {
+class CreateDocModuleCurrentAsyncModuleAction extends ReduxAction<AppState> {
+  final String codigo;
+  final String description;
+  final String urlFolder;
+
+  CreateDocModuleCurrentAsyncModuleAction({
+    this.codigo,
+    this.description,
+    this.urlFolder,
+  });
+  @override
+  Future<AppState> reduce() async {
+    print('SetDocModuleCurrentAsyncModuleAction...');
+    Firestore firestore = Firestore.instance;
+    ModuleModel moduleModel = state.moduleState.moduleCurrent.copy();
+    moduleModel.codigo = codigo;
+    moduleModel.description = description;
+    moduleModel.urlFolder = urlFolder;
+    moduleModel.arquived = false;
+    await firestore
+        .collection(ModuleModel.collection)
+        .document(moduleModel.id)
+        .setData(moduleModel.toMap(), merge: true);
+    return state.copyWith(
+      moduleState: state.moduleState.copyWith(
+        moduleCurrent: moduleModel,
+      ),
+    );
+  }
+
+  @override
+  void after() => dispatch(GetDocsModuleListAsyncModuleAction());
+}
+
+class UpdateDocModuleCurrentAsyncModuleAction extends ReduxAction<AppState> {
   final String codigo;
   final String description;
   final String urlFolder;
   final bool arquived;
 
-  SetDocModuleCurrentAsyncModuleAction({
+  UpdateDocModuleCurrentAsyncModuleAction({
     this.codigo,
     this.description,
     this.urlFolder,
@@ -60,7 +94,7 @@ class SetDocModuleCurrentAsyncModuleAction extends ReduxAction<AppState> {
   Future<AppState> reduce() async {
     print('SetDocModuleCurrentAsyncModuleAction...');
     Firestore firestore = Firestore.instance;
-    ModuleModel moduleModel = state.moduleState.moduleCurrent;
+    ModuleModel moduleModel = state.moduleState.moduleCurrent.copy();
     moduleModel.codigo = codigo;
     moduleModel.description = description;
     moduleModel.urlFolder = urlFolder;
@@ -68,7 +102,7 @@ class SetDocModuleCurrentAsyncModuleAction extends ReduxAction<AppState> {
     await firestore
         .collection(ModuleModel.collection)
         .document(moduleModel.id)
-        .setData(moduleModel.toMap(), merge: true);
+        .updateData(moduleModel.toMap());
     return state.copyWith(
       moduleState: state.moduleState.copyWith(
         moduleCurrent: moduleModel,

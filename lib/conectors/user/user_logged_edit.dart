@@ -13,7 +13,7 @@ class ViewModel extends BaseModel<AppState> {
   String plataformOnBoard;
   dynamic dateTimeOnBoard;
 
-  Function(String, String, dynamic) onUpdate;
+  Function(dynamic) onUpdate;
   ViewModel();
   ViewModel.build({
     @required this.email,
@@ -51,15 +51,9 @@ class ViewModel extends BaseModel<AppState> {
         sispat: state.loggedState.userModelLogged?.sispat ?? '',
         plataformOnBoard: _plataformOnBoard(),
         dateTimeOnBoard: state.loggedState.userModelLogged?.dateTimeOnBoard,
-        onUpdate: (String displayName, String sispat, dynamic dateTimeOnBoard) {
-          print(
-              '$displayName - $sispat - $plataformOnBoard - $dateTimeOnBoard');
+        onUpdate: (dynamic dateTimeOnBoard) {
           dispatch(
-            SetDocUserModelLoggedAction(
-              displayName: displayName,
-              sispat: sispat,
-              plataformIdOnBoard:
-                  state.loggedState.userModelLogged?.plataformIdOnBoard,
+            UpdateDocUserModelAsyncLoggedAction(
               dateTimeOnBoard: dateTimeOnBoard,
             ),
           );

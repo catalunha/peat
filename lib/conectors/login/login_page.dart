@@ -20,13 +20,13 @@ class ViewModel extends BaseModel<AppState> {
   @override
   ViewModel fromStore() => ViewModel.build(
         onLoginEmailPassword: (String email, String password) {
-          dispatch(
-              LoginEmailPasswordLoggedAction(email: email, password: password));
+          dispatch(LoginEmailPasswordAsyncLoggedAction(
+              email: email, password: password));
         },
         authenticationStatusLogged:
             state.loggedState.authenticationStatusLogged,
         onResetEmail: (String email) {
-          dispatch(ResetPasswordLoggedAction(email: email));
+          dispatch(ResetPasswordAsyncLoggedAction(email: email));
         },
       );
 }

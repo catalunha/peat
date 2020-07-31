@@ -14,6 +14,9 @@ class UserModel extends FirestoreModel {
     this.displayName,
     this.email,
     this.sispat,
+    this.plataformIdOnBoard,
+    this.dateTimeOnBoard,
+    this.arquived,
   }) : super(id);
 
   @override
@@ -49,8 +52,15 @@ class UserModel extends FirestoreModel {
     return data;
   }
 
-  @override
-  String toString() {
-    return this.toMap().toString();
+  UserModel copy() {
+    return UserModel(
+      this.id,
+      displayName: this.displayName,
+      email: this.email,
+      sispat: this.sispat,
+      plataformIdOnBoard: this.plataformIdOnBoard,
+      dateTimeOnBoard: this.dateTimeOnBoard,
+      arquived: this.arquived,
+    );
   }
 }

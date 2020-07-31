@@ -2,7 +2,6 @@ import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:peat/actions/worker_action.dart';
 import 'package:peat/states/app_state.dart';
-import 'package:peat/uis/module/module_edit_ds.dart';
 import 'package:peat/uis/worker/worker_edit_ds.dart';
 
 class ViewModel extends BaseModel<AppState> {
@@ -46,18 +45,17 @@ class ViewModel extends BaseModel<AppState> {
         isCreateOrUpdate: state.workerState.workerCurrent?.id == null,
         onCreate: (String sispat, String displayName, String activity,
             String company) {
-          dispatch(SetDocWorkerCurrentAsyncWorkerAction(
+          dispatch(CreateDocWorkerCurrentAsyncWorkerAction(
             sispat: sispat,
             displayName: displayName,
             activity: activity,
             company: company,
-            arquived: false,
           ));
           dispatch(NavigateAction.pop());
         },
         onUpdate: (String sispat, String displayName, String activity,
             String company, bool arquived) {
-          dispatch(SetDocWorkerCurrentAsyncWorkerAction(
+          dispatch(UpdateDocWorkerCurrentAsyncWorkerAction(
             sispat: sispat,
             displayName: displayName,
             activity: activity,

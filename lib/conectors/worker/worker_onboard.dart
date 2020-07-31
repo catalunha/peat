@@ -7,17 +7,25 @@ import 'package:peat/uis/worker/worker_onboard_ds.dart';
 
 class ViewModel extends BaseModel<AppState> {
   bool inBoard;
+  String workerMsg;
+  bool waiting;
   Function(String, bool) onSetWorkerListOnBoard;
   ViewModel();
   ViewModel.build({
     @required this.inBoard,
+    @required this.workerMsg,
+    @required this.waiting,
     @required this.onSetWorkerListOnBoard,
   }) : super(equals: [
           inBoard,
+          workerMsg,
+          waiting,
         ]);
   @override
   BaseModel fromStore() => ViewModel.build(
         inBoard: true,
+        waiting: state.wait.isWaiting,
+        workerMsg: state.workerState.workerMsg.trim(),
         onSetWorkerListOnBoard: (String workerListOnBoard, bool inBoard) {
           print(
               '$inBoard onSetWorkerListOnBoard: ${workerListOnBoard.trim().split('\n')}');
@@ -27,7 +35,8 @@ class ViewModel extends BaseModel<AppState> {
               sispatList: workerListOnBoard.trim().split('\n'),
             ),
           );
-          dispatch(NavigateAction.pop());
+
+          dispatch(SetWorkerMsgSyncWorkerAction(null));
         },
       );
 }
@@ -40,6 +49,8 @@ class WorkerOnBoard extends StatelessWidget {
       model: ViewModel(),
       builder: (BuildContext context, ViewModel viewModel) => WorkerOnBoardDS(
         inBoard: viewModel.inBoard,
+        waiting: viewModel.waiting,
+        workerMsg: viewModel.workerMsg,
         onSetWorkerListOnBoard: viewModel.onSetWorkerListOnBoard,
       ),
     );

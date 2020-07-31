@@ -12,10 +12,13 @@ class WorkerModel extends FirestoreModel {
 
   WorkerModel(
     String id, {
+    this.sispat,
     this.displayName,
     this.activity,
     this.company,
-    this.sispat,
+    this.plataformIdOnBoard,
+    this.moduleIdList,
+    this.arquived,
   }) : super(id);
 
   @override
@@ -45,8 +48,16 @@ class WorkerModel extends FirestoreModel {
     return data;
   }
 
-  // @override
-  // String toString() {
-  //   return this.toMap().toString();
-  // }
+  WorkerModel copy() {
+    return WorkerModel(
+      this.id,
+      sispat: this.sispat,
+      displayName: this.displayName,
+      activity: this.activity,
+      company: this.company,
+      plataformIdOnBoard: this.plataformIdOnBoard,
+      moduleIdList: this.moduleIdList,
+      arquived: this.arquived,
+    );
+  }
 }

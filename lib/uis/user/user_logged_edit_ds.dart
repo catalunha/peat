@@ -9,7 +9,7 @@ class UserLoggedEditDS extends StatefulWidget {
   final String plataformOnBoard;
   final dynamic dateTimeOnBoard;
 
-  final Function(String, String, dynamic) onUpdate;
+  final Function(dynamic) onUpdate;
 
   const UserLoggedEditDS({
     this.email,
@@ -40,7 +40,7 @@ class _UserLoggedEditDSState extends State<UserLoggedEditDS> {
   void validateData() {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      widget.onUpdate(displayName, sispat, selectedDate);
+      widget.onUpdate(selectedDate);
     } else {
       setState(() {});
     }
@@ -97,44 +97,24 @@ class _UserLoggedEditDSState extends State<UserLoggedEditDS> {
           ),
           ListTile(
             title: Text('${DateFormat('yyyy-MM-dd').format(selectedDate)}'),
-            subtitle: Text('Embarcado em'),
+            subtitle: Text('Data do embarque na plataforma'),
             trailing: Icon(Icons.date_range),
             onTap: () {
               _selectDate(context);
             },
           ),
-
-          Padding(
-            padding: const EdgeInsets.only(left: 14.0),
-            child: TextFormField(
-              initialValue: widget.displayName,
-              decoration: InputDecoration(
-                labelText: 'Nome completo:',
-              ),
-              onSaved: (value) => displayName = value,
-            ),
+          ListTile(
+            title: Text('${widget.displayName}'),
+            subtitle: Text('Nome completo'),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 14.0),
-            child: TextFormField(
-              initialValue: widget.sispat,
-              decoration: InputDecoration(
-                labelText: 'SISPAT:',
-              ),
-              onSaved: (value) => sispat = value,
-            ),
+          ListTile(
+            title: Text('${widget.sispat}'),
+            subtitle: Text('SISPAT'),
           ),
           ListTile(
             title: Text('${widget.email}'),
             subtitle: Text('Email'),
           ),
-          // ListTile(
-          //   title: Center(child: Text('Atualizar')),
-          //   onTap: () {
-          //     validateData();
-          //     Navigator.pop(context);
-          //   },
-          // ),
         ],
       ),
     );

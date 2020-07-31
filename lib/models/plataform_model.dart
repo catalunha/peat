@@ -29,8 +29,12 @@ class PlataformModel extends FirestoreModel {
     return data;
   }
 
-  @override
-  String toString() {
-    return this.toMap().toString();
+  PlataformModel copy() {
+    return PlataformModel(
+      this.id,
+      codigo: this.codigo,
+      description: this.description,
+      arquived: this.arquived,
+    );
   }
 }

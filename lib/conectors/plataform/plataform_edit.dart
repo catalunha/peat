@@ -1,7 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:peat/actions/plataform_action.dart';
-import 'package:peat/routes.dart';
 import 'package:peat/states/app_state.dart';
 import 'package:peat/uis/plataform/plataform_edit_ds.dart';
 
@@ -28,24 +27,23 @@ class ViewModel extends BaseModel<AppState> {
         ]);
   @override
   ViewModel fromStore() => ViewModel.build(
-        isCreateOrUpdate: state.plataformState.plataformCurrent.id == null,
         codigo: state.plataformState.plataformCurrent.codigo,
         description: state.plataformState.plataformCurrent.description,
         arquived: state.plataformState.plataformCurrent?.arquived ?? false,
+        isCreateOrUpdate: state.plataformState.plataformCurrent.id == null,
         onCreate: (String codigo, String description) {
           print('PlataformEdit.onCreate');
           print('$codigo | $description');
-          dispatch(SetDocPlataformCurrentAsyncPlataformAction(
+          dispatch(CreateDocPlataformCurrentAsyncPlataformAction(
             codigo: codigo,
             description: description,
-            arquived: false,
           ));
           dispatch(NavigateAction.pop());
         },
         onUpdate: (String codigo, String description, bool arquived) {
           print('PlataformEdit.onUpdate');
           print('$codigo | $description | $arquived');
-          dispatch(SetDocPlataformCurrentAsyncPlataformAction(
+          dispatch(UpdateDocPlataformCurrentAsyncPlataformAction(
             codigo: codigo,
             description: description,
             arquived: arquived,

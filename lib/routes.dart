@@ -1,3 +1,4 @@
+import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:peat/conectors/group/group_edit.dart';
 import 'package:peat/conectors/group/group_list.dart';
@@ -11,6 +12,7 @@ import 'package:peat/conectors/welcome.dart';
 import 'package:peat/conectors/worker/worker_edit.dart';
 import 'package:peat/conectors/worker/worker_list.dart';
 import 'package:peat/conectors/worker/worker_onboard.dart';
+import 'package:peat/states/app_state.dart';
 
 class Routes {
   static final home = '/';
@@ -39,7 +41,10 @@ class Routes {
     moduleEdit: (BuildContext context) => ModuleEdit(),
     workerList: (BuildContext context) => WorkerList(),
     workerEdit: (BuildContext context) => WorkerEdit(),
-    workerOnBoard: (BuildContext context) => WorkerOnBoard(),
+    // workerOnBoard: (BuildContext context) => WorkerOnBoard(),
+    workerOnBoard: (BuildContext context) => UserExceptionDialog<AppState>(
+          child: WorkerOnBoard(),
+        ),
     groupList: (BuildContext context) => GroupList(),
     groupEdit: (BuildContext context) => GroupEdit(),
   };

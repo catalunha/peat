@@ -11,6 +11,7 @@ class SetPlataformCurrentSyncPlataformAction extends ReduxAction<AppState> {
 
   @override
   AppState reduce() {
+    print('SetPlataformCurrentSyncPlataformAction...');
     PlataformModel plataformModel = id == null
         ? PlataformModel(null)
         : state.plataformState.plataformList
@@ -27,7 +28,7 @@ class SetPlataformCurrentSyncPlataformAction extends ReduxAction<AppState> {
 class GetDocsPlataformListAsyncPlataformAction extends ReduxAction<AppState> {
   @override
   Future<AppState> reduce() async {
-    print('GetListPlatatormAction...');
+    print('GetDocsPlataformListAsyncPlataformAction...');
     Firestore firestore = Firestore.instance;
 
     final collRef = firestore.collection(PlataformModel.collection);
@@ -45,12 +46,45 @@ class GetDocsPlataformListAsyncPlataformAction extends ReduxAction<AppState> {
   }
 }
 
-class SetDocPlataformCurrentAsyncPlataformAction extends ReduxAction<AppState> {
+class CreateDocPlataformCurrentAsyncPlataformAction
+    extends ReduxAction<AppState> {
+  final String codigo;
+  final String description;
+
+  CreateDocPlataformCurrentAsyncPlataformAction({
+    this.codigo,
+    this.description,
+  });
+  @override
+  Future<AppState> reduce() async {
+    print('SetDocPlataformCurrentAsyncPlataformAction...');
+    Firestore firestore = Firestore.instance;
+    PlataformModel plataformModel =
+        state.plataformState.plataformCurrent.copy();
+    plataformModel.codigo = codigo;
+    plataformModel.description = description;
+    await firestore
+        .collection(PlataformModel.collection)
+        .document(plataformModel.id)
+        .setData(plataformModel.toMap(), merge: true);
+    return state.copyWith(
+      plataformState: state.plataformState.copyWith(
+        plataformCurrent: plataformModel,
+      ),
+    );
+  }
+
+  @override
+  void after() => dispatch(GetDocsPlataformListAsyncPlataformAction());
+}
+
+class UpdateDocPlataformCurrentAsyncPlataformAction
+    extends ReduxAction<AppState> {
   final String codigo;
   final String description;
   final bool arquived;
 
-  SetDocPlataformCurrentAsyncPlataformAction({
+  UpdateDocPlataformCurrentAsyncPlataformAction({
     this.codigo,
     this.description,
     this.arquived,
@@ -59,14 +93,15 @@ class SetDocPlataformCurrentAsyncPlataformAction extends ReduxAction<AppState> {
   Future<AppState> reduce() async {
     print('SetDocPlataformCurrentAsyncPlataformAction...');
     Firestore firestore = Firestore.instance;
-    PlataformModel plataformModel = state.plataformState.plataformCurrent;
+    PlataformModel plataformModel =
+        state.plataformState.plataformCurrent.copy();
     plataformModel.codigo = codigo;
     plataformModel.description = description;
     plataformModel.arquived = arquived;
     await firestore
         .collection(PlataformModel.collection)
         .document(plataformModel.id)
-        .setData(plataformModel.toMap(), merge: true);
+        .updateData(plataformModel.toMap());
     return state.copyWith(
       plataformState: state.plataformState.copyWith(
         plataformCurrent: plataformModel,

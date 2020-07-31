@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:async_redux/async_redux.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:peat/models/worker_model.dart';
@@ -11,6 +13,7 @@ class SetWorkerCurrentSyncWorkerAction extends ReduxAction<AppState> {
 
   @override
   AppState reduce() {
+    print('SetWorkerCurrentSyncWorkerAction...');
     WorkerModel workerModel = id == null
         ? WorkerModel(null)
         : state.workerState.workerList
@@ -48,19 +51,17 @@ class GetDocsWorkerListAsyncWorkerAction extends ReduxAction<AppState> {
   }
 }
 
-class SetDocWorkerCurrentAsyncWorkerAction extends ReduxAction<AppState> {
+class CreateDocWorkerCurrentAsyncWorkerAction extends ReduxAction<AppState> {
   final String sispat;
   final String displayName;
   final String activity;
   final String company;
-  final bool arquived;
 
-  SetDocWorkerCurrentAsyncWorkerAction({
+  CreateDocWorkerCurrentAsyncWorkerAction({
     this.sispat,
     this.displayName,
     this.activity,
     this.company,
-    this.arquived,
   });
   @override
   Future<AppState> reduce() async {
@@ -72,7 +73,7 @@ class SetDocWorkerCurrentAsyncWorkerAction extends ReduxAction<AppState> {
     workerModel.displayName = displayName;
     workerModel.activity = activity;
     workerModel.company = company;
-    workerModel.arquived = arquived;
+    workerModel.arquived = false;
 
     await firestore
         .collection(WorkerModel.collection)
@@ -87,6 +88,65 @@ class SetDocWorkerCurrentAsyncWorkerAction extends ReduxAction<AppState> {
 
   @override
   void after() => dispatch(GetDocsWorkerListAsyncWorkerAction());
+}
+
+class UpdateDocWorkerCurrentAsyncWorkerAction extends ReduxAction<AppState> {
+  final String sispat;
+  final String displayName;
+  final String activity;
+  final String company;
+  final bool arquived;
+
+  UpdateDocWorkerCurrentAsyncWorkerAction({
+    this.sispat,
+    this.displayName,
+    this.activity,
+    this.company,
+    this.arquived,
+  });
+  @override
+  Future<AppState> reduce() async {
+    print('UpdateDocWorkerCurrentAsyncWorkerAction...');
+    Firestore firestore = Firestore.instance;
+
+    WorkerModel workerModel = state.workerState.workerCurrent;
+    workerModel.sispat = sispat;
+    workerModel.displayName = displayName;
+    workerModel.activity = activity;
+    workerModel.company = company;
+    workerModel.arquived = arquived;
+
+    await firestore
+        .collection(WorkerModel.collection)
+        .document(workerModel.id)
+        .updateData(workerModel.toMap());
+    return state.copyWith(
+      workerState: state.workerState.copyWith(
+        workerCurrent: workerModel,
+      ),
+    );
+  }
+
+  @override
+  void after() => dispatch(GetDocsWorkerListAsyncWorkerAction());
+}
+
+class SetWorkerMsgSyncWorkerAction extends ReduxAction<AppState> {
+  final String msg;
+
+  SetWorkerMsgSyncWorkerAction(this.msg);
+  @override
+  AppState reduce() {
+    String _msg = '';
+    if (msg != null) {
+      _msg = state.workerState.workerMsg + '\n' + msg;
+    }
+    return state.copyWith(
+      workerState: state.workerState.copyWith(
+        workerMsg: _msg,
+      ),
+    );
+  }
 }
 
 class BatchedDocsWorkerListOnBoardAsyncWorkerAction
@@ -105,7 +165,7 @@ class BatchedDocsWorkerListOnBoardAsyncWorkerAction
 
     var batch = firestore.batch();
 
-    for (var sispat in sispatList) {
+    for (String sispat in sispatList) {
       var a = await firestore
           .collection(WorkerModel.collection)
           .where('sispat', isEqualTo: sispat)
@@ -123,6 +183,8 @@ class BatchedDocsWorkerListOnBoardAsyncWorkerAction
                 : null
           });
         }
+      } else {
+        dispatch(SetWorkerMsgSyncWorkerAction(sispat));
       }
     }
 
@@ -130,6 +192,11 @@ class BatchedDocsWorkerListOnBoardAsyncWorkerAction
 
     return null;
   }
+
+  @override
+  void before() => dispatch(WaitAction.add(this));
+  @override
+  void after() => dispatch(WaitAction.remove(this));
 }
 
 class BatchedDocsWorkerListInModuleAsyncWorkerAction
