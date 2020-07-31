@@ -22,7 +22,7 @@ class ViewModel extends BaseModel<AppState> {
           waiting,
         ]);
   @override
-  BaseModel fromStore() => ViewModel.build(
+  ViewModel fromStore() => ViewModel.build(
         inBoard: true,
         waiting: state.wait.isWaiting,
         workerMsg: state.workerState.workerMsg.trim(),

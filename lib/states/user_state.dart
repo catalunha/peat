@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:peat/models/user_model.dart';
+import 'package:peat/states/types_states.dart';
 
 @immutable
 class UserState {
@@ -7,11 +8,11 @@ class UserState {
   final List<UserModel> userList;
   // final List<UserModel> filteredUserModel;
   // final List<UserModel> selectedUserModel;
-  // final UserFilter usersFilter;
+  final UserFilter userFilter;
   UserState({
     this.userList,
     // this.currentUserModel,
-    // this.usersFilter,
+    this.userFilter,
     // this.filteredUserModel,
     // this.selectedUserModel,
   });
@@ -22,7 +23,7 @@ class UserState {
       // currentUserModel: null,
       // filteredUserModel: [],
       // selectedUserModel: [],
-      // usersFilter: UserFilter.all,
+      userFilter: UserFilter.displayName,
     );
   }
   UserState copyWith({
@@ -30,12 +31,12 @@ class UserState {
     // UserModel currentUserModel,
     // List<UserModel> filteredUserModel,
     // List<UserModel> selectedUserModel,
-    // UserFilter usersFilter,
+    UserFilter userFilter,
   }) {
     return UserState(
       userList: userList ?? this.userList,
       // currentUserModel: currentUserModel ?? this.currentUserModel,
-      // usersFilter: usersFilter ?? this.usersFilter,
+      userFilter: userFilter ?? this.userFilter,
       // filteredUserModel: filteredUserModel ?? this.filteredUserModel,
       // selectedUserModel: selectedUserModel ?? this.selectedUserModel,
     );
@@ -44,7 +45,7 @@ class UserState {
   @override
   int get hashCode =>
       // currentUserModel.hashCode ^
-      // usersFilter.hashCode ^
+      userFilter.hashCode ^
       // filteredUserModel.hashCode ^
       // selectedUserModel.hashCode ^
       userList.hashCode;
@@ -54,7 +55,7 @@ class UserState {
       identical(this, other) ||
       other is UserState &&
           // currentUserModel == other.currentUserModel &&
-          // usersFilter == other.usersFilter &&
+          userFilter == other.userFilter &&
           // filteredUserModel == other.filteredUserModel &&
           // selectedUserModel == other.selectedUserModel;
           userList == other.userList &&

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peat/conectors/user/user_filtering.dart';
 import 'package:peat/models/plataform_model.dart';
 import 'package:peat/models/user_model.dart';
 
@@ -26,6 +27,7 @@ class UserListDS extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Lista com ${userList.length} analistas'),
+        actions: [UserFiltering()],
       ),
       body: ListView.builder(
         itemCount: userList.length,
