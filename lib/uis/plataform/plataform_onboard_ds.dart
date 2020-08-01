@@ -23,7 +23,8 @@ class PlataformOnBoardDS extends StatelessWidget {
             final plataform = plataformList[index];
             return ListTile(
               title: Text('${plataform.codigo}'),
-              subtitle: Text('${plataform.description}'),
+              subtitle: Text(
+                  '${plataform.description}\n${plataform.id.substring(0, 5)}'),
               onTap: () {
                 onSetUserInPlataform(plataform.id);
               },

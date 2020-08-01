@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peat/conectors/worker/worker_ordering.dart';
 import 'package:peat/models/module_model.dart';
 import 'package:peat/models/plataform_model.dart';
 import 'package:peat/models/worker_model.dart';
@@ -46,6 +47,7 @@ class WorkerListDS extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Lista com ${workerList.length} trabalhadores'),
+        actions: [WorkerOrdering()],
       ),
       body: ListView.builder(
         itemCount: workerList.length,

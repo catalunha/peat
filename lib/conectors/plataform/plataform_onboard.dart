@@ -16,9 +16,16 @@ class ViewModel extends BaseModel<AppState> {
   }) : super(equals: [
           plataformList,
         ]);
+  _plataformList(List<PlataformModel> plataformList) {
+    List<PlataformModel> _plataformList = [];
+    _plataformList.addAll(plataformList);
+    _plataformList.sort((a, b) => a.codigo.compareTo(b.codigo));
+    return _plataformList;
+  }
+
   @override
   ViewModel fromStore() => ViewModel.build(
-        plataformList: state.plataformState.plataformList,
+        plataformList: _plataformList(state.plataformState.plataformList),
         onSetUserInPlataform: (String id) {
           print('id:$id');
           dispatch(SetUserInPlataformSyncLoggedAction(id: id));

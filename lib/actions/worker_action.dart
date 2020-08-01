@@ -4,6 +4,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:peat/models/worker_model.dart';
 import 'package:peat/states/app_state.dart';
+import 'package:peat/states/types_states.dart';
 
 // +++ Actions Sync
 class SetWorkerCurrentSyncWorkerAction extends ReduxAction<AppState> {
@@ -21,6 +22,32 @@ class SetWorkerCurrentSyncWorkerAction extends ReduxAction<AppState> {
     return state.copyWith(
       workerState: state.workerState.copyWith(
         workerCurrent: workerModel,
+      ),
+    );
+  }
+}
+
+class SetWorkerOrderSyncUserAction extends ReduxAction<AppState> {
+  final WorkerOrder workerOrder;
+
+  SetWorkerOrderSyncUserAction(this.workerOrder);
+  @override
+  AppState reduce() {
+    List<WorkerModel> _workerList = [];
+    _workerList.addAll(state.workerState.workerList);
+    if (workerOrder == WorkerOrder.sispat) {
+      _workerList.sort((a, b) => a.sispat.compareTo(b.sispat));
+    } else if (workerOrder == WorkerOrder.displayName) {
+      _workerList.sort((a, b) => a.displayName.compareTo(b.displayName));
+    } else if (workerOrder == WorkerOrder.company) {
+      _workerList.sort((a, b) => a.company.compareTo(b.company));
+    } else if (workerOrder == WorkerOrder.activity) {
+      _workerList.sort((a, b) => a.activity.compareTo(b.activity));
+    }
+    return state.copyWith(
+      workerState: state.workerState.copyWith(
+        workerOrder: workerOrder,
+        workerList: _workerList,
       ),
     );
   }

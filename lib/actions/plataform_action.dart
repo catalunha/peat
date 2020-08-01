@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:peat/models/plataform_model.dart';
 import 'package:peat/states/app_state.dart';
+import 'package:peat/states/types_states.dart';
 
 // +++ Actions Sync
 class SetPlataformCurrentSyncPlataformAction extends ReduxAction<AppState> {
@@ -19,6 +20,26 @@ class SetPlataformCurrentSyncPlataformAction extends ReduxAction<AppState> {
     return state.copyWith(
       plataformState: state.plataformState.copyWith(
         plataformCurrent: plataformModel,
+      ),
+    );
+  }
+}
+
+class SetPlataformOrderSyncUserAction extends ReduxAction<AppState> {
+  final PlataformOrder plataformOrder;
+
+  SetPlataformOrderSyncUserAction(this.plataformOrder);
+  @override
+  AppState reduce() {
+    List<PlataformModel> _plataformList = [];
+    _plataformList.addAll(state.plataformState.plataformList);
+    if (plataformOrder == PlataformOrder.codigo) {
+      _plataformList.sort((a, b) => a.codigo.compareTo(b.codigo));
+    }
+    return state.copyWith(
+      plataformState: state.plataformState.copyWith(
+        plataformOrder: plataformOrder,
+        plataformList: _plataformList,
       ),
     );
   }

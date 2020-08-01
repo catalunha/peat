@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peat/conectors/plataform/plataform_ordering.dart';
 import 'package:peat/models/plataform_model.dart';
 
 class PlataformListDS extends StatelessWidget {
@@ -16,6 +17,7 @@ class PlataformListDS extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Lista com ${plataformList.length} Plataformas'),
+        actions: [PlataformOrdering()],
       ),
       body: ListView.builder(
         itemCount: plataformList.length,

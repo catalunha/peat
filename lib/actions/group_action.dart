@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:peat/models/group_model.dart';
 import 'package:peat/states/app_state.dart';
+import 'package:peat/states/types_states.dart';
 
 // +++ Actions Sync
 class SetGroupCurrentSyncGroupAction extends ReduxAction<AppState> {
@@ -18,6 +19,34 @@ class SetGroupCurrentSyncGroupAction extends ReduxAction<AppState> {
     return state.copyWith(
       groupState: state.groupState.copyWith(
         groupCurrent: groupModel,
+      ),
+    );
+  }
+}
+
+class SetGroupOrderSyncUserAction extends ReduxAction<AppState> {
+  final GroupOrder groupOrder;
+
+  SetGroupOrderSyncUserAction(this.groupOrder);
+  @override
+  AppState reduce() {
+    List<GroupModel> _groupList = [];
+    _groupList.addAll(state.groupState.groupList);
+    if (groupOrder == GroupOrder.codigo) {
+      _groupList.sort((a, b) => a.codigo.compareTo(b.codigo));
+    } else if (groupOrder == GroupOrder.number) {
+      _groupList.sort((a, b) => a.number.compareTo(b.number));
+    } else if (groupOrder == GroupOrder.startCourse) {
+      _groupList.sort((a, b) => a.startCourse.compareTo(b.startCourse));
+    } else if (groupOrder == GroupOrder.localCourse) {
+      _groupList.sort((a, b) => a.localCourse.compareTo(b.localCourse));
+    } else if (groupOrder == GroupOrder.moduleId) {
+      _groupList.sort((a, b) => a.moduleId.compareTo(b.moduleId));
+    }
+    return state.copyWith(
+      groupState: state.groupState.copyWith(
+        groupOrder: groupOrder,
+        groupList: _groupList,
       ),
     );
   }

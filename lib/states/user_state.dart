@@ -4,15 +4,15 @@ import 'package:peat/states/types_states.dart';
 
 @immutable
 class UserState {
-  // final UserModel currentUserModel;
   final List<UserModel> userList;
+  final UserOrder userOrder;
+  // final UserModel currentUserModel;
   // final List<UserModel> filteredUserModel;
   // final List<UserModel> selectedUserModel;
-  final UserFilter userFilter;
   UserState({
     this.userList,
     // this.currentUserModel,
-    this.userFilter,
+    this.userOrder,
     // this.filteredUserModel,
     // this.selectedUserModel,
   });
@@ -23,7 +23,7 @@ class UserState {
       // currentUserModel: null,
       // filteredUserModel: [],
       // selectedUserModel: [],
-      userFilter: UserFilter.displayName,
+      userOrder: UserOrder.displayName,
     );
   }
   UserState copyWith({
@@ -31,12 +31,12 @@ class UserState {
     // UserModel currentUserModel,
     // List<UserModel> filteredUserModel,
     // List<UserModel> selectedUserModel,
-    UserFilter userFilter,
+    UserOrder userOrder,
   }) {
     return UserState(
       userList: userList ?? this.userList,
       // currentUserModel: currentUserModel ?? this.currentUserModel,
-      userFilter: userFilter ?? this.userFilter,
+      userOrder: userOrder ?? this.userOrder,
       // filteredUserModel: filteredUserModel ?? this.filteredUserModel,
       // selectedUserModel: selectedUserModel ?? this.selectedUserModel,
     );
@@ -45,7 +45,7 @@ class UserState {
   @override
   int get hashCode =>
       // currentUserModel.hashCode ^
-      userFilter.hashCode ^
+      userOrder.hashCode ^
       // filteredUserModel.hashCode ^
       // selectedUserModel.hashCode ^
       userList.hashCode;
@@ -55,7 +55,7 @@ class UserState {
       identical(this, other) ||
       other is UserState &&
           // currentUserModel == other.currentUserModel &&
-          userFilter == other.userFilter &&
+          userOrder == other.userOrder &&
           // filteredUserModel == other.filteredUserModel &&
           // selectedUserModel == other.selectedUserModel;
           userList == other.userList &&
@@ -63,6 +63,6 @@ class UserState {
 
   // @override
   // String toString() {
-  //   return 'UsersState{UserModel:$currentUserModel,allUserModel:$allUserModel,UsersFilter:$UserFilter,filteredUserModel:$filteredUserModel}';
+  //   return 'UsersState{UserModel:$currentUserModel,allUserModel:$allUserModel,UsersFilter:$UserOrder,filteredUserModel:$filteredUserModel}';
   // }
 }

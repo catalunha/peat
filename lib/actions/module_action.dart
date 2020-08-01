@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:peat/models/module_model.dart';
 import 'package:peat/states/app_state.dart';
+import 'package:peat/states/types_states.dart';
 
 // +++ Actions Sync
 class SetModuleCurrentSyncModuleAction extends ReduxAction<AppState> {
@@ -18,6 +19,26 @@ class SetModuleCurrentSyncModuleAction extends ReduxAction<AppState> {
     return state.copyWith(
       moduleState: state.moduleState.copyWith(
         moduleCurrent: moduleModel,
+      ),
+    );
+  }
+}
+
+class SetModuleOrderSyncUserAction extends ReduxAction<AppState> {
+  final ModuleOrder moduleOrder;
+
+  SetModuleOrderSyncUserAction(this.moduleOrder);
+  @override
+  AppState reduce() {
+    List<ModuleModel> _moduleList = [];
+    _moduleList.addAll(state.moduleState.moduleList);
+    if (moduleOrder == ModuleOrder.codigo) {
+      _moduleList.sort((a, b) => a.codigo.compareTo(b.codigo));
+    }
+    return state.copyWith(
+      moduleState: state.moduleState.copyWith(
+        moduleOrder: moduleOrder,
+        moduleList: _moduleList,
       ),
     );
   }

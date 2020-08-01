@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peat/conectors/module/module_ordering.dart';
 import 'package:peat/models/module_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,6 +18,7 @@ class ModuleListDS extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Lista com ${moduleList.length} Modulos'),
+        actions: [ModuleOrdering()],
       ),
       body: ListView.builder(
         itemCount: moduleList.length,

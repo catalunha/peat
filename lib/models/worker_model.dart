@@ -4,8 +4,8 @@ class WorkerModel extends FirestoreModel {
   static final String collection = 'worker';
   String sispat;
   String displayName;
-  String activity;
   String company;
+  String activity;
   String plataformIdOnBoard;
   List<dynamic> moduleIdList;
   bool arquived;

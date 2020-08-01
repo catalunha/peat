@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:peat/conectors/group/group_ordering.dart';
 import 'package:peat/models/group_model.dart';
 import 'package:peat/models/module_model.dart';
 import 'package:peat/models/plataform_model.dart';
@@ -55,13 +56,17 @@ class _GroupListDSState extends State<GroupListDS> {
 
   String workerIdListData(List<dynamic> workerIdList) {
     String _return = '';
-    if (workerIdList != null && workerIdList.isNotEmpty) {
-      workerIdList.forEach((workerId) {
-        WorkerModel workerModel =
-            widget.workerList.firstWhere((worker) => worker.id == workerId);
-        _return = _return +
-            '\n${workerModel.displayName} || ${workerModel.id.substring(0, 5)}';
-      });
+    if (widget.workerList != null && widget.workerList.isNotEmpty) {
+      if (workerIdList != null && workerIdList.isNotEmpty) {
+        workerIdList.forEach((workerId) {
+          WorkerModel workerModel =
+              widget.workerList.firstWhere((worker) => worker.id == workerId);
+          _return = _return +
+              '\n${workerModel.displayName} || ${workerModel.id.substring(0, 5)}';
+        });
+      }
+    } else {
+      _return = 'Trabalhadores não estão OnBoard.';
     }
     return _return;
   }
@@ -95,6 +100,7 @@ class _GroupListDSState extends State<GroupListDS> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Lista com ${widget.groupList.length} grupos'),
+          actions: [GroupOrdering()],
           bottom: TabBar(
             tabs: [
               Tab(
