@@ -82,6 +82,18 @@ class HomePageDS extends StatelessWidget {
             title: Text('Grupo'),
             onTap: () => Navigator.pushNamed(context, Routes.groupList),
           ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.people_outline),
+            title: Text('Todos os trabalhadores'),
+            onTap: () => Navigator.pushNamed(context, Routes.workerListAll),
+          ),
+          ListTile(
+            enabled: userOnBoard,
+            leading: Icon(Icons.art_track),
+            title: Text('Todos os grupos'),
+            onTap: () => Navigator.pushNamed(context, Routes.groupListAll),
+          ),
         ],
       ),
     );

@@ -54,21 +54,47 @@ class SetWorkerOrderSyncUserAction extends ReduxAction<AppState> {
 }
 
 // +++ Actions Async
+
 class GetDocsWorkerListAsyncWorkerAction extends ReduxAction<AppState> {
   @override
   Future<AppState> reduce() async {
     print('GetDocsWorkerListAsyncWorkerAction...');
     Firestore firestore = Firestore.instance;
 
-    final collRef = firestore.collection(WorkerModel.collection).where(
-        'plataformIdOnBoard',
-        isEqualTo: state.loggedState.userModelLogged.plataformIdOnBoard);
+    final collRef = firestore
+        .collection(WorkerModel.collection)
+        .where('plataformIdOnBoard',
+            isEqualTo: state.loggedState.userModelLogged.plataformIdOnBoard)
+        .where('arquived', isEqualTo: false);
+
     final docsSnap = await collRef.getDocuments();
 
     final listDocs = docsSnap.documents
         .map((docSnap) => WorkerModel(docSnap.documentID).fromMap(docSnap.data))
         .toList();
     print('GetDocsWorkerListAsyncWorkerAction...$listDocs');
+
+    return state.copyWith(
+      workerState: state.workerState.copyWith(
+        workerList: listDocs,
+      ),
+    );
+  }
+}
+
+class GetDocsWorkerListAllAsyncWorkerAction extends ReduxAction<AppState> {
+  @override
+  Future<AppState> reduce() async {
+    print('GetDocsWorkerListAllAsyncWorkerAction...');
+    Firestore firestore = Firestore.instance;
+
+    final collRef = firestore.collection(WorkerModel.collection);
+    final docsSnap = await collRef.getDocuments();
+
+    final listDocs = docsSnap.documents
+        .map((docSnap) => WorkerModel(docSnap.documentID).fromMap(docSnap.data))
+        .toList();
+    print('GetDocsWorkerListAllAsyncWorkerAction...$listDocs');
 
     return state.copyWith(
       workerState: state.workerState.copyWith(
@@ -163,6 +189,30 @@ class UpdateDocWorkerCurrentAsyncWorkerAction extends ReduxAction<AppState> {
 
   @override
   void after() => dispatch(GetDocsWorkerListAsyncWorkerAction());
+}
+
+class SetDocWorkerAsyncWorkerAction extends ReduxAction<AppState> {
+  final String id;
+  final Map<String, dynamic> data;
+
+  SetDocWorkerAsyncWorkerAction({
+    this.id,
+    this.data,
+  });
+  @override
+  Future<AppState> reduce() async {
+    print('SetDocWorkerAsyncWorkerAction...');
+    Firestore firestore = Firestore.instance;
+
+    await firestore
+        .collection(WorkerModel.collection)
+        .document(id)
+        .setData(data, merge: true);
+    return null;
+  }
+
+  @override
+  void after() => dispatch(GetDocsWorkerListAllAsyncWorkerAction());
 }
 
 class SetWorkerMsgSyncWorkerAction extends ReduxAction<AppState> {

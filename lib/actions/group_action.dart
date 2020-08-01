@@ -81,6 +81,28 @@ class GetDocsGroupListAsyncGroupAction extends ReduxAction<AppState> {
   }
 }
 
+class GetDocsGroupListAllAsyncGroupAction extends ReduxAction<AppState> {
+  @override
+  Future<AppState> reduce() async {
+    print('GetDocsGroupListAllAsyncGroupAction...');
+    Firestore firestore = Firestore.instance;
+
+    final collRef = firestore
+        .collection(GroupModel.collection)
+        .where('userId', isEqualTo: state.loggedState.userModelLogged.id);
+    final docsSnap = await collRef.getDocuments();
+
+    final listDocs = docsSnap.documents
+        .map((docSnap) => GroupModel(docSnap.documentID).fromMap(docSnap.data))
+        .toList();
+    return state.copyWith(
+      groupState: state.groupState.copyWith(
+        groupList: listDocs,
+      ),
+    );
+  }
+}
+
 class CreateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   final String codigo; //p65.200121.01
   final String plataformId;
@@ -218,6 +240,30 @@ class UpdateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
 
   @override
   void after() => dispatch(GetDocsGroupListAsyncGroupAction());
+}
+
+class SetDocGroupAsyncGroupAction extends ReduxAction<AppState> {
+  final String id;
+  final Map<String, dynamic> data;
+
+  SetDocGroupAsyncGroupAction({
+    this.id,
+    this.data,
+  });
+  @override
+  Future<AppState> reduce() async {
+    print('SetDocGroupAsyncGroupAction...');
+    Firestore firestore = Firestore.instance;
+
+    await firestore
+        .collection(GroupModel.collection)
+        .document(id)
+        .setData(data, merge: true);
+    return null;
+  }
+
+  @override
+  void after() => dispatch(GetDocsGroupListAllAsyncGroupAction());
 }
 
 class SetModuleTheGroupSyncGroupAction extends ReduxAction<AppState> {

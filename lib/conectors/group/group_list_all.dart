@@ -11,6 +11,7 @@ import 'package:peat/models/user_model.dart';
 import 'package:peat/models/worker_model.dart';
 import 'package:peat/routes.dart';
 import 'package:peat/states/app_state.dart';
+import 'package:peat/uis/group/group_list_all_ds.dart';
 import 'package:peat/uis/group/group_list_ds.dart';
 
 class ViewModel extends BaseModel<AppState> {
@@ -20,7 +21,7 @@ class ViewModel extends BaseModel<AppState> {
   UserModel userModel;
   List<WorkerModel> workerList;
 
-  Function(String) onEditGroupCurrent;
+  Function(String) onArquivedFalse;
   ViewModel();
   ViewModel.build({
     @required this.groupList,
@@ -28,7 +29,7 @@ class ViewModel extends BaseModel<AppState> {
     @required this.plataformList,
     @required this.userModel,
     @required this.workerList,
-    @required this.onEditGroupCurrent,
+    @required this.onArquivedFalse,
   }) : super(equals: [
           groupList,
           moduleList,
@@ -43,14 +44,14 @@ class ViewModel extends BaseModel<AppState> {
         plataformList: state.plataformState.plataformList,
         userModel: state.loggedState.userModelLogged,
         workerList: state.workerState.workerList,
-        onEditGroupCurrent: (String id) {
-          dispatch(SetGroupCurrentSyncGroupAction(id));
-          dispatch(NavigateAction.pushNamed(Routes.groupEdit));
+        onArquivedFalse: (String id) {
+          dispatch(
+              SetDocGroupAsyncGroupAction(id: id, data: {'arquived': false}));
         },
       );
 }
 
-class GroupList extends StatelessWidget {
+class GroupListAll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ViewModel>(
@@ -58,17 +59,17 @@ class GroupList extends StatelessWidget {
       model: ViewModel(),
       onInit: (store) {
         store.dispatch(GetDocsModuleListAsyncModuleAction());
-        store.dispatch(GetDocsWorkerListAsyncWorkerAction());
+        store.dispatch(GetDocsWorkerListAllAsyncWorkerAction());
+        store.dispatch(GetDocsGroupListAllAsyncGroupAction());
         store.dispatch(GetDocsPlataformListAsyncPlataformAction());
-        store.dispatch(GetDocsGroupListAsyncGroupAction());
       },
-      builder: (context, viewModel) => GroupListDS(
+      builder: (context, viewModel) => GroupListAllDS(
         groupList: viewModel.groupList,
         moduleList: viewModel.moduleList,
         plataformList: viewModel.plataformList,
         userModel: viewModel.userModel,
-        workerList: viewModel.workerList ?? [],
-        onEditGroupCurrent: viewModel.onEditGroupCurrent,
+        workerList: viewModel.workerList,
+        onArquivedFalse: viewModel.onArquivedFalse,
       ),
     );
   }
