@@ -10,6 +10,7 @@ class UserFilteringDS extends StatelessWidget with _UserFilteringDSComponents {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<UserFilter>(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       icon: popupIcon(userFilter),
       tooltip: 'Filtrar usuário por',
       onSelected: (value) => onSelectedFilter(value),
