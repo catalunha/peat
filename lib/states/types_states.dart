@@ -76,7 +76,7 @@ enum GroupOrder {
   number,
   startCourse,
   localCourse,
-  moduleId,
+  // moduleId,
 }
 
 extension GroupOrderExtension on GroupOrder {
@@ -85,7 +85,7 @@ extension GroupOrderExtension on GroupOrder {
     GroupOrder.number: 'Número',
     GroupOrder.startCourse: 'Início',
     GroupOrder.localCourse: 'Local',
-    GroupOrder.moduleId: 'Módulo',
+    // GroupOrder.moduleId: 'Módulo',
   };
   String get name => names[this];
 }

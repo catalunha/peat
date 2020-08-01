@@ -23,8 +23,16 @@ class ViewModel extends BaseModel<AppState> {
   bool success;
   bool arquived;
   bool isCreateOrUpdate;
-  Function(String, String, String, dynamic, dynamic, String, String, String,
-      bool, bool) onCreate;
+  Function(
+    String,
+    String,
+    String,
+    dynamic,
+    dynamic,
+    String,
+    String,
+    String,
+  ) onCreate;
   Function(String, String, String, dynamic, dynamic, String, String, String,
       bool, bool, bool) onUpdate;
   Function() onEditPop;
@@ -107,11 +115,9 @@ class ViewModel extends BaseModel<AppState> {
           String localCourse,
           String urlFolder,
           String urlPhoto,
-          bool opened,
-          bool success,
         ) {
           print('GroupEdit.onCreate');
-          dispatch(SetDocGroupCurrentAsyncGroupAction(
+          dispatch(CreateDocGroupCurrentAsyncGroupAction(
             codigo: codigo,
             number: number,
             description: description,
@@ -120,9 +126,6 @@ class ViewModel extends BaseModel<AppState> {
             localCourse: localCourse,
             urlFolder: urlFolder,
             urlPhoto: urlPhoto,
-            opened: true,
-            success: false,
-            arquived: false,
             userId: state.loggedState.userModelLogged.id,
             plataformId: state.loggedState.userModelLogged.plataformIdOnBoard,
             userDateTimeOnBoard:
@@ -144,7 +147,7 @@ class ViewModel extends BaseModel<AppState> {
           bool arquived,
         ) {
           print('GroupEdit.onUpdate');
-          dispatch(SetDocGroupCurrentAsyncGroupAction(
+          dispatch(UpdateDocGroupCurrentAsyncGroupAction(
             codigo: codigo,
             number: number,
             description: description,
@@ -157,12 +160,12 @@ class ViewModel extends BaseModel<AppState> {
             success: success,
             arquived: arquived,
           ));
-          if (arquived) {
-            dispatch(BatchedDocsWorkerListInModuleAsyncWorkerAction(
-              workerIdList: state.groupState.groupCurrent.workerIdList,
-              moduleId: state.groupState.groupCurrent.moduleId,
-            ));
-          }
+          // if (arquived && success) {
+          //   dispatch(BatchedDocsWorkerListInModuleAsyncWorkerAction(
+          //     workerIdList: state.groupState.groupCurrent.workerIdList,
+          //     moduleId: state.groupState.groupCurrent.moduleId,
+          //   ));
+          // }
           dispatch(NavigateAction.pop());
         },
         onEditPop: () {

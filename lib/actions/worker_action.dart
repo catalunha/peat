@@ -101,7 +101,12 @@ class CreateDocWorkerCurrentAsyncWorkerAction extends ReduxAction<AppState> {
     workerModel.activity = activity;
     workerModel.company = company;
     workerModel.arquived = false;
-
+    var docRef = await firestore
+        .collection(WorkerModel.collection)
+        .where('sispat', isEqualTo: sispat)
+        .getDocuments();
+    bool doc = docRef.documents.length != 0;
+    if (doc) throw const UserException("Esta trabalhador já foi cadastrado.");
     await firestore
         .collection(WorkerModel.collection)
         .document(workerModel.id)
@@ -113,6 +118,8 @@ class CreateDocWorkerCurrentAsyncWorkerAction extends ReduxAction<AppState> {
     );
   }
 
+  @override
+  Object wrapError(error) => UserException("ATENÇÃO:", cause: error);
   @override
   void after() => dispatch(GetDocsWorkerListAsyncWorkerAction());
 }

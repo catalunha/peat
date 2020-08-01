@@ -29,10 +29,10 @@ class Routes {
   static final groupEdit = '/groupEdit';
 
   static final routes = {
-    // home: (BuildContext context) => UserExceptionDialog<AppState>(
-    //       child: Welcome(),
-    //     ),
-    home: (BuildContext context) => Welcome(),
+    home: (BuildContext context) => UserExceptionDialog<AppState>(
+          child: Welcome(),
+        ),
+    // home: (BuildContext context) => Welcome(),
     userEdit: (BuildContext context) => UserLoggedEdit(),
     userList: (BuildContext context) => UserList(),
     plataformList: (BuildContext context) => PlataformList(),
@@ -41,10 +41,7 @@ class Routes {
     moduleEdit: (BuildContext context) => ModuleEdit(),
     workerList: (BuildContext context) => WorkerList(),
     workerEdit: (BuildContext context) => WorkerEdit(),
-    // workerOnBoard: (BuildContext context) => WorkerOnBoard(),
-    workerOnBoard: (BuildContext context) => UserExceptionDialog<AppState>(
-          child: WorkerOnBoard(),
-        ),
+    workerOnBoard: (BuildContext context) => WorkerOnBoard(),
     groupList: (BuildContext context) => GroupList(),
     groupEdit: (BuildContext context) => GroupEdit(),
   };

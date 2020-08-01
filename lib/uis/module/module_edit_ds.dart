@@ -76,6 +76,12 @@ class _ModuleEditDSState extends State<ModuleEditDS> {
               labelText: 'Codigo do modulo',
             ),
             onSaved: (newValue) => _codigo = newValue,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Informe o que se pede.';
+              }
+              return null;
+            },
           ),
           TextFormField(
             initialValue: widget.description,
@@ -83,6 +89,12 @@ class _ModuleEditDSState extends State<ModuleEditDS> {
               labelText: 'Descrição do modulo',
             ),
             onSaved: (newValue) => _description = newValue,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Informe o que se pede.';
+              }
+              return null;
+            },
           ),
           TextFormField(
             initialValue: widget.urlFolder,
@@ -90,6 +102,12 @@ class _ModuleEditDSState extends State<ModuleEditDS> {
               labelText: 'Folder do modulo',
             ),
             onSaved: (newValue) => _urlFolder = newValue,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Informe o que se pede.';
+              }
+              return null;
+            },
           ),
           widget.isCreateOrUpdate
               ? Container()

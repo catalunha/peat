@@ -1,5 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:peat/actions/worker_action.dart';
 import 'package:peat/models/group_model.dart';
 import 'package:peat/states/app_state.dart';
 import 'package:peat/states/types_states.dart';
@@ -40,9 +41,11 @@ class SetGroupOrderSyncUserAction extends ReduxAction<AppState> {
       _groupList.sort((a, b) => a.startCourse.compareTo(b.startCourse));
     } else if (groupOrder == GroupOrder.localCourse) {
       _groupList.sort((a, b) => a.localCourse.compareTo(b.localCourse));
-    } else if (groupOrder == GroupOrder.moduleId) {
-      _groupList.sort((a, b) => a.moduleId.compareTo(b.moduleId));
     }
+    // else if (groupOrder == GroupOrder.moduleId) {
+    //   _groupList.sort((a, b) => a.moduleId.compareTo(b.moduleId));
+    // }
+    print('--------------------------');
     return state.copyWith(
       groupState: state.groupState.copyWith(
         groupOrder: groupOrder,
@@ -78,7 +81,75 @@ class GetDocsGroupListAsyncGroupAction extends ReduxAction<AppState> {
   }
 }
 
-class SetDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
+class CreateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
+  final String codigo; //p65.200121.01
+  final String plataformId;
+  final dynamic userDateTimeOnBoard;
+  final String number;
+  final String userId;
+  final dynamic startCourse;
+  final dynamic endCourse;
+  final String localCourse;
+  final String urlFolder;
+  final String urlPhoto;
+  final String description;
+  CreateDocGroupCurrentAsyncGroupAction({
+    this.codigo,
+    this.plataformId,
+    this.userDateTimeOnBoard,
+    this.number,
+    this.userId,
+    this.startCourse,
+    this.endCourse,
+    this.localCourse,
+    this.urlFolder,
+    this.urlPhoto,
+    this.description,
+  });
+  @override
+  Future<AppState> reduce() async {
+    print('SetDocGroupCurrentAsyncGroupAction...');
+    Firestore firestore = Firestore.instance;
+    GroupModel groupModel = state.groupState.groupCurrent;
+    groupModel.codigo = codigo;
+    groupModel.plataformId = plataformId;
+    groupModel.userDateTimeOnBoard = userDateTimeOnBoard;
+    groupModel.number = number;
+    groupModel.userId = userId;
+    groupModel.startCourse = startCourse;
+    groupModel.endCourse = endCourse;
+    groupModel.localCourse = localCourse;
+    groupModel.urlFolder = urlFolder;
+    groupModel.urlPhoto = urlPhoto;
+    groupModel.description = description;
+    groupModel.opened = true;
+    groupModel.success = false;
+    groupModel.created = FieldValue.serverTimestamp();
+    groupModel.arquived = false;
+    var docRef = await firestore
+        .collection(GroupModel.collection)
+        .where('codigo', isEqualTo: codigo)
+        .getDocuments();
+    bool doc = docRef.documents.length != 0;
+    if (doc) throw const UserException("Esta grupo já foi cadastrado.");
+    await firestore
+        .collection(GroupModel.collection)
+        .document(groupModel.id)
+        .setData(groupModel.toMap(), merge: true);
+    return state.copyWith(
+      groupState: state.groupState.copyWith(
+        groupCurrent: groupModel,
+      ),
+    );
+  }
+
+  @override
+  Object wrapError(error) => UserException("ATENÇÃO:", cause: error);
+  @override
+  void after() => dispatch(GetDocsGroupListAsyncGroupAction());
+}
+
+class UpdateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   final String codigo; //p65.200121.01
   final String plataformId;
   final dynamic userDateTimeOnBoard;
@@ -92,9 +163,8 @@ class SetDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   final String description;
   final bool opened;
   final bool success;
-  final dynamic created;
   final bool arquived;
-  SetDocGroupCurrentAsyncGroupAction({
+  UpdateDocGroupCurrentAsyncGroupAction({
     this.codigo,
     this.plataformId,
     this.userDateTimeOnBoard,
@@ -108,7 +178,6 @@ class SetDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
     this.description,
     this.opened,
     this.success,
-    this.created,
     this.arquived,
   });
   @override
@@ -129,8 +198,13 @@ class SetDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
     groupModel.description = description;
     groupModel.opened = opened;
     groupModel.success = success;
-    groupModel.created = FieldValue.serverTimestamp();
     groupModel.arquived = arquived;
+    if (arquived && success) {
+      dispatch(BatchedDocsWorkerListInModuleAsyncWorkerAction(
+        workerIdList: state.groupState.groupCurrent.workerIdList,
+        moduleId: state.groupState.groupCurrent.moduleId,
+      ));
+    }
     await firestore
         .collection(GroupModel.collection)
         .document(groupModel.id)

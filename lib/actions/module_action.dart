@@ -84,6 +84,12 @@ class CreateDocModuleCurrentAsyncModuleAction extends ReduxAction<AppState> {
     moduleModel.description = description;
     moduleModel.urlFolder = urlFolder;
     moduleModel.arquived = false;
+    var docRef = await firestore
+        .collection(ModuleModel.collection)
+        .where('codigo', isEqualTo: codigo)
+        .getDocuments();
+    bool doc = docRef.documents.length != 0;
+    if (doc) throw const UserException("Esta módulo já foi cadastrado.");
     await firestore
         .collection(ModuleModel.collection)
         .document(moduleModel.id)
@@ -95,6 +101,8 @@ class CreateDocModuleCurrentAsyncModuleAction extends ReduxAction<AppState> {
     );
   }
 
+  @override
+  Object wrapError(error) => UserException("ATENÇÃO:", cause: error);
   @override
   void after() => dispatch(GetDocsModuleListAsyncModuleAction());
 }

@@ -20,8 +20,16 @@ class GroupEditDS extends StatefulWidget {
   final bool success;
   final bool arquived;
   final bool isCreateOrUpdate;
-  final Function(String, String, String, dynamic, dynamic, String, String,
-      String, bool, bool) onCreate;
+  final Function(
+    String,
+    String,
+    String,
+    dynamic,
+    dynamic,
+    String,
+    String,
+    String,
+  ) onCreate;
   final Function(String, String, String, dynamic, dynamic, String, String,
       String, bool, bool, bool) onUpdate;
   final Function() onEditPop;
@@ -55,6 +63,8 @@ class GroupEditDS extends StatefulWidget {
 }
 
 class _GroupEditDSState extends State<GroupEditDS> {
+  GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
+
   final formKey = GlobalKey<FormState>();
   String _codigo;
   String _number;
@@ -90,6 +100,7 @@ class _GroupEditDSState extends State<GroupEditDS> {
   void validateData() {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
+
       widget.isCreateOrUpdate
           ? widget.onCreate(
               _codigo,
@@ -100,8 +111,6 @@ class _GroupEditDSState extends State<GroupEditDS> {
               _localCourse,
               _urlFolder,
               _urlPhoto,
-              _opened,
-              _success,
             )
           : widget.onUpdate(
               _codigo,
@@ -200,6 +209,7 @@ class _GroupEditDSState extends State<GroupEditDS> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldState,
       appBar: AppBar(
         title: Text(widget.isCreateOrUpdate ? 'Criar grupo' : 'Editar grupo'),
         leading: IconButton(
@@ -214,10 +224,26 @@ class _GroupEditDSState extends State<GroupEditDS> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.cloud_upload),
         onPressed: () {
-          validateData();
+          if (widget.moduleId != null &&
+              widget.moduleId.isNotEmpty &&
+              widget.workerIdList != null &&
+              widget.workerIdList.isNotEmpty) {
+            validateData();
+          } else {
+            showSnackBarHandler(context);
+            // scaffoldState.currentState.showSnackBar(SnackBar(
+            //     content: Text('Favor informar Módulo e Trabalhadores.')));
+          }
         },
       ),
     );
+  }
+
+  showSnackBarHandler(context) {
+    scaffoldState.currentState.showSnackBar(
+        SnackBar(content: Text('Favor informar Módulo e Trabalhadores.')));
+    // Scaffold.of(context).showSnackBar(
+    //     SnackBar(content: Text('Favor informar Módulo e Trabalhadores.')));
   }
 
   _workerIdData(String workerId) {
@@ -291,16 +317,28 @@ class _GroupEditDSState extends State<GroupEditDS> {
           TextFormField(
             initialValue: widget.codigo,
             decoration: InputDecoration(
-              labelText: 'Codigo do grupo',
+              labelText: 'Código do grupo',
             ),
             onSaved: (newValue) => _codigo = newValue,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Informe o que se pede.';
+              }
+              return null;
+            },
           ),
           TextFormField(
             initialValue: widget.number,
             decoration: InputDecoration(
-              labelText: 'numero do grupo',
+              labelText: 'Número do grupo',
             ),
             onSaved: (newValue) => _number = newValue,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Informe o que se pede.';
+              }
+              return null;
+            },
           ),
           TextFormField(
             initialValue: widget.description,
@@ -315,6 +353,12 @@ class _GroupEditDSState extends State<GroupEditDS> {
               labelText: 'Local do encontro',
             ),
             onSaved: (newValue) => _localCourse = newValue,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Informe o que se pede.';
+              }
+              return null;
+            },
           ),
           ListTile(
             title:
@@ -357,6 +401,12 @@ class _GroupEditDSState extends State<GroupEditDS> {
               labelText: 'Link da pasta de relatorios do encontro',
             ),
             onSaved: (newValue) => _urlFolder = newValue,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Informe o que se pede.';
+              }
+              return null;
+            },
           ),
           TextFormField(
             initialValue: widget.urlPhoto,
@@ -365,24 +415,28 @@ class _GroupEditDSState extends State<GroupEditDS> {
             ),
             onSaved: (newValue) => _urlPhoto = newValue,
           ),
-          SwitchListTile(
-            value: _opened,
-            title: Text('Grupo aberto ?'),
-            onChanged: (value) {
-              setState(() {
-                _opened = value;
-              });
-            },
-          ),
-          SwitchListTile(
-            value: _success,
-            title: Text('Sucesso no encontro ?'),
-            onChanged: (value) {
-              setState(() {
-                _success = value;
-              });
-            },
-          ),
+          widget.isCreateOrUpdate
+              ? Container()
+              : SwitchListTile(
+                  value: _opened,
+                  title: Text('Grupo aberto ?'),
+                  onChanged: (value) {
+                    setState(() {
+                      _opened = value;
+                    });
+                  },
+                ),
+          widget.isCreateOrUpdate
+              ? Container()
+              : SwitchListTile(
+                  value: _success,
+                  title: Text('Sucesso no encontro ?'),
+                  onChanged: (value) {
+                    setState(() {
+                      _success = value;
+                    });
+                  },
+                ),
           widget.isCreateOrUpdate
               ? Container()
               : SwitchListTile(

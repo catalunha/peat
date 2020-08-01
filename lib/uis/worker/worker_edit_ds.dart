@@ -87,6 +87,12 @@ class _WorkerEditDSState extends State<WorkerEditDS> {
               labelText: 'SISPAT',
             ),
             onSaved: (newValue) => _sispat = newValue,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Informe o que se pede.';
+              }
+              return null;
+            },
           ),
           TextFormField(
             initialValue: widget.displayName,
@@ -94,6 +100,12 @@ class _WorkerEditDSState extends State<WorkerEditDS> {
               labelText: 'Nome',
             ),
             onSaved: (newValue) => _displayName = newValue,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Informe o que se pede.';
+              }
+              return null;
+            },
           ),
           TextFormField(
             initialValue: widget.company,
@@ -101,6 +113,12 @@ class _WorkerEditDSState extends State<WorkerEditDS> {
               labelText: 'Empresa',
             ),
             onSaved: (newValue) => _company = newValue,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Informe o que se pede.';
+              }
+              return null;
+            },
           ),
           TextFormField(
             initialValue: widget.activity,
@@ -108,6 +126,12 @@ class _WorkerEditDSState extends State<WorkerEditDS> {
               labelText: 'Função na empresa',
             ),
             onSaved: (newValue) => _activity = newValue,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Informe o que se pede.';
+              }
+              return null;
+            },
           ),
           widget.isCreateOrUpdate
               ? Container()

@@ -66,7 +66,12 @@ class _GroupListDSState extends State<GroupListDS> {
         });
       }
     } else {
-      _return = 'Trabalhadores não estão OnBoard.';
+      _return = 'Trabalhadores não estão OnBoard:';
+      if (workerIdList != null && workerIdList.isNotEmpty) {
+        workerIdList.forEach((workerId) {
+          _return = _return + '\n${workerId.toString()}';
+        });
+      }
     }
     return _return;
   }
@@ -156,6 +161,7 @@ class _GroupListDSState extends State<GroupListDS> {
                     //     _launched = _launchInBrowser(group.urlPhoto);
                     //   }),
                     onTap: () {
+                      print('ops');
                       widget.onEditGroupCurrent(group.id);
                     },
                   );
@@ -174,6 +180,9 @@ class _GroupListDSState extends State<GroupListDS> {
                     title: Text('${group.codigo}'),
                     subtitle: Text(
                         '\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${userIdData(group.userId)}\nplataformId: ${plataformIdCodigo(group.plataformId)}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userDateTimeOnBoard)}\nmoduleId: ${moduleIdCodigo(group.moduleId)}\nworkerIdList: ${workerIdListData(group.workerIdList)}  '),
+                    onTap: () {
+                      widget.onEditGroupCurrent(group.id);
+                    },
                     trailing: IconButton(
                       icon: Icon(Icons.link),
                       tooltip: group.urlPhoto,
@@ -231,9 +240,6 @@ class _GroupListDSState extends State<GroupListDS> {
                     //     }
                     //   },
                     // ),
-                    onTap: () {
-                      widget.onEditGroupCurrent(group.id);
-                    },
                   );
                 } else {
                   return Container();

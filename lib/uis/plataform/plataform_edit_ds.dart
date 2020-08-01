@@ -74,6 +74,12 @@ class _PlataformEditDSState extends State<PlataformEditDS> {
               labelText: 'Codigo da plataforma',
             ),
             onSaved: (newValue) => _codigo = newValue,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Informe o que se pede.';
+              }
+              return null;
+            },
           ),
           TextFormField(
             initialValue: widget.description,
@@ -81,6 +87,12 @@ class _PlataformEditDSState extends State<PlataformEditDS> {
               labelText: 'Descrição da plataforma',
             ),
             onSaved: (newValue) => _description = newValue,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Informe o que se pede.';
+              }
+              return null;
+            },
           ),
           widget.isCreateOrUpdate
               ? Container()

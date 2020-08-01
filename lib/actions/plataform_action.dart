@@ -84,6 +84,14 @@ class CreateDocPlataformCurrentAsyncPlataformAction
         state.plataformState.plataformCurrent.copy();
     plataformModel.codigo = codigo;
     plataformModel.description = description;
+    plataformModel.arquived = false;
+    var docRef = await firestore
+        .collection(PlataformModel.collection)
+        .where('codigo', isEqualTo: codigo)
+        .getDocuments();
+    bool doc = docRef.documents.length != 0;
+    if (doc) throw const UserException("Esta plataforma já foi cadastrada.");
+
     await firestore
         .collection(PlataformModel.collection)
         .document(plataformModel.id)
@@ -95,6 +103,8 @@ class CreateDocPlataformCurrentAsyncPlataformAction
     );
   }
 
+  @override
+  Object wrapError(error) => UserException("ATENÇÃO:", cause: error);
   @override
   void after() => dispatch(GetDocsPlataformListAsyncPlataformAction());
 }
