@@ -26,6 +26,8 @@ class PlataformModel extends FirestoreModel {
     if (codigo != null) data['codigo'] = this.codigo;
     if (description != null) data['description'] = this.description;
     if (arquived != null) data['arquived'] = this.arquived;
+    data.addAll({'id': this.id});
+
     return data;
   }
 

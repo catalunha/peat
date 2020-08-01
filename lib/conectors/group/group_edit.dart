@@ -126,8 +126,8 @@ class ViewModel extends BaseModel<AppState> {
             localCourse: localCourse,
             urlFolder: urlFolder,
             urlPhoto: urlPhoto,
-            userId: state.loggedState.userModelLogged.id,
-            plataformId: state.loggedState.userModelLogged.plataformIdOnBoard,
+            // userId: state.loggedState.userModelLogged.id,
+            // plataformId: state.loggedState.userModelLogged.plataformIdOnBoard,
             userDateTimeOnBoard:
                 state.loggedState.userModelLogged.dateTimeOnBoard,
           ));

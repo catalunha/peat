@@ -1,10 +1,11 @@
 import 'package:peat/models/firestore_model.dart';
+import 'package:peat/models/plataform_model.dart';
 
 class GroupModel extends FirestoreModel {
   static final String collection = 'group';
 
   String codigo; //p65.200121.01
-  String plataformId; //automatico
+  PlataformModel plataformModel; //automatico
   dynamic userDateTimeOnBoard; //automatico
   String number;
   String userId; //automatico
@@ -24,7 +25,7 @@ class GroupModel extends FirestoreModel {
   GroupModel(
     String id, {
     this.codigo,
-    this.plataformId,
+    this.plataformModel,
     this.userDateTimeOnBoard,
     this.number,
     this.userId,
@@ -44,7 +45,10 @@ class GroupModel extends FirestoreModel {
   @override
   GroupModel fromMap(Map<String, dynamic> map) {
     if (map.containsKey('codigo')) codigo = map['codigo'];
-    if (map.containsKey('plataformId')) plataformId = map['plataformId'];
+    plataformModel =
+        map.containsKey('plataformModel') && map['plataformModel'] != null
+            ? PlataformModel(map['id']).fromMap(map['plataformModel'])
+            : null;
     userDateTimeOnBoard = map.containsKey('userDateTimeOnBoard') &&
             map['userDateTimeOnBoard'] != null
         ? DateTime.fromMillisecondsSinceEpoch(
@@ -82,7 +86,9 @@ class GroupModel extends FirestoreModel {
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     if (codigo != null) data['codigo'] = this.codigo;
-    if (plataformId != null) data['plataformId'] = this.plataformId;
+    if (this.plataformModel != null) {
+      data['plataformModel'] = this.plataformModel.toMap();
+    }
     if (userDateTimeOnBoard != null)
       data['userDateTimeOnBoard'] = this.userDateTimeOnBoard;
     if (number != null) data['number'] = this.number;
@@ -99,11 +105,12 @@ class GroupModel extends FirestoreModel {
     if (workerIdList != null) data['workerIdList'] = this.workerIdList;
     if (created != null) data['created'] = this.created;
     if (arquived != null) data['arquived'] = this.arquived;
+    data.addAll({'id': this.id});
     return data;
   }
 
-  @override
-  String toString() {
-    return this.toMap().toString();
-  }
+  // @override
+  // String toString() {
+  //   return this.toMap().toString();
+  // }
 }

@@ -128,7 +128,7 @@ class _GroupListDSState extends State<GroupListDS> {
                     selected: group.arquived,
                     title: Text('${group.codigo}'),
                     subtitle: Text(
-                        '\id: ${group.id.substring(0, 5)}\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${userIdData(group.userId)}\nplataformId: ${plataformIdCodigo(group.plataformId)}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userDateTimeOnBoard)}\nmoduleId: ${moduleIdCodigo(group.moduleId)}\nworkerIdList: ${workerIdListData(group.workerIdList)} '),
+                        '\id: ${group.id.substring(0, 5)}\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${userIdData(group.userId)}\nplataformId: ${group.plataformModel.codigo}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userDateTimeOnBoard)}\nmoduleId: ${moduleIdCodigo(group.moduleId)}\nworkerIdList: ${workerIdListData(group.workerIdList)} '),
                     // trailing: PopupMenuButton<int>(
                     //   icon: Icon(Icons.link),
                     //   itemBuilder: (context) => [
@@ -179,7 +179,7 @@ class _GroupListDSState extends State<GroupListDS> {
                     selected: group.arquived,
                     title: Text('${group.codigo}'),
                     subtitle: Text(
-                        '\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${userIdData(group.userId)}\nplataformId: ${plataformIdCodigo(group.plataformId)}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userDateTimeOnBoard)}\nmoduleId: ${moduleIdCodigo(group.moduleId)}\nworkerIdList: ${workerIdListData(group.workerIdList)}  '),
+                        '\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${userIdData(group.userId)}\nplataformId: ${group.plataformModel.codigo}}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userDateTimeOnBoard)}\nmoduleId: ${moduleIdCodigo(group.moduleId)}\nworkerIdList: ${workerIdListData(group.workerIdList)}  '),
                     onTap: () {
                       widget.onEditGroupCurrent(group.id);
                     },

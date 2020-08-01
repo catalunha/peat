@@ -65,7 +65,7 @@ class GetDocsGroupListAsyncGroupAction extends ReduxAction<AppState> {
     final collRef = firestore
         .collection(GroupModel.collection)
         .where('userId', isEqualTo: state.loggedState.userModelLogged.id)
-        .where('plataformId',
+        .where('plataformModel.id',
             isEqualTo: state.loggedState.userModelLogged.plataformIdOnBoard)
         .where('arquived', isEqualTo: false);
     final docsSnap = await collRef.getDocuments();
@@ -105,10 +105,10 @@ class GetDocsGroupListAllAsyncGroupAction extends ReduxAction<AppState> {
 
 class CreateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   final String codigo; //p65.200121.01
-  final String plataformId;
+  // final String plataformId;
+  // final String userId;
   final dynamic userDateTimeOnBoard;
   final String number;
-  final String userId;
   final dynamic startCourse;
   final dynamic endCourse;
   final String localCourse;
@@ -117,10 +117,10 @@ class CreateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   final String description;
   CreateDocGroupCurrentAsyncGroupAction({
     this.codigo,
-    this.plataformId,
+    // this.plataformId,
+    // this.userId,
     this.userDateTimeOnBoard,
     this.number,
-    this.userId,
     this.startCourse,
     this.endCourse,
     this.localCourse,
@@ -134,10 +134,13 @@ class CreateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
     Firestore firestore = Firestore.instance;
     GroupModel groupModel = state.groupState.groupCurrent;
     groupModel.codigo = codigo;
-    groupModel.plataformId = plataformId;
+    groupModel.plataformModel = state.plataformState.plataformList.firstWhere(
+        (element) =>
+            element.id == state.loggedState.userModelLogged.plataformIdOnBoard);
+
+    groupModel.userId = state.loggedState.userModelLogged.id;
     groupModel.userDateTimeOnBoard = userDateTimeOnBoard;
     groupModel.number = number;
-    groupModel.userId = userId;
     groupModel.startCourse = startCourse;
     groupModel.endCourse = endCourse;
     groupModel.localCourse = localCourse;
@@ -173,10 +176,10 @@ class CreateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
 
 class UpdateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   final String codigo; //p65.200121.01
-  final String plataformId;
+  // final String plataformId;
+  // final String userId;
   final dynamic userDateTimeOnBoard;
   final String number;
-  final String userId;
   final dynamic startCourse;
   final dynamic endCourse;
   final String localCourse;
@@ -188,10 +191,10 @@ class UpdateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   final bool arquived;
   UpdateDocGroupCurrentAsyncGroupAction({
     this.codigo,
-    this.plataformId,
+    // this.plataformId,
+    // this.userId,
     this.userDateTimeOnBoard,
     this.number,
-    this.userId,
     this.startCourse,
     this.endCourse,
     this.localCourse,
@@ -208,10 +211,13 @@ class UpdateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
     Firestore firestore = Firestore.instance;
     GroupModel groupModel = state.groupState.groupCurrent;
     groupModel.codigo = codigo;
-    groupModel.plataformId = plataformId;
+    groupModel.plataformModel = state.plataformState.plataformList.firstWhere(
+        (element) =>
+            element.id == state.loggedState.userModelLogged.plataformIdOnBoard);
+
+    groupModel.userId = state.loggedState.userModelLogged.id;
     groupModel.userDateTimeOnBoard = userDateTimeOnBoard;
     groupModel.number = number;
-    groupModel.userId = userId;
     groupModel.startCourse = startCourse;
     groupModel.endCourse = endCourse;
     groupModel.localCourse = localCourse;
