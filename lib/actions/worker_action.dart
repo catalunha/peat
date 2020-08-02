@@ -64,7 +64,7 @@ class GetDocsWorkerListAsyncWorkerAction extends ReduxAction<AppState> {
     final collRef = firestore
         .collection(WorkerModel.collection)
         .where('plataformIdOnBoard',
-            isEqualTo: state.loggedState.userModelLogged.plataformIdOnBoard)
+            isEqualTo: state.loggedState.userModelLogged.plataformRef.id)
         .where('arquived', isEqualTo: false);
 
     final docsSnap = await collRef.getDocuments();
@@ -263,7 +263,7 @@ class BatchedDocsWorkerListOnBoardAsyncWorkerAction
               .document(b.documentID);
           batch.updateData(c, {
             'plataformIdOnBoard': inBoard
-                ? state.loggedState.userModelLogged.plataformIdOnBoard
+                ? state.loggedState.userModelLogged.plataformRef.id
                 : null
           });
         }

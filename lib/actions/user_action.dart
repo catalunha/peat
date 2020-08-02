@@ -23,13 +23,12 @@ class SetUserOrderSyncUserAction extends ReduxAction<AppState> {
       List<UserModel> userListWithNull = [];
       List<UserModel> userListWithoutNull = [];
       userListWithNull.addAll(_userList);
-      userListWithNull
-          .removeWhere((element) => element.plataformIdOnBoard != null);
+      userListWithNull.removeWhere((element) => element.plataformRef != null);
       userListWithoutNull.addAll(_userList);
       userListWithoutNull
-          .removeWhere((element) => element.plataformIdOnBoard == null);
+          .removeWhere((element) => element.plataformRef == null);
       userListWithoutNull.sort(
-          (a, b) => a.plataformIdOnBoard?.compareTo(b.plataformIdOnBoard));
+          (a, b) => a.plataformRef.codigo?.compareTo(b.plataformRef.codigo));
       _userList = [];
       _userList.addAll(userListWithoutNull);
       _userList.addAll(userListWithNull);

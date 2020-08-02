@@ -1,11 +1,12 @@
 import 'package:peat/models/firestore_model.dart';
+import 'package:peat/models/plataform_model.dart';
 
 class UserModel extends FirestoreModel {
   static final String collection = 'user';
   String sispat;
   String displayName;
   String email;
-  String plataformIdOnBoard;
+  PlataformModel plataformRef; //automatico
   dynamic dateTimeOnBoard;
   bool arquived;
 
@@ -14,7 +15,7 @@ class UserModel extends FirestoreModel {
     this.displayName,
     this.email,
     this.sispat,
-    this.plataformIdOnBoard,
+    this.plataformRef,
     this.dateTimeOnBoard,
     this.arquived,
   }) : super(id);
@@ -25,8 +26,10 @@ class UserModel extends FirestoreModel {
       if (map.containsKey('displayName')) displayName = map['displayName'];
       if (map.containsKey('email')) email = map['email'];
       if (map.containsKey('sispat')) sispat = map['sispat'];
-      if (map.containsKey('plataformIdOnBoard'))
-        plataformIdOnBoard = map['plataformIdOnBoard'];
+      plataformRef =
+          map.containsKey('plataformRef') && map['plataformRef'] != null
+              ? PlataformModel(map['id']).fromMap(map['plataformRef'])
+              : null;
       dateTimeOnBoard =
           map.containsKey('dateTimeOnBoard') && map['dateTimeOnBoard'] != null
               ? DateTime.fromMillisecondsSinceEpoch(
@@ -43,8 +46,13 @@ class UserModel extends FirestoreModel {
     if (displayName != null) data['displayName'] = this.displayName;
     if (email != null) data['email'] = this.email;
     if (sispat != null) data['sispat'] = this.sispat;
+    data['plataformRef'] = this.plataformRef?.toMapRef();
     // if (plataformIdOnBoard != null)
-    data['plataformIdOnBoard'] = this.plataformIdOnBoard;
+    // if (this.plataformRef == null) {
+    //   data['plataformRef'] = null;
+    // } else {
+    //   data['plataformRef'] = this.plataformRef.toMapRef();
+    // }
     // if (dateTimeOnBoard != null)
     data['dateTimeOnBoard'] = this.dateTimeOnBoard;
     if (arquived != null) data['arquived'] = this.arquived;
@@ -56,7 +64,7 @@ class UserModel extends FirestoreModel {
     final Map<String, dynamic> data = Map<String, dynamic>();
     if (sispat != null) data['sispat'] = this.sispat;
     if (displayName != null) data['displayName'] = this.displayName;
-    data['plataformIdOnBoard'] = this.plataformIdOnBoard;
+    data['plataformRef'] = this.plataformRef?.toMapRef();
     data['dateTimeOnBoard'] = this.dateTimeOnBoard;
     data.addAll({'id': this.id});
     return data;
@@ -68,7 +76,7 @@ class UserModel extends FirestoreModel {
       displayName: this.displayName,
       email: this.email,
       sispat: this.sispat,
-      plataformIdOnBoard: this.plataformIdOnBoard,
+      plataformRef: this.plataformRef,
       dateTimeOnBoard: this.dateTimeOnBoard,
       arquived: this.arquived,
     );

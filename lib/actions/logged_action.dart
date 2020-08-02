@@ -1,6 +1,7 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:peat/models/plataform_model.dart';
 import 'package:peat/models/user_model.dart';
 import 'package:peat/states/app_state.dart';
 import 'package:peat/states/types_states.dart';
@@ -74,13 +75,13 @@ class LogoutSuccessfulSyncLoggedAction extends ReduxAction<AppState> {
 }
 
 class SetUserInPlataformSyncLoggedAction extends ReduxAction<AppState> {
-  final String id;
-  SetUserInPlataformSyncLoggedAction({this.id});
+  final PlataformModel plataformModel;
+  SetUserInPlataformSyncLoggedAction({this.plataformModel});
   @override
   AppState reduce() {
     print('SetUserInPlataformSyncLoggedAction...');
     UserModel userModel = state.loggedState.userModelLogged.copy();
-    userModel.plataformIdOnBoard = id;
+    userModel.plataformRef = plataformModel;
     return state.copyWith(
       loggedState: state.loggedState.copyWith(
         userModelLogged: userModel,
@@ -225,7 +226,7 @@ class LogoutAsyncLoggedAction extends ReduxAction<AppState> {
     print('LogoutAsyncLoggedAction...');
     final FirebaseAuth _auth = FirebaseAuth.instance;
     try {
-      dispatch(SetUserInPlataformSyncLoggedAction(id: null));
+      dispatch(SetUserInPlataformSyncLoggedAction(plataformModel: null));
       store.dispatch(UpdateDocUserModelAsyncLoggedAction(
         dateTimeOnBoard: null,
       ));

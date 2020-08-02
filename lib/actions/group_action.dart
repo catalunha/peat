@@ -67,8 +67,8 @@ class GetDocsGroupListAsyncGroupAction extends ReduxAction<AppState> {
     final collRef = firestore
         .collection(GroupModel.collection)
         .where('userRef.id', isEqualTo: state.loggedState.userModelLogged.id)
-        .where('plataformRef.id',
-            isEqualTo: state.loggedState.userModelLogged.plataformIdOnBoard)
+        .where('userRef.plataformRef.id',
+            isEqualTo: state.loggedState.userModelLogged.plataformRef.id)
         .where('arquived', isEqualTo: false);
     final docsSnap = await collRef.getDocuments();
 
@@ -136,10 +136,10 @@ class CreateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
     Firestore firestore = Firestore.instance;
     GroupModel groupModel = state.groupState.groupCurrent;
     groupModel.codigo = codigo;
-    PlataformModel temp = state.plataformState.plataformList.firstWhere(
-        (element) =>
-            element.id == state.loggedState.userModelLogged.plataformIdOnBoard);
-    groupModel.plataformRef = PlataformModel(temp.id).fromMap(temp.toMapRef());
+    // PlataformModel temp = state.plataformState.plataformList.firstWhere(
+    //     (element) =>
+    //         element.id == state.loggedState.userModelLogged.plataformIdOnBoard);
+    // groupModel.plataformRef = PlataformModel(temp.id).fromMap(temp.toMapRef());
     // UserModel temp = state.us.plataformList.firstWhere(
     //     (element) =>
     //         element.id == state.loggedState.userModelLogged.plataformIdOnBoard);
@@ -219,9 +219,9 @@ class UpdateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
     Firestore firestore = Firestore.instance;
     GroupModel groupModel = state.groupState.groupCurrent;
     groupModel.codigo = codigo;
-    groupModel.plataformRef = state.plataformState.plataformList.firstWhere(
-        (element) =>
-            element.id == state.loggedState.userModelLogged.plataformIdOnBoard);
+    // groupModel.plataformRef = state.plataformState.plataformList.firstWhere(
+    //     (element) =>
+    //         element.id == state.loggedState.userModelLogged.plataformIdOnBoard);
     groupModel.userRef = UserModel(state.loggedState.userModelLogged.id)
         .fromMap(state.loggedState.userModelLogged.toMapRef());
 

@@ -11,7 +11,7 @@ class ViewModel extends BaseModel<AppState> {
   String sispat;
   String email;
   bool userOnBoard;
-  String userPlataformOnBoard;
+  PlataformModel plataformRef;
   dynamic userDateTimeOnBoard;
   ViewModel();
   ViewModel.build({
@@ -20,7 +20,7 @@ class ViewModel extends BaseModel<AppState> {
     @required this.sispat,
     @required this.email,
     @required this.userOnBoard,
-    @required this.userPlataformOnBoard,
+    @required this.plataformRef,
     @required this.userDateTimeOnBoard,
   }) : super(equals: [
           id,
@@ -28,21 +28,20 @@ class ViewModel extends BaseModel<AppState> {
           sispat,
           email,
           userOnBoard,
-          userPlataformOnBoard,
+          plataformRef,
           userDateTimeOnBoard,
         ]);
-  String _userPlataformOnBoard() {
-    String _return;
-    PlataformModel plataformModel;
-    if (state.loggedState.userModelLogged?.plataformIdOnBoard != null) {
-      plataformModel = state.plataformState.plataformList.firstWhere(
-          (element) =>
-              element.id ==
-              state.loggedState.userModelLogged.plataformIdOnBoard);
-      _return = plataformModel.codigo;
-    }
-    return _return;
-  }
+  // String _plataformRef() {
+  //   String _return;
+  //   PlataformModel plataformModel;
+  //   if (state.loggedState.userModelLogged?.plataformRef != null) {
+  //     plataformModel = state.plataformState.plataformList.firstWhere(
+  //         (element) =>
+  //             element.id == state.loggedState.userModelLogged.plataformRef.id);
+  //     _return = plataformModel.codigo;
+  //   }
+  //   return _return;
+  // }
 
   @override
   ViewModel fromStore() => ViewModel.build(
@@ -50,9 +49,8 @@ class ViewModel extends BaseModel<AppState> {
         displayName: state.loggedState.userModelLogged?.displayName ?? '',
         sispat: state.loggedState.userModelLogged?.sispat ?? '',
         email: state.loggedState.userModelLogged?.email ?? '',
-        userOnBoard:
-            state.loggedState.userModelLogged?.plataformIdOnBoard != null,
-        userPlataformOnBoard: _userPlataformOnBoard(),
+        userOnBoard: state.loggedState.userModelLogged?.plataformRef != null,
+        plataformRef: state.loggedState.userModelLogged?.plataformRef,
         userDateTimeOnBoard: state.loggedState.userModelLogged?.dateTimeOnBoard,
       );
 }
@@ -71,7 +69,7 @@ class HomePage extends StatelessWidget {
         sispat: viewModel.sispat,
         email: viewModel.email,
         userOnBoard: viewModel.userOnBoard,
-        userPlataformOnBoard: viewModel.userPlataformOnBoard,
+        plataformRef: viewModel.plataformRef,
         userDateTimeOnBoard: viewModel.userDateTimeOnBoard,
       ),
     );

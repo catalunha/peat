@@ -3,7 +3,7 @@ import 'package:peat/models/plataform_model.dart';
 
 class PlataformOnBoardDS extends StatelessWidget {
   final List<PlataformModel> plataformList;
-  final Function(String) onSetUserInPlataform;
+  final Function(PlataformModel) onSetUserInPlataform;
 
   const PlataformOnBoardDS({
     Key key,
@@ -26,7 +26,7 @@ class PlataformOnBoardDS extends StatelessWidget {
               subtitle: Text(
                   '${plataform.description}\n${plataform.id.substring(0, 5)}'),
               onTap: () {
-                onSetUserInPlataform(plataform.id);
+                onSetUserInPlataform(plataform);
               },
             );
           },

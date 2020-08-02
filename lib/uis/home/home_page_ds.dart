@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:peat/conectors/components/logout_button.dart';
+import 'package:peat/models/plataform_model.dart';
 import 'package:peat/routes.dart';
 
 class HomePageDS extends StatelessWidget {
@@ -9,7 +10,7 @@ class HomePageDS extends StatelessWidget {
   final String sispat;
   final String email;
   final bool userOnBoard;
-  final String userPlataformOnBoard;
+  final PlataformModel plataformRef;
   final dynamic userDateTimeOnBoard;
 
   const HomePageDS({
@@ -18,7 +19,7 @@ class HomePageDS extends StatelessWidget {
     this.displayName,
     this.email,
     this.userOnBoard,
-    this.userPlataformOnBoard,
+    this.plataformRef,
     this.userDateTimeOnBoard,
     this.sispat,
   }) : super(key: key);
@@ -32,7 +33,7 @@ class HomePageDS extends StatelessWidget {
             icon: Icon(Icons.person,
                 color: userOnBoard ? Colors.green : Colors.red),
             tooltip:
-                'Name: $displayName\nSISPAT:$sispat\nemail: $email\nPlataforma OnBoard: $userPlataformOnBoard\nData OnBoard: ${userDateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userDateTimeOnBoard) : userDateTimeOnBoard}\nid: ${id.substring(0, 5)}',
+                'Name: $displayName\nSISPAT:$sispat\nemail: $email\nPlataforma OnBoard: ${plataformRef.codigo}\nData OnBoard: ${userDateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userDateTimeOnBoard) : userDateTimeOnBoard}\nid: ${id.substring(0, 5)}',
             onPressed: () {
               Navigator.pushNamed(context, Routes.userEdit);
             },
@@ -46,7 +47,7 @@ class HomePageDS extends StatelessWidget {
             enabled: false,
             title: Text('$displayName'),
             subtitle: Text(
-                'SISPAT:$sispat\nemail: $email\nPlataforma OnBoard: $userPlataformOnBoard\nData OnBoard: ${userDateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userDateTimeOnBoard) : userDateTimeOnBoard}\nid: ${id.substring(0, 5)}'),
+                'SISPAT:$sispat\nemail: $email\nPlataforma OnBoard: ${plataformRef.codigo}\nData OnBoard: ${userDateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userDateTimeOnBoard) : userDateTimeOnBoard}\nid: ${id.substring(0, 5)}'),
           ),
           ListTile(
             leading: Icon(

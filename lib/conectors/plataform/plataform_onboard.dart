@@ -8,7 +8,7 @@ import 'package:peat/uis/plataform/plataform_onboard_ds.dart';
 
 class ViewModel extends BaseModel<AppState> {
   List<PlataformModel> plataformList;
-  Function(String) onSetUserInPlataform;
+  Function(PlataformModel) onSetUserInPlataform;
   ViewModel();
   ViewModel.build({
     @required this.plataformList,
@@ -26,9 +26,10 @@ class ViewModel extends BaseModel<AppState> {
   @override
   ViewModel fromStore() => ViewModel.build(
         plataformList: _plataformList(state.plataformState.plataformList),
-        onSetUserInPlataform: (String id) {
-          print('id:$id');
-          dispatch(SetUserInPlataformSyncLoggedAction(id: id));
+        onSetUserInPlataform: (PlataformModel plataformModel) {
+          // print('id:$id');
+          dispatch(SetUserInPlataformSyncLoggedAction(
+              plataformModel: plataformModel));
           dispatch(NavigateAction.pop());
         },
       );

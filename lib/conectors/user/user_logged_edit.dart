@@ -33,11 +33,10 @@ class ViewModel extends BaseModel<AppState> {
   String _plataformOnBoard() {
     String _return;
     PlataformModel plataformModel;
-    if (state.loggedState.userModelLogged?.plataformIdOnBoard != null) {
+    if (state.loggedState.userModelLogged?.plataformRef != null) {
       plataformModel = state.plataformState.plataformList.firstWhere(
           (element) =>
-              element.id ==
-              state.loggedState.userModelLogged.plataformIdOnBoard);
+              element.id == state.loggedState.userModelLogged.plataformRef.id);
       _return = plataformModel.codigo;
     }
 

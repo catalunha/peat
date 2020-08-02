@@ -36,7 +36,7 @@ class UserListDS extends StatelessWidget {
           return ListTile(
             title: Text('${user.displayName}'),
             subtitle: Text(
-                'SISPAT: ${user.sispat}\nEmail: ${user.email}\nPlataforma OnBoard: ${plataform(user.plataformIdOnBoard)}\nDate OnBoard: ${user.dateTimeOnBoard}\nid:${user.id.substring(0, 5)}'),
+                'SISPAT: ${user.sispat}\nEmail: ${user.email}\nPlataforma OnBoard: ${user.plataformRef.codigo}\nDate OnBoard: ${user.dateTimeOnBoard}\nid:${user.id.substring(0, 5)}'),
           );
         },
       ),
