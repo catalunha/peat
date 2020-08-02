@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:peat/actions/worker_action.dart';
 import 'package:peat/models/group_model.dart';
+import 'package:peat/models/module_model.dart';
 import 'package:peat/models/plataform_model.dart';
 import 'package:peat/models/user_model.dart';
 import 'package:peat/states/app_state.dart';
@@ -240,7 +241,7 @@ class UpdateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
     if (arquived && success) {
       dispatch(BatchedDocsWorkerListInModuleAsyncWorkerAction(
         workerIdList: state.groupState.groupCurrent.workerIdList,
-        moduleId: state.groupState.groupCurrent.moduleId,
+        moduleRef: state.groupState.groupCurrent.moduleRef,
       ));
     }
     await firestore
@@ -283,12 +284,12 @@ class SetDocGroupAsyncGroupAction extends ReduxAction<AppState> {
 }
 
 class SetModuleTheGroupSyncGroupAction extends ReduxAction<AppState> {
-  final String id;
-  SetModuleTheGroupSyncGroupAction({this.id});
+  final ModuleModel moduleModel;
+  SetModuleTheGroupSyncGroupAction({this.moduleModel});
   @override
   AppState reduce() {
     GroupModel groupModel = state.groupState.groupCurrent;
-    groupModel.moduleId = id;
+    groupModel.moduleRef = moduleModel;
     return state.copyWith(
       groupState: state.groupState.copyWith(
         groupCurrent: groupModel,

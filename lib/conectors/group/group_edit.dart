@@ -17,7 +17,7 @@ class ViewModel extends BaseModel<AppState> {
   String localCourse;
   String urlFolder;
   String urlPhoto;
-  String moduleId;
+  ModuleModel moduleRef;
   List<dynamic> workerIdList;
   bool opened;
   bool success;
@@ -50,7 +50,7 @@ class ViewModel extends BaseModel<AppState> {
     @required this.localCourse,
     @required this.urlFolder,
     @required this.urlPhoto,
-    @required this.moduleId,
+    @required this.moduleRef,
     @required this.workerIdList,
     @required this.opened,
     @required this.success,
@@ -70,7 +70,7 @@ class ViewModel extends BaseModel<AppState> {
           localCourse,
           urlFolder,
           urlPhoto,
-          moduleId,
+          moduleRef,
           workerIdList,
           opened,
           success,
@@ -78,17 +78,17 @@ class ViewModel extends BaseModel<AppState> {
           isCreateOrUpdate,
           workerList,
         ]);
-  String _moduleId() {
-    String _return;
-    ModuleModel moduleModel;
-    if (state.groupState.groupCurrent.moduleId != null) {
-      moduleModel = state.moduleState.moduleList.firstWhere(
-          (element) => element.id == state.groupState.groupCurrent.moduleId);
-      _return = moduleModel.codigo;
-    }
+  // String _moduleId() {
+  //   String _return;
+  //   ModuleModel moduleModel;
+  //   if (state.groupState.groupCurrent.moduleId != null) {
+  //     moduleModel = state.moduleState.moduleList.firstWhere(
+  //         (element) => element.id == state.groupState.groupCurrent.moduleId);
+  //     _return = moduleModel.codigo;
+  //   }
 
-    return _return;
-  }
+  //   return _return;
+  // }
 
   @override
   ViewModel fromStore() => ViewModel.build(
@@ -100,7 +100,7 @@ class ViewModel extends BaseModel<AppState> {
         localCourse: state.groupState.groupCurrent.localCourse,
         urlFolder: state.groupState.groupCurrent.urlFolder,
         urlPhoto: state.groupState.groupCurrent.urlPhoto,
-        moduleId: _moduleId(),
+        moduleRef: state.groupState.groupCurrent.moduleRef,
         workerIdList: state.groupState.groupCurrent.workerIdList,
         opened: state.groupState.groupCurrent?.opened ?? true,
         success: state.groupState.groupCurrent?.success ?? false,
@@ -200,7 +200,7 @@ class GroupEdit extends StatelessWidget {
         localCourse: viewModel.localCourse,
         urlFolder: viewModel.urlFolder,
         urlPhoto: viewModel.urlPhoto,
-        moduleId: viewModel.moduleId,
+        moduleRef: viewModel.moduleRef,
         workerIdList: viewModel.workerIdList,
         opened: viewModel.opened,
         success: viewModel.success,

@@ -30,11 +30,12 @@ class ViewModel extends BaseModel<AppState> {
       print('workerListClean0: ${element.id}');
       if (element.moduleIdList != null && element.moduleIdList.isNotEmpty) {
         print('workerListClean1: ${element.id}');
-        print('workerListClean2: ${state.groupState.groupCurrent.moduleId}');
         print(
-            'workerListClean3: ${element.moduleIdList.contains(state.groupState.groupCurrent.moduleId)}');
+            'workerListClean2: ${state.groupState.groupCurrent.moduleRef.id}');
+        print(
+            'workerListClean3: ${element.moduleIdList.contains(state.groupState.groupCurrent.moduleRef.id)}');
         return element.moduleIdList
-            .contains(state.groupState.groupCurrent.moduleId);
+            .contains(state.groupState.groupCurrent.moduleRef.id);
       } else {
         return false;
       }
@@ -45,7 +46,8 @@ class ViewModel extends BaseModel<AppState> {
         for (var worker in group.workerIdList) {
           workerListClean.removeWhere((element) {
             return element.id == worker &&
-                group.moduleId == state.groupState.groupCurrent.moduleId;
+                group.moduleRef.id ==
+                    state.groupState.groupCurrent.moduleRef.id;
           });
         }
       }

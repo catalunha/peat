@@ -28,7 +28,8 @@ class UserModel extends FirestoreModel {
       if (map.containsKey('sispat')) sispat = map['sispat'];
       plataformRef =
           map.containsKey('plataformRef') && map['plataformRef'] != null
-              ? PlataformModel(map['id']).fromMap(map['plataformRef'])
+              ? PlataformModel(map['plataformRef']['id'])
+                  .fromMap(map['plataformRef'])
               : null;
       dateTimeOnBoard =
           map.containsKey('dateTimeOnBoard') && map['dateTimeOnBoard'] != null

@@ -34,6 +34,13 @@ class ModuleModel extends FirestoreModel {
     return data;
   }
 
+  Map<String, dynamic> toMapRef() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (codigo != null) data['codigo'] = this.codigo;
+    data.addAll({'id': this.id});
+    return data;
+  }
+
   ModuleModel copy() {
     return ModuleModel(
       this.id,

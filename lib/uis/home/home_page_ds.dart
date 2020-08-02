@@ -33,7 +33,7 @@ class HomePageDS extends StatelessWidget {
             icon: Icon(Icons.person,
                 color: userOnBoard ? Colors.green : Colors.red),
             tooltip:
-                'Name: $displayName\nSISPAT:$sispat\nemail: $email\nPlataforma OnBoard: ${plataformRef.codigo}\nData OnBoard: ${userDateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userDateTimeOnBoard) : userDateTimeOnBoard}\nid: ${id.substring(0, 5)}',
+                'Name: $displayName\nSISPAT:$sispat\nemail: $email\nPlataforma OnBoard: ${plataformRef?.codigo}\nData OnBoard: ${userDateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userDateTimeOnBoard) : userDateTimeOnBoard}\nid: ${id.substring(0, 5)}',
             onPressed: () {
               Navigator.pushNamed(context, Routes.userEdit);
             },
@@ -47,7 +47,7 @@ class HomePageDS extends StatelessWidget {
             enabled: false,
             title: Text('$displayName'),
             subtitle: Text(
-                'SISPAT:$sispat\nemail: $email\nPlataforma OnBoard: ${plataformRef.codigo}\nData OnBoard: ${userDateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userDateTimeOnBoard) : userDateTimeOnBoard}\nid: ${id.substring(0, 5)}'),
+                'SISPAT:$sispat\nemail: $email\nPlataforma OnBoard: ${plataformRef?.codigo}\nData OnBoard: ${userDateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userDateTimeOnBoard) : userDateTimeOnBoard}\nid: ${id.substring(0, 5)}'),
           ),
           ListTile(
             leading: Icon(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:peat/conectors/module/module_select.dart';
 import 'package:peat/conectors/worker/worker_select.dart';
+import 'package:peat/models/module_model.dart';
 import 'package:peat/models/worker_model.dart';
 
 class GroupEditDS extends StatefulWidget {
@@ -13,7 +14,8 @@ class GroupEditDS extends StatefulWidget {
   final String localCourse;
   final String urlFolder;
   final String urlPhoto;
-  final String moduleId;
+  final ModuleModel moduleRef;
+
   final List<dynamic> workerIdList;
 
   final bool opened;
@@ -52,7 +54,7 @@ class GroupEditDS extends StatefulWidget {
     this.localCourse,
     this.opened,
     this.success,
-    this.moduleId,
+    this.moduleRef,
     this.workerIdList,
     this.onEditPop,
     this.onRemoveWorkerTheGroup,
@@ -224,8 +226,7 @@ class _GroupEditDSState extends State<GroupEditDS> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.cloud_upload),
         onPressed: () {
-          if (widget.moduleId != null &&
-              widget.moduleId.isNotEmpty &&
+          if (widget.moduleRef != null &&
               widget.workerIdList != null &&
               widget.workerIdList.isNotEmpty) {
             validateData();
@@ -266,7 +267,7 @@ class _GroupEditDSState extends State<GroupEditDS> {
       child: ListView(
         children: [
           ListTile(
-            title: Text('${widget.moduleId}'),
+            title: Text('${widget.moduleRef?.codigo}'),
             subtitle: Text('Qual modulo para este grupo'),
             trailing: Icon(Icons.search),
             onTap: () {
@@ -276,7 +277,7 @@ class _GroupEditDSState extends State<GroupEditDS> {
               );
             },
           ),
-          widget.moduleId != null && widget.moduleId.isNotEmpty
+          widget.moduleRef != null
               ? ListTile(
                   title: Text(
                       '${widget.workerIdList != null && widget.workerIdList.isNotEmpty ? widget.workerIdList.length : null}'),

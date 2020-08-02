@@ -15,33 +15,30 @@ import 'package:peat/uis/group/group_list_ds.dart';
 
 class ViewModel extends BaseModel<AppState> {
   List<GroupModel> groupList;
-  List<ModuleModel> moduleList;
-  List<PlataformModel> plataformList;
-  UserModel userModel;
+  // List<ModuleModel> moduleList;
+  // List<PlataformModel> plataformList;
+  // UserModel userModel;
   List<WorkerModel> workerList;
 
   Function(String) onEditGroupCurrent;
   ViewModel();
   ViewModel.build({
     @required this.groupList,
-    @required this.moduleList,
-    @required this.plataformList,
-    @required this.userModel,
+    // @required this.moduleList,
+    // @required this.plataformList,
+    // @required this.userModel,
     @required this.workerList,
     @required this.onEditGroupCurrent,
   }) : super(equals: [
           groupList,
-          moduleList,
-          plataformList,
-          userModel,
           workerList,
         ]);
   @override
   ViewModel fromStore() => ViewModel.build(
         groupList: state.groupState.groupList,
-        moduleList: state.moduleState.moduleList,
-        plataformList: state.plataformState.plataformList,
-        userModel: state.loggedState.userModelLogged,
+        // moduleList: state.moduleState.moduleList,
+        // plataformList: state.plataformState.plataformList,
+        // userModel: state.loggedState.userModelLogged,
         workerList: state.workerState.workerList,
         onEditGroupCurrent: (String id) {
           dispatch(SetGroupCurrentSyncGroupAction(id));
@@ -57,16 +54,16 @@ class GroupList extends StatelessWidget {
       debug: this,
       model: ViewModel(),
       onInit: (store) {
-        store.dispatch(GetDocsModuleListAsyncModuleAction());
-        store.dispatch(GetDocsWorkerListAsyncWorkerAction());
-        store.dispatch(GetDocsPlataformListAsyncPlataformAction());
+        // store.dispatch(GetDocsModuleListAsyncModuleAction());
+        // store.dispatch(GetDocsWorkerListAsyncWorkerAction());
+        // store.dispatch(GetDocsPlataformListAsyncPlataformAction());
         store.dispatch(GetDocsGroupListAsyncGroupAction());
       },
       builder: (context, viewModel) => GroupListDS(
         groupList: viewModel.groupList,
-        moduleList: viewModel.moduleList,
-        plataformList: viewModel.plataformList,
-        userModel: viewModel.userModel,
+        // moduleList: viewModel.moduleList,
+        // plataformList: viewModel.plataformList,
+        // userModel: viewModel.userModel,
         workerList: viewModel.workerList ?? [],
         onEditGroupCurrent: viewModel.onEditGroupCurrent,
       ),

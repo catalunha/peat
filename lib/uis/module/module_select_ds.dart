@@ -3,7 +3,7 @@ import 'package:peat/models/module_model.dart';
 
 class ModuleSelectDS extends StatelessWidget {
   final List<ModuleModel> moduleList;
-  final Function(String) onSetModuleTheGroup;
+  final Function(ModuleModel) onSetModuleTheGroup;
 
   const ModuleSelectDS({
     Key key,
@@ -25,7 +25,7 @@ class ModuleSelectDS extends StatelessWidget {
               title: Text('${module.codigo}'),
               subtitle: Text('${module.description}'),
               onTap: () {
-                onSetModuleTheGroup(module.id);
+                onSetModuleTheGroup(module);
               },
             );
           },

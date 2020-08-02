@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:async_redux/async_redux.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:peat/models/module_model.dart';
 import 'package:peat/models/worker_model.dart';
 import 'package:peat/states/app_state.dart';
 import 'package:peat/states/types_states.dart';
@@ -286,11 +287,11 @@ class BatchedDocsWorkerListOnBoardAsyncWorkerAction
 class BatchedDocsWorkerListInModuleAsyncWorkerAction
     extends ReduxAction<AppState> {
   final List<dynamic> workerIdList;
-  final String moduleId;
+  final ModuleModel moduleRef;
 
   BatchedDocsWorkerListInModuleAsyncWorkerAction({
     this.workerIdList,
-    this.moduleId,
+    this.moduleRef,
   });
   @override
   Future<AppState> reduce() async {
@@ -304,7 +305,7 @@ class BatchedDocsWorkerListInModuleAsyncWorkerAction
           .collection(WorkerModel.collection)
           .document(workerId.toString());
       batch.updateData(c, {
-        'moduleIdList': FieldValue.arrayUnion([moduleId])
+        'moduleIdList': FieldValue.arrayUnion([moduleRef.id])
       });
     }
 

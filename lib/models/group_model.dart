@@ -1,12 +1,12 @@
 import 'package:peat/models/firestore_model.dart';
-import 'package:peat/models/plataform_model.dart';
+import 'package:peat/models/module_model.dart';
 import 'package:peat/models/user_model.dart';
 
 class GroupModel extends FirestoreModel {
   static final String collection = 'group';
 
   String codigo; //p65.200121.01
-  PlataformModel plataformRef; //automatico
+  // PlataformModel plataformRef; //automatico
   UserModel userRef; //automatico
   // dynamic userDateTimeOnBoard; //automatico
   String number;
@@ -19,7 +19,7 @@ class GroupModel extends FirestoreModel {
   String urlPhoto;
   bool opened;
   bool success;
-  String moduleId;
+  ModuleModel moduleRef;
   List<dynamic> workerIdList;
   dynamic created; //automatico
   bool arquived;
@@ -27,7 +27,7 @@ class GroupModel extends FirestoreModel {
   GroupModel(
     String id, {
     this.codigo,
-    this.plataformRef,
+    // this.plataformRef,
     // this.userDateTimeOnBoard,
     this.number,
     this.userRef,
@@ -39,7 +39,7 @@ class GroupModel extends FirestoreModel {
     this.description,
     this.opened,
     this.success,
-    this.moduleId,
+    this.moduleRef,
     this.workerIdList,
     this.created,
     this.arquived,
@@ -47,13 +47,16 @@ class GroupModel extends FirestoreModel {
   @override
   GroupModel fromMap(Map<String, dynamic> map) {
     if (map.containsKey('codigo')) codigo = map['codigo'];
-    plataformRef =
-        map.containsKey('plataformRef') && map['plataformRef'] != null
-            ? PlataformModel(map['id']).fromMap(map['plataformRef'])
-            : null;
+    // plataformRef =
+    //     map.containsKey('plataformRef') && map['plataformRef'] != null
+    //         ? PlataformModel(map['id']).fromMap(map['plataformRef'])
+    //         : null;
     // if (map.containsKey('userId')) userId = map['userId'];
     userRef = map.containsKey('userRef') && map['userRef'] != null
-        ? UserModel(map['id']).fromMap(map['userRef'])
+        ? UserModel(map['userRef']['id']).fromMap(map['userRef'])
+        : null;
+    moduleRef = map.containsKey('moduleRef') && map['moduleRef'] != null
+        ? ModuleModel(map['moduleRef']['id']).fromMap(map['moduleRef'])
         : null;
     // userDateTimeOnBoard = map.containsKey('userDateTimeOnBoard') &&
     //         map['userDateTimeOnBoard'] != null
@@ -61,7 +64,7 @@ class GroupModel extends FirestoreModel {
     //         map['userDateTimeOnBoard'].millisecondsSinceEpoch)
     //     : null;
     if (map.containsKey('number')) number = map['number'];
-    if (map.containsKey('moduloId')) moduleId = map['moduloId'];
+    // if (map.containsKey('moduloId')) moduleId = map['moduloId'];
     startCourse = map.containsKey('startCourse') && map['startCourse'] != null
         ? DateTime.fromMillisecondsSinceEpoch(
             map['startCourse'].millisecondsSinceEpoch)
@@ -77,7 +80,7 @@ class GroupModel extends FirestoreModel {
     if (map.containsKey('opened')) opened = map['opened'];
     if (map.containsKey('success')) success = map['success'];
     if (map.containsKey('arquived')) arquived = map['arquived'];
-    if (map.containsKey('moduleId')) moduleId = map['moduleId'];
+    // if (map.containsKey('moduleId')) moduleId = map['moduleId'];
     if (map.containsKey('workerIdList')) workerIdList = map['workerIdList'];
     created = map.containsKey('created') && map['created'] != null
         ? DateTime.fromMillisecondsSinceEpoch(
@@ -91,11 +94,14 @@ class GroupModel extends FirestoreModel {
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     if (codigo != null) data['codigo'] = this.codigo;
-    if (this.plataformRef != null) {
-      data['plataformRef'] = this.plataformRef.toMapRef();
-    }
+    // if (this.plataformRef != null) {
+    //   data['plataformRef'] = this.plataformRef.toMapRef();
+    // }
     if (this.userRef != null) {
       data['userRef'] = this.userRef.toMapRef();
+    }
+    if (this.moduleRef != null) {
+      data['moduleRef'] = this.moduleRef.toMapRef();
     }
     // if (userDateTimeOnBoard != null)
     //   data['userDateTimeOnBoard'] = this.userDateTimeOnBoard;
@@ -109,7 +115,7 @@ class GroupModel extends FirestoreModel {
     if (description != null) data['description'] = this.description;
     if (opened != null) data['opened'] = this.opened;
     if (success != null) data['success'] = this.success;
-    if (moduleId != null) data['moduleId'] = this.moduleId;
+    // if (moduleId != null) data['moduleId'] = this.moduleId;
     if (workerIdList != null) data['workerIdList'] = this.workerIdList;
     if (created != null) data['created'] = this.created;
     if (arquived != null) data['arquived'] = this.arquived;

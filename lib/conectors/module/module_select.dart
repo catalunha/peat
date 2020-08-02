@@ -9,7 +9,7 @@ import 'package:peat/uis/module/module_select_ds.dart';
 
 class ViewModel extends BaseModel<AppState> {
   List<ModuleModel> moduleList;
-  Function(String) onSetModuleTheGroup;
+  Function(ModuleModel) onSetModuleTheGroup;
   ViewModel();
   ViewModel.build({
     @required this.moduleList,
@@ -20,9 +20,9 @@ class ViewModel extends BaseModel<AppState> {
   @override
   ViewModel fromStore() => ViewModel.build(
         moduleList: state.moduleState.moduleList,
-        onSetModuleTheGroup: (String id) {
-          print('id:$id');
-          dispatch(SetModuleTheGroupSyncGroupAction(id: id));
+        onSetModuleTheGroup: (ModuleModel moduleModel) {
+          // print('id:$id');
+          dispatch(SetModuleTheGroupSyncGroupAction(moduleModel: moduleModel));
           dispatch(NavigateAction.pop());
         },
       );
