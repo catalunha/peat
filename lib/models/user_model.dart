@@ -52,6 +52,16 @@ class UserModel extends FirestoreModel {
     return data;
   }
 
+  Map<String, dynamic> toMapRef() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (sispat != null) data['sispat'] = this.sispat;
+    if (displayName != null) data['displayName'] = this.displayName;
+    data['plataformIdOnBoard'] = this.plataformIdOnBoard;
+    data['dateTimeOnBoard'] = this.dateTimeOnBoard;
+    data.addAll({'id': this.id});
+    return data;
+  }
+
   UserModel copy() {
     return UserModel(
       this.id,

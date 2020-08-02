@@ -2,6 +2,8 @@ import 'package:async_redux/async_redux.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:peat/actions/worker_action.dart';
 import 'package:peat/models/group_model.dart';
+import 'package:peat/models/plataform_model.dart';
+import 'package:peat/models/user_model.dart';
 import 'package:peat/states/app_state.dart';
 import 'package:peat/states/types_states.dart';
 
@@ -64,8 +66,8 @@ class GetDocsGroupListAsyncGroupAction extends ReduxAction<AppState> {
 
     final collRef = firestore
         .collection(GroupModel.collection)
-        .where('userId', isEqualTo: state.loggedState.userModelLogged.id)
-        .where('plataformModel.id',
+        .where('userRef.id', isEqualTo: state.loggedState.userModelLogged.id)
+        .where('plataformRef.id',
             isEqualTo: state.loggedState.userModelLogged.plataformIdOnBoard)
         .where('arquived', isEqualTo: false);
     final docsSnap = await collRef.getDocuments();
@@ -130,16 +132,22 @@ class CreateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   });
   @override
   Future<AppState> reduce() async {
-    print('SetDocGroupCurrentAsyncGroupAction...');
+    print('CreateDocGroupCurrentAsyncGroupAction...');
     Firestore firestore = Firestore.instance;
     GroupModel groupModel = state.groupState.groupCurrent;
     groupModel.codigo = codigo;
-    groupModel.plataformModel = state.plataformState.plataformList.firstWhere(
+    PlataformModel temp = state.plataformState.plataformList.firstWhere(
         (element) =>
             element.id == state.loggedState.userModelLogged.plataformIdOnBoard);
+    groupModel.plataformRef = PlataformModel(temp.id).fromMap(temp.toMapRef());
+    // UserModel temp = state.us.plataformList.firstWhere(
+    //     (element) =>
+    //         element.id == state.loggedState.userModelLogged.plataformIdOnBoard);
+    groupModel.userRef = UserModel(state.loggedState.userModelLogged.id)
+        .fromMap(state.loggedState.userModelLogged.toMapRef());
 
-    groupModel.userId = state.loggedState.userModelLogged.id;
-    groupModel.userDateTimeOnBoard = userDateTimeOnBoard;
+    // groupModel.userId = state.loggedState.userModelLogged.id;
+    // groupModel.userDateTimeOnBoard = userDateTimeOnBoard;
     groupModel.number = number;
     groupModel.startCourse = startCourse;
     groupModel.endCourse = endCourse;
@@ -211,12 +219,14 @@ class UpdateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
     Firestore firestore = Firestore.instance;
     GroupModel groupModel = state.groupState.groupCurrent;
     groupModel.codigo = codigo;
-    groupModel.plataformModel = state.plataformState.plataformList.firstWhere(
+    groupModel.plataformRef = state.plataformState.plataformList.firstWhere(
         (element) =>
             element.id == state.loggedState.userModelLogged.plataformIdOnBoard);
+    groupModel.userRef = UserModel(state.loggedState.userModelLogged.id)
+        .fromMap(state.loggedState.userModelLogged.toMapRef());
 
-    groupModel.userId = state.loggedState.userModelLogged.id;
-    groupModel.userDateTimeOnBoard = userDateTimeOnBoard;
+    // groupModel.userId = state.loggedState.userModelLogged.id;
+    // groupModel.userDateTimeOnBoard = userDateTimeOnBoard;
     groupModel.number = number;
     groupModel.startCourse = startCourse;
     groupModel.endCourse = endCourse;
