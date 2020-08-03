@@ -36,7 +36,6 @@ class Routes {
     home: (BuildContext context) => UserExceptionDialog<AppState>(
           child: Welcome(),
         ),
-    // home: (BuildContext context) => Welcome(),
     userEdit: (BuildContext context) => UserLoggedEdit(),
     userList: (BuildContext context) => UserList(),
     plataformList: (BuildContext context) => PlataformList(),

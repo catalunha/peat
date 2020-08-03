@@ -32,7 +32,6 @@ class MyApp extends StatelessWidget {
     Resources.initialize(Theme.of(context).platform);
 
     return StoreProvider<AppState>(
-      // store: appStore,
       store: store,
       child: MaterialApp(
         theme: ThemeData.dark(),

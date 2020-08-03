@@ -2,17 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:peat/conectors/group/group_ordering.dart';
 import 'package:peat/models/group_model.dart';
-// import 'package:peat/models/module_model.dart';
-// import 'package:peat/models/plataform_model.dart';
-// import 'package:peat/models/user_model.dart';
 import 'package:peat/models/worker_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class GroupListDS extends StatefulWidget {
   final List<GroupModel> groupList;
-  // final List<ModuleModel> moduleList;
-  // final List<PlataformModel> plataformList;
-  // final UserModel userModel;
   final List<WorkerModel> workerList;
 
   final Function(String) onEditGroupCurrent;
@@ -21,9 +15,6 @@ class GroupListDS extends StatefulWidget {
     Key key,
     this.groupList,
     this.onEditGroupCurrent,
-    // this.moduleList,
-    // this.plataformList,
-    // this.userModel,
     this.workerList,
   }) : super(key: key);
 
@@ -32,28 +23,6 @@ class GroupListDS extends StatefulWidget {
 }
 
 class _GroupListDSState extends State<GroupListDS> {
-  // Future<void> _launched;
-
-  // String moduleIdCodigo(String moduleId) {
-  //   String _return;
-  //   if (moduleId != null) {
-  //     ModuleModel moduleModel =
-  //         widget.moduleList.firstWhere((element) => element.id == moduleId);
-  //     _return = moduleModel.codigo;
-  //   }
-  //   return _return + ' || ' + moduleId.substring(0, 5);
-  // }
-
-  // String plataformIdCodigo(String plataformId) {
-  //   String _return;
-  //   if (plataformId != null) {
-  //     PlataformModel plataformModel = widget.plataformList
-  //         .firstWhere((element) => element.id == plataformId);
-  //     _return = plataformModel.codigo;
-  //   }
-  //   return _return + ' || ' + plataformId.substring(0, 5);
-  // }
-
   String workerRefMapData(Map<String, WorkerModel> workerRefMap) {
     String _return = '';
     for (var workerRef in workerRefMap.entries) {
@@ -63,27 +32,6 @@ class _GroupListDSState extends State<GroupListDS> {
 
     return _return;
   }
-  // String userIdData(String userId) {
-  //   String _return = 'Erro no userId';
-  //   if (userId == widget.userModel.id) {
-  //     _return =
-  //         '${widget.userModel.displayName} || ${widget.userModel.id.substring(0, 5)}';
-  //   }
-  //   return _return;
-  // }
-
-  // Future<void> _launchInBrowser(String url) async {
-  //   if (await canLaunch(url)) {
-  //     await launch(
-  //       url,
-  //       forceSafariVC: false,
-  //       forceWebView: false,
-  //       headers: <String, String>{'my_header_key': 'my_header_value'},
-  //     );
-  //   } else {
-  //     throw 'Could not launch $url';
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -182,52 +130,6 @@ class _GroupListDSState extends State<GroupListDS> {
                         }
                       },
                     ),
-                    // leading: PopupMenuButton<int>(
-                    //   itemBuilder: (context) => [
-                    //     PopupMenuItem(
-                    //       value: 1,
-                    //       child: Text("urlPhoto"),
-                    //     ),
-                    //     PopupMenuItem(
-                    //       value: 2,
-                    //       child: Text("urlFolder"),
-                    //     ),
-                    //   ],
-                    //   onSelected: (value) {
-                    //     if (value == 1) {
-                    //       Future<void> a() async {
-                    //         if (group?.urlPhoto != null) {
-                    //           if (await canLaunch(group.urlPhoto)) {
-                    //             await launch(group.urlPhoto);
-                    //           }
-                    //         }
-                    //       }
-
-                    //       a();
-                    //     } else {
-                    //       Future<void> b() async {
-                    //         if (group?.urlFolder != null) {
-                    //           if (await canLaunch(group.urlFolder)) {
-                    //             await launch(group.urlFolder);
-                    //           }
-                    //         }
-                    //       }
-
-                    //       b();
-                    //     }
-                    //   },
-                    // ),
-                    // trailing: IconButton(
-                    //   icon: Icon(Icons.link),
-                    //   tooltip: group.urlFolder,
-                    //   onPressed: () async {
-                    //     if (group?.urlFolder != null) {
-                    //       if (await canLaunch(group.urlFolder)) {
-                    //         await launch(group.urlFolder);
-                    //       }
-                    //     }
-                    //   },
-                    // ),
                   );
                 } else {
                   return Container();

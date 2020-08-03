@@ -21,7 +21,6 @@ class ViewModel extends BaseModel<AppState> {
   ViewModel fromStore() => ViewModel.build(
         moduleList: state.moduleState.moduleList,
         onSetModuleTheGroup: (ModuleModel moduleModel) {
-          // print('id:$id');
           dispatch(SetModuleTheGroupSyncGroupAction(moduleModel: moduleModel));
           dispatch(NavigateAction.pop());
         },

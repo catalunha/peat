@@ -64,7 +64,7 @@ class GetDocsWorkerListAsyncWorkerAction extends ReduxAction<AppState> {
 
     final collRef = firestore
         .collection(WorkerModel.collection)
-        .where('plataformIdOnBoard',
+        .where('plataformRef.id',
             isEqualTo: state.loggedState.userModelLogged.plataformRef.id)
         .where('arquived', isEqualTo: false);
 
@@ -122,7 +122,8 @@ class CreateDocWorkerCurrentAsyncWorkerAction extends ReduxAction<AppState> {
     print('SetDocWorkerCurrentAsyncWorkerAction...');
     Firestore firestore = Firestore.instance;
 
-    WorkerModel workerModel = state.workerState.workerCurrent;
+    WorkerModel workerModel = WorkerModel(state.workerState.workerCurrent.id)
+        .fromMap(state.workerState.workerCurrent.toMap());
     workerModel.sispat = sispat;
     workerModel.displayName = displayName;
     workerModel.activity = activity;
@@ -170,7 +171,8 @@ class UpdateDocWorkerCurrentAsyncWorkerAction extends ReduxAction<AppState> {
     print('UpdateDocWorkerCurrentAsyncWorkerAction...');
     Firestore firestore = Firestore.instance;
 
-    WorkerModel workerModel = state.workerState.workerCurrent;
+    WorkerModel workerModel = WorkerModel(state.workerState.workerCurrent.id)
+        .fromMap(state.workerState.workerCurrent.toMap());
     workerModel.sispat = sispat;
     workerModel.displayName = displayName;
     workerModel.activity = activity;
@@ -263,8 +265,8 @@ class BatchedDocsWorkerListOnBoardAsyncWorkerAction
               .collection(WorkerModel.collection)
               .document(b.documentID);
           batch.updateData(c, {
-            'plataformIdOnBoard': inBoard
-                ? state.loggedState.userModelLogged.plataformRef.id
+            'plataformRef': inBoard
+                ? state.loggedState.userModelLogged.plataformRef.toMapRef()
                 : null
           });
         }

@@ -6,7 +6,7 @@ class UserModel extends FirestoreModel {
   String sispat;
   String displayName;
   String email;
-  PlataformModel plataformRef; //automatico
+  PlataformModel plataformRef;
   dynamic dateTimeOnBoard;
   bool arquived;
 
@@ -48,13 +48,7 @@ class UserModel extends FirestoreModel {
     if (email != null) data['email'] = this.email;
     if (sispat != null) data['sispat'] = this.sispat;
     data['plataformRef'] = this.plataformRef?.toMapRef();
-    // if (plataformIdOnBoard != null)
-    // if (this.plataformRef == null) {
-    //   data['plataformRef'] = null;
-    // } else {
-    //   data['plataformRef'] = this.plataformRef.toMapRef();
-    // }
-    // if (dateTimeOnBoard != null)
+
     data['dateTimeOnBoard'] = this.dateTimeOnBoard;
     if (arquived != null) data['arquived'] = this.arquived;
 

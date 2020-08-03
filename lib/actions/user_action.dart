@@ -14,12 +14,11 @@ class SetUserOrderSyncUserAction extends ReduxAction<AppState> {
   AppState reduce() {
     List<UserModel> _userList = [];
     _userList.addAll(state.userState.userList);
-    // print(userList);
     if (userOrder == UserOrder.sispat) {
       _userList.sort((a, b) => a.sispat.compareTo(b.sispat));
     } else if (userOrder == UserOrder.displayName) {
       _userList.sort((a, b) => a.displayName.compareTo(b.displayName));
-    } else if (userOrder == UserOrder.plataformIdOnBoard) {
+    } else if (userOrder == UserOrder.plataformRefOnBoard) {
       List<UserModel> userListWithNull = [];
       List<UserModel> userListWithoutNull = [];
       userListWithNull.addAll(_userList);
@@ -47,7 +46,6 @@ class SetUserOrderSyncUserAction extends ReduxAction<AppState> {
       _userList.addAll(userListWithoutNull);
       _userList.addAll(userListWithNull);
     }
-    // print(userList);
     return state.copyWith(
       userState: state.userState.copyWith(
         userOrder: userOrder,

@@ -105,40 +105,6 @@ class CurrentUserModelSyncLoggedAction extends ReduxAction<AppState> {
   }
 }
 
-// class SetDocUserModelLoggedAction extends ReduxAction<AppState> {
-//   final String displayName;
-//   final String sispat;
-//   final String plataformIdOnBoard;
-//   final dynamic dateTimeOnBoard;
-
-//   SetDocUserModelLoggedAction({
-//     this.displayName,
-//     this.sispat,
-//     this.plataformIdOnBoard,
-//     this.dateTimeOnBoard,
-//   });
-//   @override
-//   Future<AppState> reduce() async {
-//     print('SetDocUserModelLoggedAction...');
-//     Firestore firestore = Firestore.instance;
-//     UserModel userModel = state.loggedState.userModelLogged.copy();
-
-//     userModel.displayName = displayName;
-//     userModel.sispat = sispat;
-//     userModel.plataformIdOnBoard = plataformIdOnBoard;
-//     userModel.dateTimeOnBoard = dateTimeOnBoard;
-//     await firestore
-//         .collection(UserModel.collection)
-//         .document(userModel.id)
-//         .setData(userModel.toMap(), merge: true);
-//     return state.copyWith(
-//       loggedState: state.loggedState.copyWith(
-//         userModelLogged: userModel,
-//       ),
-//     );
-//   }
-// }
-
 class UpdateDocUserModelAsyncLoggedAction extends ReduxAction<AppState> {
   final dynamic dateTimeOnBoard;
 
@@ -150,7 +116,6 @@ class UpdateDocUserModelAsyncLoggedAction extends ReduxAction<AppState> {
     print('UpdateDocUserModelAsyncLoggedAction...');
     Firestore firestore = Firestore.instance;
     UserModel userModel = state.loggedState.userModelLogged.copy();
-    // userModel.plataformIdOnBoard = plataformIdOnBoard;
     userModel.dateTimeOnBoard = dateTimeOnBoard;
     final colRef =
         firestore.collection(UserModel.collection).document(userModel.id);
@@ -178,8 +143,6 @@ class LoginEmailPasswordAsyncLoggedAction extends ReduxAction<AppState> {
       store.dispatch(AuthenticationStatusSyncLoggedAction(
           authenticationStatusLogged:
               AuthenticationStatusLogged.authenticating));
-      // print(email);
-      // print(password);
       final AuthResult authResult = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       firebaseUser = authResult.user;

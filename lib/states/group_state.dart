@@ -7,8 +7,6 @@ class GroupState {
   final List<GroupModel> groupList;
   final GroupOrder groupOrder;
   final GroupModel groupCurrent;
-  // final List<GroupModel> groupSelected;
-  // final List<GroupModel> groupFiltered;
   GroupState({
     this.groupList,
     this.groupOrder,

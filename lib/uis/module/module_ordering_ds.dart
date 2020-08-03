@@ -35,9 +35,6 @@ class _ModuleOrderingDSComponents {
   final codigoIcon = Icon(Icons.sort_by_alpha);
   Icon popupIcon(ModuleOrder moduleOrder) {
     var icon = codigoIcon;
-    // if (moduleOrder == ModuleOrder.displayName) {
-    //   icon = displayNameIcon;
-    // }
     return icon;
   }
 }

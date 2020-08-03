@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peat/models/plataform_model.dart';
 
 class WorkerEditDS extends StatefulWidget {
   final String sispat;
@@ -6,6 +7,8 @@ class WorkerEditDS extends StatefulWidget {
   final String activity;
   final String company;
   final bool arquived;
+  final PlataformModel plataformRef;
+
   final bool isCreateOrUpdate;
   final Function(String, String, String, String) onCreate;
   final Function(String, String, String, String, bool) onUpdate;
@@ -20,6 +23,7 @@ class WorkerEditDS extends StatefulWidget {
     this.displayName,
     this.activity,
     this.company,
+    this.plataformRef,
   }) : super(key: key);
   @override
   _WorkerEditDSState createState() => _WorkerEditDSState();
@@ -81,6 +85,9 @@ class _WorkerEditDSState extends State<WorkerEditDS> {
       key: formKey,
       child: ListView(
         children: [
+          ListTile(
+            title: Text('${widget.plataformRef}'),
+          ),
           TextFormField(
             initialValue: widget.sispat,
             decoration: InputDecoration(

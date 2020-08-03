@@ -24,34 +24,6 @@ class ViewModel extends BaseModel<AppState> {
   _workerListClean() {
     List<WorkerModel> workerListClean = [];
     workerListClean.addAll(state.workerState.workerList);
-    // print('workerListClean: $workerListClean');
-    // //Remove todos que ja estao cadastrados para fazer este modulo nos grupos abertos e fechados
-    // workerListClean.removeWhere((element) {
-    //   print('workerListClean0: ${element.id}');
-    //   if (element.moduleIdList != null && element.moduleIdList.isNotEmpty) {
-    //     print('workerListClean1: ${element.id}');
-    //     print(
-    //         'workerListClean2: ${state.groupState.groupCurrent.moduleRef.id}');
-    //     print(
-    //         'workerListClean3: ${element.moduleIdList.contains(state.groupState.groupCurrent.moduleRef.id)}');
-    //     return element.moduleIdList
-    //         .contains(state.groupState.groupCurrent.moduleRef.id);
-    //   } else {
-    //     return false;
-    //   }
-    // });
-    // //remove todos os que ja estao cadastrados em outras grupos deste mesmo modulo
-    // for (var group in state.groupState.groupList) {
-    //   if (group.workerIdList != null && group.workerIdList.isNotEmpty) {
-    //     for (var worker in group.workerIdList) {
-    //       workerListClean.removeWhere((element) {
-    //         return element.id == worker &&
-    //             group.moduleRef.id ==
-    //                 state.groupState.groupCurrent.moduleRef.id;
-    //       });
-    //     }
-    //   }
-    // }
     return workerListClean;
   }
 
@@ -66,7 +38,6 @@ class ViewModel extends BaseModel<AppState> {
             workerRef: workerRef,
             addOrRemove: addOrRemove,
           ));
-          // dispatch(NavigateAction.pop());
         },
       );
 }

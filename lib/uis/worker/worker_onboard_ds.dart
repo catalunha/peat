@@ -42,38 +42,10 @@ class _WorkerOnBoardDSState extends State<WorkerOnBoardDS> {
       widget.onSetWorkerListOnBoard(_sispats, _inBoard);
       textEditingController.text = '';
       setState(() {});
-      // showAlertDialog(context);
     } else {
       setState(() {});
     }
   }
-
-  // showAlertDialog(BuildContext context) {
-  //   // configura o button
-  //   Widget okButton = FlatButton(
-  //     child: Text("OK"),
-  //     onPressed: () {
-  //       textEditingController.text = widget.workerMsg;
-  //       Navigator.pop(context);
-  //     },
-  //   );
-  //   // configura o  AlertDialog
-  //   AlertDialog alerta = AlertDialog(
-  //     title: Text("Aviso."),
-  //     content: Text(
-  //         'Se alguns SISPATs não foram encontrados eles retornaram pra lista para revisão.'),
-  //     actions: [
-  //       okButton,
-  //     ],
-  //   );
-  //   // exibe o dialog
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return alerta;
-  //     },
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +84,6 @@ class _WorkerOnBoardDSState extends State<WorkerOnBoardDS> {
               ],
             ),
           )
-        // CircularProgressIndicator(),
       ],
     );
   }
@@ -142,7 +113,6 @@ class _WorkerOnBoardDSState extends State<WorkerOnBoardDS> {
           ),
           TextFormField(
             controller: textEditingController,
-            // initialValue: textEditingController.text,
             keyboardType: TextInputType.multiline,
             maxLines: null,
             decoration: InputDecoration(

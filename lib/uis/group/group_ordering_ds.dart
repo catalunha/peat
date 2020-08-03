@@ -55,16 +55,6 @@ class GroupOrderingDS extends StatelessWidget with _GroupOrderingDSComponents {
             ],
           ),
         ),
-        // PopupMenuItem<GroupOrder>(
-        //   value: GroupOrder.moduleId,
-        //   child: Row(
-        //     children: [
-        //       moduleIdIcon,
-        //       SizedBox(width: 5),
-        //       Text(GroupOrder.moduleId.name),
-        //     ],
-        //   ),
-        // ),
       ],
     );
   }
@@ -75,7 +65,6 @@ class _GroupOrderingDSComponents {
   final numberIcon = Icon(Icons.format_list_numbered);
   final startCourseIcon = Icon(Icons.date_range);
   final localCourseIcon = Icon(Icons.person_pin_circle);
-  // final moduleIdIcon = Icon(Icons.record_voice_over);
   Icon popupIcon(GroupOrder groupOrder) {
     var icon = codigoIcon;
     if (groupOrder == GroupOrder.number) {
@@ -85,9 +74,6 @@ class _GroupOrderingDSComponents {
     } else if (groupOrder == GroupOrder.localCourse) {
       icon = localCourseIcon;
     }
-    // else if (groupOrder == GroupOrder.moduleId) {
-    //   icon = moduleIdIcon;
-    // }
     return icon;
   }
 }

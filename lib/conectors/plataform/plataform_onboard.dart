@@ -27,7 +27,6 @@ class ViewModel extends BaseModel<AppState> {
   ViewModel fromStore() => ViewModel.build(
         plataformList: _plataformList(state.plataformState.plataformList),
         onSetUserInPlataform: (PlataformModel plataformModel) {
-          // print('id:$id');
           dispatch(SetUserInPlataformSyncLoggedAction(
               plataformModel: plataformModel));
           dispatch(NavigateAction.pop());

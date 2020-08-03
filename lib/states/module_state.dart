@@ -7,8 +7,6 @@ class ModuleState {
   final List<ModuleModel> moduleList;
   final ModuleOrder moduleOrder;
   final ModuleModel moduleCurrent;
-  // final List<ModuleModel> moduleSelected;
-  // final List<ModuleModel> moduleFiltered;
   ModuleState({
     this.moduleList,
     this.moduleOrder,

@@ -6,12 +6,9 @@ import 'package:peat/models/worker_model.dart';
 class GroupModel extends FirestoreModel {
   static final String collection = 'group';
 
-  String codigo; //p65.200121.01
-  // PlataformModel plataformRef; //automatico
-  UserModel userRef; //automatico
-  // dynamic userDateTimeOnBoard; //automatico
+  String codigo; //p65.200121.number
+  UserModel userRef;
   String number;
-  // String userId; //automatico
   String description;
   dynamic startCourse;
   dynamic endCourse;
@@ -22,14 +19,12 @@ class GroupModel extends FirestoreModel {
   bool success;
   ModuleModel moduleRef;
   Map<String, WorkerModel> workerRefMap;
-  dynamic created; //automatico
+  dynamic created;
   bool arquived;
 
   GroupModel(
     String id, {
     this.codigo,
-    // this.plataformRef,
-    // this.userDateTimeOnBoard,
     this.number,
     this.userRef,
     this.startCourse,
@@ -48,11 +43,6 @@ class GroupModel extends FirestoreModel {
   @override
   GroupModel fromMap(Map<String, dynamic> map) {
     if (map.containsKey('codigo')) codigo = map['codigo'];
-    // plataformRef =
-    //     map.containsKey('plataformRef') && map['plataformRef'] != null
-    //         ? PlataformModel(map['id']).fromMap(map['plataformRef'])
-    //         : null;
-    // if (map.containsKey('userId')) userId = map['userId'];
     userRef = map.containsKey('userRef') && map['userRef'] != null
         ? UserModel(map['userRef']['id']).fromMap(map['userRef'])
         : null;
@@ -65,13 +55,8 @@ class GroupModel extends FirestoreModel {
         workerRefMap[k] = WorkerModel(k).fromMap(v);
       });
     }
-    // userDateTimeOnBoard = map.containsKey('userDateTimeOnBoard') &&
-    //         map['userDateTimeOnBoard'] != null
-    //     ? DateTime.fromMillisecondsSinceEpoch(
-    //         map['userDateTimeOnBoard'].millisecondsSinceEpoch)
-    //     : null;
+
     if (map.containsKey('number')) number = map['number'];
-    // if (map.containsKey('moduloId')) moduleId = map['moduloId'];
     startCourse = map.containsKey('startCourse') && map['startCourse'] != null
         ? DateTime.fromMillisecondsSinceEpoch(
             map['startCourse'].millisecondsSinceEpoch)
@@ -87,7 +72,6 @@ class GroupModel extends FirestoreModel {
     if (map.containsKey('opened')) opened = map['opened'];
     if (map.containsKey('success')) success = map['success'];
     if (map.containsKey('arquived')) arquived = map['arquived'];
-    // if (map.containsKey('moduleId')) moduleId = map['moduleId'];
     created = map.containsKey('created') && map['created'] != null
         ? DateTime.fromMillisecondsSinceEpoch(
             map['created'].millisecondsSinceEpoch)
@@ -100,9 +84,6 @@ class GroupModel extends FirestoreModel {
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     if (codigo != null) data['codigo'] = this.codigo;
-    // if (this.plataformRef != null) {
-    //   data['plataformRef'] = this.plataformRef.toMapRef();
-    // }
     if (this.userRef != null) {
       data['userRef'] = this.userRef.toMapRef();
     }
@@ -116,9 +97,6 @@ class GroupModel extends FirestoreModel {
       });
       data['workerRefMap'] = dataFromField;
     }
-    // if (userDateTimeOnBoard != null)
-    //   data['userDateTimeOnBoard'] = this.userDateTimeOnBoard;
-    // if (userId != null) data['userId'] = this.userId;
     if (number != null) data['number'] = this.number;
     if (startCourse != null) data['startCourse'] = this.startCourse;
     if (endCourse != null) data['endCourse'] = this.endCourse;
@@ -128,10 +106,8 @@ class GroupModel extends FirestoreModel {
     if (description != null) data['description'] = this.description;
     if (opened != null) data['opened'] = this.opened;
     if (success != null) data['success'] = this.success;
-    // if (moduleId != null) data['moduleId'] = this.moduleId;
     if (created != null) data['created'] = this.created;
     if (arquived != null) data['arquived'] = this.arquived;
-    // data.addAll({'id': this.id});
     return data;
   }
 

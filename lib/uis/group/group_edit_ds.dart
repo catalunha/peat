@@ -65,7 +65,7 @@ class _GroupEditDSState extends State<GroupEditDS> {
   String _number;
   String _description;
   DateTime _startCourse;
-  TimeOfDay _startCourseTime; // = new TimeOfDay.now();
+  TimeOfDay _startCourseTime;
   DateTime _endCourse;
   TimeOfDay _endCourseTime;
   String _localCourse;
@@ -225,8 +225,6 @@ class _GroupEditDSState extends State<GroupEditDS> {
             validateData();
           } else {
             showSnackBarHandler(context);
-            // scaffoldState.currentState.showSnackBar(SnackBar(
-            //     content: Text('Favor informar Módulo e Trabalhadores.')));
           }
         },
       ),
@@ -236,8 +234,6 @@ class _GroupEditDSState extends State<GroupEditDS> {
   showSnackBarHandler(context) {
     scaffoldState.currentState.showSnackBar(
         SnackBar(content: Text('Favor informar Módulo e Trabalhadores.')));
-    // Scaffold.of(context).showSnackBar(
-    //     SnackBar(content: Text('Favor informar Módulo e Trabalhadores.')));
   }
 
   _workerIdData(String workerId) {

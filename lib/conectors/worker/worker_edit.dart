@@ -1,6 +1,7 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:peat/actions/worker_action.dart';
+import 'package:peat/models/plataform_model.dart';
 import 'package:peat/states/app_state.dart';
 import 'package:peat/uis/worker/worker_edit_ds.dart';
 
@@ -10,7 +11,7 @@ class ViewModel extends BaseModel<AppState> {
   String activity;
   String company;
   bool arquived;
-  String plataformIdOnBoard;
+  PlataformModel plataformRef;
   bool isCreateOrUpdate;
   Function(String, String, String, String) onCreate;
   Function(String, String, String, String, bool) onUpdate;
@@ -21,7 +22,7 @@ class ViewModel extends BaseModel<AppState> {
     @required this.activity,
     @required this.company,
     @required this.arquived,
-    @required this.plataformIdOnBoard,
+    @required this.plataformRef,
     @required this.isCreateOrUpdate,
     @required this.onCreate,
     @required this.onUpdate,
@@ -31,7 +32,7 @@ class ViewModel extends BaseModel<AppState> {
           activity,
           company,
           arquived,
-          plataformIdOnBoard,
+          plataformRef,
           isCreateOrUpdate,
         ]);
   @override
@@ -41,7 +42,7 @@ class ViewModel extends BaseModel<AppState> {
         activity: state.workerState.workerCurrent.activity,
         company: state.workerState.workerCurrent.company,
         arquived: state.workerState.workerCurrent?.arquived ?? false,
-        plataformIdOnBoard: state.workerState.workerCurrent.plataformIdOnBoard,
+        plataformRef: state.workerState.workerCurrent.plataformRef,
         isCreateOrUpdate: state.workerState.workerCurrent?.id == null,
         onCreate: (String sispat, String displayName, String activity,
             String company) {

@@ -46,10 +46,6 @@ class SetGroupOrderSyncUserAction extends ReduxAction<AppState> {
     } else if (groupOrder == GroupOrder.localCourse) {
       _groupList.sort((a, b) => a.localCourse.compareTo(b.localCourse));
     }
-    // else if (groupOrder == GroupOrder.moduleId) {
-    //   _groupList.sort((a, b) => a.moduleId.compareTo(b.moduleId));
-    // }
-    print('--------------------------');
     return state.copyWith(
       groupState: state.groupState.copyWith(
         groupOrder: groupOrder,
@@ -109,8 +105,6 @@ class GetDocsGroupListAllAsyncGroupAction extends ReduxAction<AppState> {
 
 class CreateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   final String codigo; //p65.200121.01
-  // final String plataformId;
-  // final String userId;
   final dynamic userDateTimeOnBoard;
   final String number;
   final dynamic startCourse;
@@ -121,8 +115,6 @@ class CreateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   final String description;
   CreateDocGroupCurrentAsyncGroupAction({
     this.codigo,
-    // this.plataformId,
-    // this.userId,
     this.userDateTimeOnBoard,
     this.number,
     this.startCourse,
@@ -138,18 +130,10 @@ class CreateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
     Firestore firestore = Firestore.instance;
     GroupModel groupModel = state.groupState.groupCurrent;
     groupModel.codigo = codigo;
-    // PlataformModel temp = state.plataformState.plataformList.firstWhere(
-    //     (element) =>
-    //         element.id == state.loggedState.userModelLogged.plataformIdOnBoard);
-    // groupModel.plataformRef = PlataformModel(temp.id).fromMap(temp.toMapRef());
-    // UserModel temp = state.us.plataformList.firstWhere(
-    //     (element) =>
-    //         element.id == state.loggedState.userModelLogged.plataformIdOnBoard);
+
     groupModel.userRef = UserModel(state.loggedState.userModelLogged.id)
         .fromMap(state.loggedState.userModelLogged.toMapRef());
 
-    // groupModel.userId = state.loggedState.userModelLogged.id;
-    // groupModel.userDateTimeOnBoard = userDateTimeOnBoard;
     groupModel.number = number;
     groupModel.startCourse = startCourse;
     groupModel.endCourse = endCourse;
@@ -186,8 +170,6 @@ class CreateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
 
 class UpdateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   final String codigo; //p65.200121.01
-  // final String plataformId;
-  // final String userId;
   final dynamic userDateTimeOnBoard;
   final String number;
   final dynamic startCourse;
@@ -201,8 +183,6 @@ class UpdateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   final bool arquived;
   UpdateDocGroupCurrentAsyncGroupAction({
     this.codigo,
-    // this.plataformId,
-    // this.userId,
     this.userDateTimeOnBoard,
     this.number,
     this.startCourse,
@@ -222,13 +202,7 @@ class UpdateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
     GroupModel groupModel = GroupModel(state.groupState.groupCurrent.id)
         .fromMap(state.groupState.groupCurrent.toMap());
     groupModel.codigo = codigo;
-    // groupModel.plataformRef = state.plataformState.plataformList.firstWhere(
-    //     (element) =>
-    //         element.id == state.loggedState.userModelLogged.plataformIdOnBoard);
-    // groupModel.userRef = UserModel(state.loggedState.userModelLogged.id)
-    //     .fromMap(state.loggedState.userModelLogged.toMapRef());
-    // groupModel.userId = state.loggedState.userModelLogged.id;
-    // groupModel.userDateTimeOnBoard = userDateTimeOnBoard;
+
     groupModel.number = number;
     groupModel.startCourse = startCourse;
     groupModel.endCourse = endCourse;

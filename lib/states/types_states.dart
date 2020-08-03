@@ -10,7 +10,7 @@ enum AuthenticationStatusLogged {
 enum UserOrder {
   sispat,
   displayName,
-  plataformIdOnBoard,
+  plataformRefOnBoard,
   dateTimeOnBoard,
 }
 
@@ -18,7 +18,7 @@ extension UserOrderExtension on UserOrder {
   static const names = {
     UserOrder.sispat: 'SISPAT',
     UserOrder.displayName: 'Nome',
-    UserOrder.plataformIdOnBoard: 'Plataforma',
+    UserOrder.plataformRefOnBoard: 'Plataforma',
     UserOrder.dateTimeOnBoard: 'DataOnBoard',
   };
   String get name => names[this];
@@ -76,7 +76,6 @@ enum GroupOrder {
   number,
   startCourse,
   localCourse,
-  // moduleId,
 }
 
 extension GroupOrderExtension on GroupOrder {
@@ -85,7 +84,6 @@ extension GroupOrderExtension on GroupOrder {
     GroupOrder.number: 'Número',
     GroupOrder.startCourse: 'Início',
     GroupOrder.localCourse: 'Local',
-    // GroupOrder.moduleId: 'Módulo',
   };
   String get name => names[this];
 }

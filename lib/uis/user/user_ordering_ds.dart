@@ -36,12 +36,12 @@ class UserOrderingDS extends StatelessWidget with _UserOrderingDSComponents {
           ),
         ),
         PopupMenuItem<UserOrder>(
-          value: UserOrder.plataformIdOnBoard,
+          value: UserOrder.plataformRefOnBoard,
           child: Row(
             children: [
-              plataformIdOnBoardIcon,
+              plataformRefOnBoardIcon,
               SizedBox(width: 5),
-              Text(UserOrder.plataformIdOnBoard.name),
+              Text(UserOrder.plataformRefOnBoard.name),
             ],
           ),
         ),
@@ -63,14 +63,14 @@ class UserOrderingDS extends StatelessWidget with _UserOrderingDSComponents {
 class _UserOrderingDSComponents {
   final sispatIcon = Icon(Icons.format_list_numbered);
   final displayNameIcon = Icon(Icons.sort_by_alpha);
-  final plataformIdOnBoardIcon = Icon(Icons.directions_boat);
+  final plataformRefOnBoardIcon = Icon(Icons.directions_boat);
   final dateTimeOnBoardIcon = Icon(Icons.date_range);
   Icon popupIcon(UserOrder userOrder) {
     var icon = sispatIcon;
     if (userOrder == UserOrder.displayName) {
       icon = displayNameIcon;
-    } else if (userOrder == UserOrder.plataformIdOnBoard) {
-      icon = plataformIdOnBoardIcon;
+    } else if (userOrder == UserOrder.plataformRefOnBoard) {
+      icon = plataformRefOnBoardIcon;
     } else if (userOrder == UserOrder.dateTimeOnBoard) {
       icon = dateTimeOnBoardIcon;
     }

@@ -35,9 +35,6 @@ class _PlataformOrderingDSComponents {
   final codigoIcon = Icon(Icons.sort_by_alpha);
   Icon popupIcon(PlataformOrder plataformOrder) {
     var icon = codigoIcon;
-    // if (plataformOrder == PlataformOrder.displayName) {
-    //   icon = displayNameIcon;
-    // }
     return icon;
   }
 }

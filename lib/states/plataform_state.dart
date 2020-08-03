@@ -7,8 +7,6 @@ class PlataformState {
   final List<PlataformModel> plataformList;
   final PlataformOrder plataformOrder;
   final PlataformModel plataformCurrent;
-  // final List<PlataformModel> plataformSelected;
-  // final List<PlataformModel> plataformFiltered;
   PlataformState({
     this.plataformList,
     this.plataformOrder,

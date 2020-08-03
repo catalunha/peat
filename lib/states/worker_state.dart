@@ -7,8 +7,6 @@ class WorkerState {
   final List<WorkerModel> workerList;
   final WorkerOrder workerOrder;
   final WorkerModel workerCurrent;
-  // final List<WorkerModel> workerSelected;
-  // final List<WorkerModel> workerFiltered;
   final String workerMsg;
   WorkerState({
     this.workerList,

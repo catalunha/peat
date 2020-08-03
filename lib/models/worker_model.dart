@@ -1,4 +1,6 @@
 import 'package:peat/models/firestore_model.dart';
+import 'package:peat/models/module_model.dart';
+import 'package:peat/models/plataform_model.dart';
 
 class WorkerModel extends FirestoreModel {
   static final String collection = 'worker';
@@ -6,8 +8,9 @@ class WorkerModel extends FirestoreModel {
   String displayName;
   String company;
   String activity;
-  String plataformIdOnBoard;
-  List<dynamic> moduleIdList;
+  PlataformModel plataformRef;
+  Map<String, ModuleModel> moduleRefMap;
+
   bool arquived;
 
   WorkerModel(
@@ -16,8 +19,8 @@ class WorkerModel extends FirestoreModel {
     this.displayName,
     this.activity,
     this.company,
-    this.plataformIdOnBoard,
-    this.moduleIdList,
+    this.plataformRef,
+    this.moduleRefMap,
     this.arquived,
   }) : super(id);
 
@@ -28,9 +31,16 @@ class WorkerModel extends FirestoreModel {
     if (map.containsKey('activity')) activity = map['activity'];
     if (map.containsKey('company')) company = map['company'];
     if (map.containsKey('arquived')) arquived = map['arquived'];
-    if (map.containsKey('moduleIdList')) moduleIdList = map['moduleIdList'];
-    if (map.containsKey('plataformIdOnBoard'))
-      plataformIdOnBoard = map['plataformIdOnBoard'];
+    if (map["moduleRefMap"] is Map) {
+      moduleRefMap = Map<String, ModuleModel>();
+      map["moduleRefMap"].forEach((k, v) {
+        moduleRefMap[k] = ModuleModel(k).fromMap(v);
+      });
+    }
+    plataformRef = map.containsKey('plataformRef') &&
+            map['plataformRef'] != null
+        ? PlataformModel(map['plataformRef']['id']).fromMap(map['plataformRef'])
+        : null;
     return this;
   }
 
@@ -42,9 +52,15 @@ class WorkerModel extends FirestoreModel {
     if (activity != null) data['activity'] = this.activity;
     if (company != null) data['company'] = this.company;
     if (arquived != null) data['arquived'] = this.arquived;
-    if (moduleIdList != null) data['moduleIdList'] = this.moduleIdList;
-    if (plataformIdOnBoard != null)
-      data['plataformIdOnBoard'] = this.plataformIdOnBoard;
+    if (moduleRefMap != null) {
+      Map<String, dynamic> dataFromField = Map<String, dynamic>();
+      this.moduleRefMap.forEach((k, v) {
+        dataFromField[k] = v.toMapRef();
+      });
+      data['moduleRefMap'] = dataFromField;
+    }
+    data['plataformRef'] = this.plataformRef?.toMapRef();
+
     return data;
   }
 
@@ -65,8 +81,8 @@ class WorkerModel extends FirestoreModel {
       displayName: this.displayName,
       activity: this.activity,
       company: this.company,
-      plataformIdOnBoard: this.plataformIdOnBoard,
-      moduleIdList: this.moduleIdList,
+      plataformRef: this.plataformRef,
+      moduleRefMap: this.moduleRefMap,
       arquived: this.arquived,
     );
   }

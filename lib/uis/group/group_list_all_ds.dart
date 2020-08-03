@@ -102,37 +102,6 @@ class _GroupListAllDSState extends State<GroupListAllDS> {
             title: Text('${group.codigo}'),
             subtitle: Text(
                 '\nnumber: ${group.id.substring(0, 5)}\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${group.userRef.id}\nplataformId: ${group.userRef.plataformRef.codigo}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userRef.dateTimeOnBoard)}\nmoduleId: ${group.moduleRef.codigo}\nworkerRefMap: ${workerRefMapData(group.workerRefMap)} '),
-            // trailing: PopupMenuButton<int>(
-            //   icon: Icon(Icons.link),
-            //   itemBuilder: (context) => [
-            //     PopupMenuItem(
-            //       value: 1,
-            //       child: Text("urlPhoto"),
-            //     ),
-            //     PopupMenuItem(
-            //       value: 2,
-            //       child: Text("urlFolder"),
-            //     ),
-            //   ],
-            //   onSelected: (value) {
-            //     if (value == 1) {
-            //       setState(() {
-            //         _launched = _launchInBrowser(group.urlPhoto);
-            //       });
-            //     } else {
-            //       setState(() {
-            //         _launched = _launchInBrowser(group.urlFolder);
-            //       });
-            //     }
-            //   },
-            // ),
-
-            // trailing: IconButton(
-            //   icon: Icon(Icons.link),
-            //   tooltip: group.urlPhoto,
-            //   onPressed: () => setState(() {
-            //     _launched = _launchInBrowser(group.urlPhoto);
-            //   }),
             onTap: () {
               widget.onArquivedFalse(group.id);
             },

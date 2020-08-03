@@ -92,18 +92,6 @@ class ViewModel extends BaseModel<AppState> {
           isCreateOrUpdate,
           workerList,
         ]);
-  // String _moduleId() {
-  //   String _return;
-  //   ModuleModel moduleModel;
-  //   if (state.groupState.groupCurrent.moduleId != null) {
-  //     moduleModel = state.moduleState.moduleList.firstWhere(
-  //         (element) => element.id == state.groupState.groupCurrent.moduleId);
-  //     _return = moduleModel.codigo;
-  //   }
-
-  //   return _return;
-  // }
-
   @override
   ViewModel fromStore() => ViewModel.build(
         codigo: state.groupState.groupCurrent.codigo,
