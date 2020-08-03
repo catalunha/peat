@@ -57,7 +57,7 @@ class HomePageDS extends StatelessWidget {
           ),
           ListTile(
             enabled: userOnBoard,
-            leading: Icon(Icons.art_track),
+            leading: Icon(Icons.track_changes),
             title: Text('Grupos arquivados'),
             onTap: () => Navigator.pushNamed(context, Routes.groupListAll),
           ),
