@@ -17,7 +17,7 @@ class HomePageDS extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PEAT'),
+        title: Text('PEAT - ${userModel?.sispat}'),
         actions: [
           IconButton(
             icon: Icon(Icons.person,
@@ -33,10 +33,40 @@ class HomePageDS extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          // ListTile(
+          //   enabled: false,
+          //   title: Text('${userModel?.displayName}'),
+          //   subtitle: Text('$userModel'),
+          // ),
           ListTile(
-            enabled: false,
-            title: Text('${userModel?.displayName}'),
-            subtitle: Text('$userModel'),
+            leading: Icon(Icons.people),
+            title: Text('Trabalhadores'),
+            onTap: () => Navigator.pushNamed(context, Routes.workerList),
+          ),
+          ListTile(
+            enabled: userOnBoard,
+            leading: Icon(Icons.directions_boat),
+            title: Text('Check PeopleOnBoard'),
+            onTap: () => Navigator.pushNamed(context, Routes.workerOnBoard),
+          ),
+          ListTile(
+            enabled: userOnBoard,
+            leading: Icon(Icons.art_track),
+            title: Text('Grupos ativos'),
+            onTap: () => Navigator.pushNamed(context, Routes.groupList),
+          ),
+          ListTile(
+            enabled: userOnBoard,
+            leading: Icon(Icons.art_track),
+            title: Text('Grupos arquivados'),
+            onTap: () => Navigator.pushNamed(context, Routes.groupListAll),
+          ),
+          Row(
+            children: [
+              Expanded(child: Divider()),
+              Text('Administradores'),
+              Expanded(child: Divider()),
+            ],
           ),
           ListTile(
             leading: Icon(
@@ -55,34 +85,17 @@ class HomePageDS extends StatelessWidget {
             title: Text('Modulos'),
             onTap: () => Navigator.pushNamed(context, Routes.moduleList),
           ),
-          ListTile(
-            enabled: userOnBoard,
-            leading: Icon(Icons.directions_boat),
-            title: Text('Check PeopleOnBoard'),
-            onTap: () => Navigator.pushNamed(context, Routes.workerOnBoard),
+          Row(
+            children: [
+              Expanded(child: Divider()),
+              Text('Acesso restrito'),
+              Expanded(child: Divider()),
+            ],
           ),
-          ListTile(
-            leading: Icon(Icons.people),
-            title: Text('Trabalhadores'),
-            onTap: () => Navigator.pushNamed(context, Routes.workerList),
-          ),
-          ListTile(
-            enabled: userOnBoard,
-            leading: Icon(Icons.art_track),
-            title: Text('Grupo'),
-            onTap: () => Navigator.pushNamed(context, Routes.groupList),
-          ),
-          Divider(),
           ListTile(
             leading: Icon(Icons.people_outline),
             title: Text('Todos os trabalhadores'),
             onTap: () => Navigator.pushNamed(context, Routes.workerListAll),
-          ),
-          ListTile(
-            enabled: userOnBoard,
-            leading: Icon(Icons.art_track),
-            title: Text('Todos os grupos'),
-            onTap: () => Navigator.pushNamed(context, Routes.groupListAll),
           ),
         ],
       ),

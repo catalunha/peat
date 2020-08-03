@@ -24,25 +24,27 @@ class ModuleListDS extends StatelessWidget {
         itemCount: moduleList.length,
         itemBuilder: (context, index) {
           final module = moduleList[index];
-          return ListTile(
-            selected: module.arquived,
-            title: Text('${module.codigo}'),
-            subtitle: Text(
-                '${module.description}\n${module.urlFolder}\nmoduleModel: $module'),
-            trailing: IconButton(
-              icon: Icon(Icons.link),
-              tooltip: module.urlFolder,
-              onPressed: () async {
-                if (module?.urlFolder != null) {
-                  if (await canLaunch(module.urlFolder)) {
-                    await launch(module.urlFolder);
+          return Card(
+            child: ListTile(
+              selected: module.arquived,
+              title: Text('${module.codigo}'),
+              subtitle: Text(
+                  '${module.description}\n${module.urlFolder}\nmoduleModel: $module'),
+              trailing: IconButton(
+                icon: Icon(Icons.link),
+                tooltip: module.urlFolder,
+                onPressed: () async {
+                  if (module?.urlFolder != null) {
+                    if (await canLaunch(module.urlFolder)) {
+                      await launch(module.urlFolder);
+                    }
                   }
-                }
+                },
+              ),
+              onTap: () {
+                onEditModuleCurrent(module.id);
               },
             ),
-            onTap: () {
-              onEditModuleCurrent(module.id);
-            },
           );
         },
       ),

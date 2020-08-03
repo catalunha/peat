@@ -23,14 +23,16 @@ class PlataformListDS extends StatelessWidget {
         itemCount: plataformList.length,
         itemBuilder: (context, index) {
           final plataform = plataformList[index];
-          return ListTile(
-            selected: plataform.arquived,
-            title: Text('${plataform.codigo}'),
-            subtitle:
-                Text('${plataform.description}\nplataformModel: $plataform'),
-            onTap: () {
-              onEditPlataformCurrent(plataform.id);
-            },
+          return Card(
+            child: ListTile(
+              selected: plataform.arquived,
+              title: Text('${plataform.codigo}'),
+              subtitle:
+                  Text('${plataform.description}\nplataformModel: $plataform'),
+              onTap: () {
+                onEditPlataformCurrent(plataform.id);
+              },
+            ),
           );
         },
       ),

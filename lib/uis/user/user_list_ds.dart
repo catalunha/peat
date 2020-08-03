@@ -33,10 +33,12 @@ class UserListDS extends StatelessWidget {
         itemCount: userList.length,
         itemBuilder: (context, index) {
           final user = userList[index];
-          return ListTile(
-            title: Text('${user.displayName}'),
-            subtitle: Text(
-                'SISPAT: ${user.sispat}\nEmail: ${user.email}\nPlataforma OnBoard: ${user.plataformRef?.codigo}\nDate OnBoard: ${user.dateTimeOnBoard}\nuserModel: $user'),
+          return Card(
+            child: ListTile(
+              title: Text('${user.displayName}'),
+              subtitle: Text(
+                  'SISPAT: ${user.sispat}\nEmail: ${user.email}\nPlataforma OnBoard: ${user.plataformRef?.codigo}\nDate OnBoard: ${user.dateTimeOnBoard}\nuserModel: $user'),
+            ),
           );
         },
       ),

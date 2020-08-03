@@ -33,14 +33,16 @@ class WorkerListDS extends StatelessWidget {
         itemCount: workerList.length,
         itemBuilder: (context, index) {
           final worker = workerList[index];
-          return ListTile(
-            selected: worker.arquived,
-            title: Text('${worker.displayName}'),
-            subtitle: Text(
-                'SISPAT: ${worker.sispat}\nEmpresa: ${worker.company}\nFunção: ${worker.activity}\nPlataforma OnBoard: ${worker.plataformRef?.codigo}\nModulos: ${moduleRefMapData(worker.moduleRefMap)}\nworkerModel: $worker\n'),
-            onTap: () {
-              onEditWorkerCurrent(worker.id);
-            },
+          return Card(
+            child: ListTile(
+              selected: worker.arquived,
+              title: Text('${worker.displayName}'),
+              subtitle: Text(
+                  'SISPAT: ${worker.sispat}\nEmpresa: ${worker.company}\nFunção: ${worker.activity}\nPlataforma OnBoard: ${worker.plataformRef?.codigo}\nModulos: ${moduleRefMapData(worker.moduleRefMap)}\nworkerModel: $worker\n'),
+              onTap: () {
+                onEditWorkerCurrent(worker.id);
+              },
+            ),
           );
         },
       ),
