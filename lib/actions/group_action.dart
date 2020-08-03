@@ -39,8 +39,6 @@ class SetGroupOrderSyncUserAction extends ReduxAction<AppState> {
     _groupList.addAll(state.groupState.groupList);
     if (groupOrder == GroupOrder.codigo) {
       _groupList.sort((a, b) => a.codigo.compareTo(b.codigo));
-    } else if (groupOrder == GroupOrder.number) {
-      _groupList.sort((a, b) => a.number.compareTo(b.number));
     } else if (groupOrder == GroupOrder.startCourse) {
       _groupList.sort((a, b) => a.startCourse.compareTo(b.startCourse));
     } else if (groupOrder == GroupOrder.localCourse) {

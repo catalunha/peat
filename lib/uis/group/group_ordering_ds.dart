@@ -26,16 +26,6 @@ class GroupOrderingDS extends StatelessWidget with _GroupOrderingDSComponents {
           ),
         ),
         PopupMenuItem<GroupOrder>(
-          value: GroupOrder.number,
-          child: Row(
-            children: [
-              numberIcon,
-              SizedBox(width: 5),
-              Text(GroupOrder.number.name),
-            ],
-          ),
-        ),
-        PopupMenuItem<GroupOrder>(
           value: GroupOrder.startCourse,
           child: Row(
             children: [
@@ -67,9 +57,7 @@ class _GroupOrderingDSComponents {
   final localCourseIcon = Icon(Icons.person_pin_circle);
   Icon popupIcon(GroupOrder groupOrder) {
     var icon = codigoIcon;
-    if (groupOrder == GroupOrder.number) {
-      icon = numberIcon;
-    } else if (groupOrder == GroupOrder.startCourse) {
+    if (groupOrder == GroupOrder.startCourse) {
       icon = startCourseIcon;
     } else if (groupOrder == GroupOrder.localCourse) {
       icon = localCourseIcon;

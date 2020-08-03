@@ -41,26 +41,8 @@ class _GroupListAllDSState extends State<GroupListAllDS> {
       _return = _return +
           '\n${workerRef.displayName} || ${workerRef.id.substring(0, 5)}';
     }
-
-    // for (var workerRef in workerRefMap.entries) {
-    //   _return = _return +
-    //       '\n${workerRef.value.displayName} || ${workerRef.value.id.substring(0, 5)}';
-    // }
-
     return _return;
   }
-  // Future<void> _launchInBrowser(String url) async {
-  //   if (await canLaunch(url)) {
-  //     await launch(
-  //       url,
-  //       forceSafariVC: false,
-  //       forceWebView: false,
-  //       headers: <String, String>{'my_header_key': 'my_header_value'},
-  //     );
-  //   } else {
-  //     throw 'Could not launch $url';
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -73,21 +55,48 @@ class _GroupListAllDSState extends State<GroupListAllDS> {
         itemCount: widget.groupList.length,
         itemBuilder: (context, index) {
           final group = widget.groupList[index];
-          return ListTile(
-            selected: group.arquived,
-            title: Text('${group.codigo}'),
-            subtitle: Text(
-                '\nid: ${group.id.substring(0, 5)}\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${group.userRef.id}\nplataformId: ${group.userRef.plataformRef.codigo}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userRef.dateTimeOnBoard)}\nmoduleId: ${group.moduleRef.codigo}\nworkerRefMap: ${workerRefMapData(group.workerRefMap)}'),
-            onTap: () {
-              widget.onArquivedFalse(group.id);
-            },
+          return Card(
+            child: Column(
+              children: [
+                ListTile(
+                  selected: group.arquived,
+                  title: Text('${group.codigo}'),
+                  subtitle: Text(
+                      '\nid: ${group.id.substring(0, 5)}\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${group.userRef.id}\nplataformId: ${group.userRef.plataformRef.codigo}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userRef.dateTimeOnBoard)}\nmoduleId: ${group.moduleRef.codigo}\nworkerRefMap: ${workerRefMapData(group.workerRefMap)}'),
+                  onTap: () {
+                    widget.onArquivedFalse(group.id);
+                  },
+                ),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  children: [
+                    IconButton(
+                      tooltip: 'Link para a pasta deste grupo',
+                      icon: Icon(Icons.folder),
+                      onPressed: () async {
+                        if (group?.urlFolder != null) {
+                          if (await canLaunch(group.urlFolder)) {
+                            await launch(group.urlFolder);
+                          }
+                        }
+                      },
+                    ),
+                    IconButton(
+                      tooltip: 'Link para a foto do encontro deste grupo',
+                      icon: Icon(Icons.people),
+                      onPressed: () async {
+                        if (group?.urlPhoto != null) {
+                          if (await canLaunch(group.urlPhoto)) {
+                            await launch(group.urlPhoto);
+                          }
+                        }
+                      },
+                    ),
+                  ],
+                )
+              ],
+            ),
           );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          widget.onArquivedFalse(null);
         },
       ),
     );

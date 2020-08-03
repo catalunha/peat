@@ -73,7 +73,6 @@ extension WorkerOrderExtension on WorkerOrder {
 //+++ PlataformOrder
 enum GroupOrder {
   codigo,
-  number,
   startCourse,
   localCourse,
 }
@@ -81,7 +80,6 @@ enum GroupOrder {
 extension GroupOrderExtension on GroupOrder {
   static const names = {
     GroupOrder.codigo: 'Código',
-    GroupOrder.number: 'Número',
     GroupOrder.startCourse: 'Início',
     GroupOrder.localCourse: 'Local',
   };

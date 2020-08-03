@@ -4,6 +4,7 @@ import 'package:peat/actions/group_action.dart';
 import 'package:peat/actions/module_action.dart';
 import 'package:peat/actions/worker_action.dart';
 import 'package:peat/models/module_model.dart';
+import 'package:peat/models/user_model.dart';
 import 'package:peat/models/worker_model.dart';
 import 'package:peat/states/app_state.dart';
 import 'package:peat/uis/group/group_edit_ds.dart';
@@ -17,6 +18,7 @@ class ViewModel extends BaseModel<AppState> {
   String localCourse;
   String urlFolder;
   String urlPhoto;
+  UserModel userRef;
   ModuleModel moduleRef;
   Map<String, WorkerModel> workerRefMap;
   bool opened;
@@ -64,6 +66,7 @@ class ViewModel extends BaseModel<AppState> {
     @required this.localCourse,
     @required this.urlFolder,
     @required this.urlPhoto,
+    @required this.userRef,
     @required this.moduleRef,
     @required this.workerRefMap,
     @required this.opened,
@@ -84,6 +87,7 @@ class ViewModel extends BaseModel<AppState> {
           localCourse,
           urlFolder,
           urlPhoto,
+          userRef,
           moduleRef,
           workerRefMap,
           opened,
@@ -102,6 +106,7 @@ class ViewModel extends BaseModel<AppState> {
         localCourse: state.groupState.groupCurrent.localCourse,
         urlFolder: state.groupState.groupCurrent.urlFolder,
         urlPhoto: state.groupState.groupCurrent.urlPhoto,
+        userRef: state.loggedState.userModelLogged,
         moduleRef: state.groupState.groupCurrent.moduleRef,
         workerRefMap: state.groupState.groupCurrent.workerRefMap,
         opened: state.groupState.groupCurrent?.opened ?? true,
@@ -193,6 +198,7 @@ class GroupEdit extends StatelessWidget {
         localCourse: viewModel.localCourse,
         urlFolder: viewModel.urlFolder,
         urlPhoto: viewModel.urlPhoto,
+        userRef: viewModel.userRef,
         moduleRef: viewModel.moduleRef,
         workerRefMap: viewModel.workerRefMap,
         opened: viewModel.opened,

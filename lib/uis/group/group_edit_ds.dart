@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:peat/conectors/module/module_select.dart';
 import 'package:peat/conectors/worker/worker_select.dart';
 import 'package:peat/models/module_model.dart';
+import 'package:peat/models/user_model.dart';
 import 'package:peat/models/worker_model.dart';
 
 class GroupEditDS extends StatefulWidget {
@@ -15,8 +16,8 @@ class GroupEditDS extends StatefulWidget {
   final String urlFolder;
   final String urlPhoto;
   final ModuleModel moduleRef;
-
   final Map<String, WorkerModel> workerRefMap;
+  final UserModel userRef;
 
   final bool opened;
   final bool success;
@@ -52,6 +53,7 @@ class GroupEditDS extends StatefulWidget {
     this.onEditPop,
     this.onSetWorkerTheGroupSyncGroupAction,
     this.workerList,
+    this.userRef,
   }) : super(key: key);
   @override
   _GroupEditDSState createState() => _GroupEditDSState();
@@ -59,7 +61,8 @@ class GroupEditDS extends StatefulWidget {
 
 class _GroupEditDSState extends State<GroupEditDS> {
   GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
-  final codigoTextEditingController = TextEditingController();
+  // final numberTextEditingController =
+  //     TextEditingController();
 
   final formKey = GlobalKey<FormState>();
   String _codigo;
@@ -78,6 +81,10 @@ class _GroupEditDSState extends State<GroupEditDS> {
   @override
   void initState() {
     super.initState();
+    _codigo =
+        '${widget.userRef.plataformRef.codigo}.${DateFormat('yyMMdd').format(widget.userRef.dateTimeOnBoard)}.' +
+            (widget.number ?? '');
+    // numberTextEditingController.text = widget.number;
     _opened = widget.opened;
     _success = widget.success;
     _arquived = widget.arquived;
@@ -95,7 +102,7 @@ class _GroupEditDSState extends State<GroupEditDS> {
 
   @override
   void dispose() {
-    codigoTextEditingController.dispose();
+    // numberTextEditingController.dispose();
     super.dispose();
   }
 
@@ -213,7 +220,8 @@ class _GroupEditDSState extends State<GroupEditDS> {
     return Scaffold(
       key: scaffoldState,
       appBar: AppBar(
-        title: Text(widget.isCreateOrUpdate ? 'Criar grupo' : 'Editar grupo'),
+        title: Text(
+            (widget.isCreateOrUpdate ? 'Criar' : 'Editar') + ' grupo $_codigo'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => widget.onEditPop(),
@@ -226,35 +234,49 @@ class _GroupEditDSState extends State<GroupEditDS> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.cloud_upload),
         onPressed: () {
-          if (widget.moduleRef != null &&
-              widget.workerRefMap != null &&
-              widget.workerRefMap.isNotEmpty) {
+          bool liberated = true;
+          if (liberated) {
+            if (widget.moduleRef != null &&
+                widget.workerRefMap != null &&
+                widget.workerRefMap.isNotEmpty) {
+              liberated = true;
+            } else {
+              liberated = false;
+              showSnackBarHandler(
+                  context, 'Favor informar Módulo e Trabalhadores.');
+            }
+          }
+          if (liberated) {
+            Duration difference = _endCourse.difference(_startCourse);
+            if (difference.isNegative) {
+              liberated = false;
+              showSnackBarHandler(
+                  context, 'Data e hora do fim antes do início.');
+            } else {
+              liberated = true;
+            }
+          }
+          if (liberated) {
+            if (_arquived) {
+              if (_opened) {
+                liberated = false;
+                showSnackBarHandler(
+                    context, 'Para arquivar deve estar encerrado.');
+              } else {
+                liberated = true;
+              }
+            }
+          }
+          if (liberated) {
             validateData();
-          } else {
-            showSnackBarHandler(context);
           }
         },
       ),
     );
   }
 
-  showSnackBarHandler(context) {
-    scaffoldState.currentState.showSnackBar(
-        SnackBar(content: Text('Favor informar Módulo e Trabalhadores.')));
-  }
-
-  _workerIdData(String workerId) {
-    String _return = workerId;
-    if (workerId != null &&
-        widget.workerList != null &&
-        widget.workerList.isNotEmpty) {
-      print('workerId: $workerId ... widget.workerList.: ${widget.workerList}');
-      WorkerModel workerModel =
-          widget.workerList.firstWhere((element) => element.id == workerId);
-      _return =
-          '${workerModel.id.substring(0, 5)},${workerModel.sispat}, ${workerModel.displayName}, ${workerModel.company}, ${workerModel.activity}. ';
-    }
-    return _return;
+  showSnackBarHandler(context, String msg) {
+    scaffoldState.currentState.showSnackBar(SnackBar(content: Text(msg)));
   }
 
   Widget form() {
@@ -262,6 +284,29 @@ class _GroupEditDSState extends State<GroupEditDS> {
       key: formKey,
       child: ListView(
         children: [
+          TextFormField(
+            // controller: numberTextEditingController,
+            initialValue: widget.number,
+            decoration: InputDecoration(
+              labelText: 'Número do grupo',
+            ),
+            onChanged: (value) {
+              setState(() {
+                _codigo =
+                    '${widget.userRef.plataformRef.codigo}.${DateFormat('yyMMdd').format(widget.userRef.dateTimeOnBoard)}.$value';
+              });
+            },
+            onSaved: (newValue) {
+              _number = newValue;
+            },
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Informe o que se pede.';
+              }
+              return null;
+            },
+          ),
+
           ListTile(
             title: Text('${widget.moduleRef?.codigo}'),
             subtitle: Text('Qual modulo para este grupo'),
@@ -282,7 +327,8 @@ class _GroupEditDSState extends State<GroupEditDS> {
                     showDialog(
                       context: context,
                       builder: (context) => WorkerSelect(),
-                    ).then((value) => setState(() {}));
+                    );
+                    // .then((value) => setState(() {}));
                   },
                 )
               : Container(),
@@ -304,46 +350,29 @@ class _GroupEditDSState extends State<GroupEditDS> {
                                 workerRef,
                                 false,
                               );
-                              setState(() {});
+                              // setState(() {});
                             }),
                       );
                     },
                   ),
                 )
               : Container(),
-          TextFormField(
-            initialValue: widget.codigo,
-            decoration: InputDecoration(
-              labelText: 'Código do grupo',
-            ),
-            onSaved: (newValue) => _codigo = newValue,
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Informe o que se pede.';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            initialValue: widget.number,
-            decoration: InputDecoration(
-              labelText: 'Número do grupo',
-            ),
-            onSaved: (newValue) => _number = newValue,
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Informe o que se pede.';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            initialValue: widget.description,
-            decoration: InputDecoration(
-              labelText: 'Descrição do grupo',
-            ),
-            onSaved: (newValue) => _description = newValue,
-          ),
+          // TextFormField(
+          //   initialValue: widget.codigo,
+          //   decoration: InputDecoration(
+          //     labelText: 'Código do grupo',
+          //   ),
+          //   onSaved: (newValue) => _codigo = newValue,
+          //   validator: (value) {
+          //     if (value.isEmpty) {
+          //       return 'Informe o que se pede.';
+          //     }
+          //     return null;
+          //   },
+          // ),
+          // ListTile(
+          //   title: Text(_codigo),
+          // ),
           TextFormField(
             initialValue: widget.localCourse,
             decoration: InputDecoration(
@@ -412,11 +441,20 @@ class _GroupEditDSState extends State<GroupEditDS> {
             ),
             onSaved: (newValue) => _urlPhoto = newValue,
           ),
+          TextFormField(
+            initialValue: widget.description,
+            decoration: InputDecoration(
+              labelText: 'Descrição do grupo',
+            ),
+            onSaved: (newValue) => _description = newValue,
+          ),
           widget.isCreateOrUpdate
               ? Container()
               : SwitchListTile(
                   value: _opened,
-                  title: Text('Grupo aberto ?'),
+                  title: _opened
+                      ? Text('Encontro agendado.')
+                      : Text('Encontro encerrado.'),
                   onChanged: (value) {
                     setState(() {
                       _opened = value;
@@ -427,24 +465,29 @@ class _GroupEditDSState extends State<GroupEditDS> {
               ? Container()
               : SwitchListTile(
                   value: _success,
-                  title: Text('Sucesso no encontro ?'),
+                  title: _success
+                      ? Text('Sucesso no encontro.')
+                      : Text('Problema no encontro.'),
                   onChanged: (value) {
                     setState(() {
                       _success = value;
                     });
                   },
                 ),
-          widget.isCreateOrUpdate
+          widget.isCreateOrUpdate || _opened
               ? Container()
               : SwitchListTile(
                   value: _arquived,
-                  title: Text('Arquivar grupo ?'),
+                  title: _arquived ? Text('Arquivar.') : Text('Grupo ativo.'),
                   onChanged: (value) {
                     setState(() {
                       _arquived = value;
                     });
                   },
                 ),
+          SizedBox(
+            height: 50,
+          ),
         ],
       ),
     );
