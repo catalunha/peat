@@ -18,7 +18,7 @@ class ViewModel extends BaseModel<AppState> {
   String urlFolder;
   String urlPhoto;
   ModuleModel moduleRef;
-  List<dynamic> workerIdList;
+  Map<String, WorkerModel> workerRefMap;
   bool opened;
   bool success;
   bool arquived;
@@ -33,10 +33,24 @@ class ViewModel extends BaseModel<AppState> {
     String,
     String,
   ) onCreate;
-  Function(String, String, String, dynamic, dynamic, String, String, String,
-      bool, bool, bool) onUpdate;
+  Function(
+    String,
+    String,
+    String,
+    dynamic,
+    dynamic,
+    String,
+    String,
+    String,
+    bool,
+    bool,
+    bool,
+  ) onUpdate;
   Function() onEditPop;
-  Function(String, bool) onRemoveWorkerTheGroup;
+  Function(
+    WorkerModel,
+    bool,
+  ) onSetWorkerTheGroupSyncGroupAction;
 
   List<WorkerModel> workerList;
 
@@ -51,7 +65,7 @@ class ViewModel extends BaseModel<AppState> {
     @required this.urlFolder,
     @required this.urlPhoto,
     @required this.moduleRef,
-    @required this.workerIdList,
+    @required this.workerRefMap,
     @required this.opened,
     @required this.success,
     @required this.arquived,
@@ -59,7 +73,7 @@ class ViewModel extends BaseModel<AppState> {
     @required this.onCreate,
     @required this.onUpdate,
     @required this.onEditPop,
-    @required this.onRemoveWorkerTheGroup,
+    @required this.onSetWorkerTheGroupSyncGroupAction,
     @required this.workerList,
   }) : super(equals: [
           codigo,
@@ -71,7 +85,7 @@ class ViewModel extends BaseModel<AppState> {
           urlFolder,
           urlPhoto,
           moduleRef,
-          workerIdList,
+          workerRefMap,
           opened,
           success,
           arquived,
@@ -101,7 +115,7 @@ class ViewModel extends BaseModel<AppState> {
         urlFolder: state.groupState.groupCurrent.urlFolder,
         urlPhoto: state.groupState.groupCurrent.urlPhoto,
         moduleRef: state.groupState.groupCurrent.moduleRef,
-        workerIdList: state.groupState.groupCurrent.workerIdList,
+        workerRefMap: state.groupState.groupCurrent.workerRefMap,
         opened: state.groupState.groupCurrent?.opened ?? true,
         success: state.groupState.groupCurrent?.success ?? false,
         arquived: state.groupState.groupCurrent?.arquived ?? false,
@@ -126,8 +140,6 @@ class ViewModel extends BaseModel<AppState> {
             localCourse: localCourse,
             urlFolder: urlFolder,
             urlPhoto: urlPhoto,
-            // userId: state.loggedState.userModelLogged.id,
-            // plataformId: state.loggedState.userModelLogged.plataformIdOnBoard,
             userDateTimeOnBoard:
                 state.loggedState.userModelLogged.dateTimeOnBoard,
           ));
@@ -160,22 +172,17 @@ class ViewModel extends BaseModel<AppState> {
             success: success,
             arquived: arquived,
           ));
-          // if (arquived && success) {
-          //   dispatch(BatchedDocsWorkerListInModuleAsyncWorkerAction(
-          //     workerIdList: state.groupState.groupCurrent.workerIdList,
-          //     moduleId: state.groupState.groupCurrent.moduleId,
-          //   ));
-          // }
           dispatch(NavigateAction.pop());
         },
         onEditPop: () {
           dispatch(GetDocsGroupListAsyncGroupAction());
           dispatch(NavigateAction.pop());
         },
-        onRemoveWorkerTheGroup: (String id, bool addOrRemove) {
-          print('id:$id addOrRemove:$addOrRemove');
+        onSetWorkerTheGroupSyncGroupAction:
+            (WorkerModel workerRef, bool addOrRemove) {
+          print('id:${workerRef.id} addOrRemove:$addOrRemove');
           dispatch(SetWorkerTheGroupSyncGroupAction(
-              id: id, addOrRemove: addOrRemove));
+              workerRef: workerRef, addOrRemove: addOrRemove));
         },
         workerList: state.workerState.workerList ?? [],
       );
@@ -201,7 +208,7 @@ class GroupEdit extends StatelessWidget {
         urlFolder: viewModel.urlFolder,
         urlPhoto: viewModel.urlPhoto,
         moduleRef: viewModel.moduleRef,
-        workerIdList: viewModel.workerIdList,
+        workerRefMap: viewModel.workerRefMap,
         opened: viewModel.opened,
         success: viewModel.success,
         arquived: viewModel.arquived,
@@ -209,7 +216,8 @@ class GroupEdit extends StatelessWidget {
         onCreate: viewModel.onCreate,
         onUpdate: viewModel.onUpdate,
         onEditPop: viewModel.onEditPop,
-        onRemoveWorkerTheGroup: viewModel.onRemoveWorkerTheGroup,
+        onSetWorkerTheGroupSyncGroupAction:
+            viewModel.onSetWorkerTheGroupSyncGroupAction,
         workerList: viewModel.workerList,
       ),
     );

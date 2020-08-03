@@ -54,28 +54,15 @@ class _GroupListDSState extends State<GroupListDS> {
   //   return _return + ' || ' + plataformId.substring(0, 5);
   // }
 
-  String workerIdListData(List<dynamic> workerIdList) {
+  String workerRefMapData(Map<String, WorkerModel> workerRefMap) {
     String _return = '';
-    if (widget?.workerList != null && widget.workerList.isNotEmpty) {
-      if (workerIdList != null && workerIdList.isNotEmpty) {
-        workerIdList.forEach((workerId) {
-          WorkerModel workerModel =
-              widget.workerList.firstWhere((worker) => worker.id == workerId);
-          _return = _return +
-              '\n${workerModel.displayName} || ${workerModel.id.substring(0, 5)}';
-        });
-      }
-    } else {
-      _return = 'Trabalhadores não estão OnBoard:';
-      if (workerIdList != null && workerIdList.isNotEmpty) {
-        workerIdList.forEach((workerId) {
-          _return = _return + '\n${workerId.toString()}';
-        });
-      }
+    for (var workerRef in workerRefMap.entries) {
+      _return =
+          _return + '\n${workerRef.value.displayName} || ${workerRef.value}';
     }
+
     return _return;
   }
-
   // String userIdData(String userId) {
   //   String _return = 'Erro no userId';
   //   if (userId == widget.userModel.id) {
@@ -129,7 +116,7 @@ class _GroupListDSState extends State<GroupListDS> {
                     selected: group.arquived,
                     title: Text('${group.codigo}'),
                     subtitle: Text(
-                        '\id: ${group.id.substring(0, 5)}\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${group.userRef.id}\nplataformId: ${group.userRef.plataformRef.codigo}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userRef.dateTimeOnBoard)}\nmoduleId: ${group.moduleRef.codigo}\nworkerIdList: ${workerIdListData(group.workerIdList)} '),
+                        '\id: ${group.id.substring(0, 5)}\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${group.userRef.id}\nplataformId: ${group.userRef.plataformRef.codigo}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userRef.dateTimeOnBoard)}\nmoduleId: ${group.moduleRef.codigo}\nworkerRefMap: ${workerRefMapData(group.workerRefMap)} '),
                     // trailing: PopupMenuButton<int>(
                     //   icon: Icon(Icons.link),
                     //   itemBuilder: (context) => [
@@ -180,7 +167,7 @@ class _GroupListDSState extends State<GroupListDS> {
                     selected: group.arquived,
                     title: Text('${group.codigo}'),
                     subtitle: Text(
-                        '\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${group.userRef.id}\nplataformId: ${group.userRef.plataformRef.codigo}}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userRef.dateTimeOnBoard)}\nmoduleId: ${group.moduleRef.codigo}\nworkerIdList: ${workerIdListData(group.workerIdList)}  '),
+                        '\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${group.userRef.id}\nplataformId: ${group.userRef.plataformRef.codigo}}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userRef.dateTimeOnBoard)}\nmoduleId: ${group.moduleRef.codigo}\nworkerRefMap: ${workerRefMapData(group.workerRefMap)}  '),
                     onTap: () {
                       widget.onEditGroupCurrent(group.id);
                     },

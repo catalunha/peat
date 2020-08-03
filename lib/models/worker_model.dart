@@ -48,6 +48,16 @@ class WorkerModel extends FirestoreModel {
     return data;
   }
 
+  Map<String, dynamic> toMapRef() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (sispat != null) data['sispat'] = this.sispat;
+    if (displayName != null) data['displayName'] = this.displayName;
+    if (activity != null) data['activity'] = this.activity;
+    if (company != null) data['company'] = this.company;
+    data.addAll({'id': this.id});
+    return data;
+  }
+
   WorkerModel copy() {
     return WorkerModel(
       this.id,

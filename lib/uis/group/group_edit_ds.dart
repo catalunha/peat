@@ -16,26 +16,19 @@ class GroupEditDS extends StatefulWidget {
   final String urlPhoto;
   final ModuleModel moduleRef;
 
-  final List<dynamic> workerIdList;
+  final Map<String, WorkerModel> workerRefMap;
 
   final bool opened;
   final bool success;
   final bool arquived;
   final bool isCreateOrUpdate;
   final Function(
-    String,
-    String,
-    String,
-    dynamic,
-    dynamic,
-    String,
-    String,
-    String,
-  ) onCreate;
+          String, String, String, dynamic, dynamic, String, String, String)
+      onCreate;
   final Function(String, String, String, dynamic, dynamic, String, String,
       String, bool, bool, bool) onUpdate;
   final Function() onEditPop;
-  final Function(String, bool) onRemoveWorkerTheGroup;
+  final Function(WorkerModel, bool) onSetWorkerTheGroupSyncGroupAction;
   final List<WorkerModel> workerList;
 
   const GroupEditDS({
@@ -55,9 +48,9 @@ class GroupEditDS extends StatefulWidget {
     this.opened,
     this.success,
     this.moduleRef,
-    this.workerIdList,
+    this.workerRefMap,
     this.onEditPop,
-    this.onRemoveWorkerTheGroup,
+    this.onSetWorkerTheGroupSyncGroupAction,
     this.workerList,
   }) : super(key: key);
   @override
@@ -227,8 +220,8 @@ class _GroupEditDSState extends State<GroupEditDS> {
         child: Icon(Icons.cloud_upload),
         onPressed: () {
           if (widget.moduleRef != null &&
-              widget.workerIdList != null &&
-              widget.workerIdList.isNotEmpty) {
+              widget.workerRefMap != null &&
+              widget.workerRefMap.isNotEmpty) {
             validateData();
           } else {
             showSnackBarHandler(context);
@@ -280,8 +273,7 @@ class _GroupEditDSState extends State<GroupEditDS> {
           widget.moduleRef != null
               ? ListTile(
                   title: Text(
-                      '${widget.workerIdList != null && widget.workerIdList.isNotEmpty ? widget.workerIdList.length : null}'),
-                  subtitle: Text('Quais trabalhadores neste grupo'),
+                      'Há ${widget.workerRefMap != null && widget.workerRefMap.isNotEmpty ? widget.workerRefMap.length : null} trabalhador(es) neste grupo'),
                   trailing: Icon(Icons.search),
                   onTap: () {
                     showDialog(
@@ -291,21 +283,22 @@ class _GroupEditDSState extends State<GroupEditDS> {
                   },
                 )
               : Container(),
-          widget.workerIdList != null
+          widget.workerRefMap != null && widget.workerRefMap.isNotEmpty
               ? Container(
                   width: double.infinity,
                   height: 100,
                   child: ListView.builder(
-                    itemCount: widget.workerIdList.length,
+                    itemCount: widget.workerRefMap.length,
                     itemBuilder: (context, index) {
-                      String workerId = widget.workerIdList[index];
+                      WorkerModel workerRef =
+                          widget.workerRefMap.entries.toList()[index].value;
                       return ListTile(
-                        title: Text('${_workerIdData(workerId)}'),
+                        title: Text('${workerRef}'),
                         trailing: IconButton(
-                            icon: Icon(Icons.restore_from_trash),
+                            icon: Icon(Icons.delete),
                             onPressed: () {
-                              widget.onRemoveWorkerTheGroup(
-                                workerId,
+                              widget.onSetWorkerTheGroupSyncGroupAction(
+                                workerRef,
                                 false,
                               );
                               setState(() {});

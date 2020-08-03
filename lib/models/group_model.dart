@@ -1,6 +1,7 @@
 import 'package:peat/models/firestore_model.dart';
 import 'package:peat/models/module_model.dart';
 import 'package:peat/models/user_model.dart';
+import 'package:peat/models/worker_model.dart';
 
 class GroupModel extends FirestoreModel {
   static final String collection = 'group';
@@ -20,7 +21,7 @@ class GroupModel extends FirestoreModel {
   bool opened;
   bool success;
   ModuleModel moduleRef;
-  List<dynamic> workerIdList;
+  Map<String, WorkerModel> workerRefMap;
   dynamic created; //automatico
   bool arquived;
 
@@ -40,7 +41,7 @@ class GroupModel extends FirestoreModel {
     this.opened,
     this.success,
     this.moduleRef,
-    this.workerIdList,
+    this.workerRefMap,
     this.created,
     this.arquived,
   }) : super(id);
@@ -58,6 +59,12 @@ class GroupModel extends FirestoreModel {
     moduleRef = map.containsKey('moduleRef') && map['moduleRef'] != null
         ? ModuleModel(map['moduleRef']['id']).fromMap(map['moduleRef'])
         : null;
+    if (map["workerRefMap"] is Map) {
+      workerRefMap = Map<String, WorkerModel>();
+      map["workerRefMap"].forEach((k, v) {
+        workerRefMap[k] = WorkerModel(k).fromMap(v);
+      });
+    }
     // userDateTimeOnBoard = map.containsKey('userDateTimeOnBoard') &&
     //         map['userDateTimeOnBoard'] != null
     //     ? DateTime.fromMillisecondsSinceEpoch(
@@ -81,7 +88,6 @@ class GroupModel extends FirestoreModel {
     if (map.containsKey('success')) success = map['success'];
     if (map.containsKey('arquived')) arquived = map['arquived'];
     // if (map.containsKey('moduleId')) moduleId = map['moduleId'];
-    if (map.containsKey('workerIdList')) workerIdList = map['workerIdList'];
     created = map.containsKey('created') && map['created'] != null
         ? DateTime.fromMillisecondsSinceEpoch(
             map['created'].millisecondsSinceEpoch)
@@ -103,6 +109,13 @@ class GroupModel extends FirestoreModel {
     if (this.moduleRef != null) {
       data['moduleRef'] = this.moduleRef.toMapRef();
     }
+    if (workerRefMap != null) {
+      Map<String, dynamic> dataFromField = Map<String, dynamic>();
+      this.workerRefMap.forEach((k, v) {
+        dataFromField[k] = v.toMapRef();
+      });
+      data['workerRefMap'] = dataFromField;
+    }
     // if (userDateTimeOnBoard != null)
     //   data['userDateTimeOnBoard'] = this.userDateTimeOnBoard;
     // if (userId != null) data['userId'] = this.userId;
@@ -116,15 +129,37 @@ class GroupModel extends FirestoreModel {
     if (opened != null) data['opened'] = this.opened;
     if (success != null) data['success'] = this.success;
     // if (moduleId != null) data['moduleId'] = this.moduleId;
-    if (workerIdList != null) data['workerIdList'] = this.workerIdList;
     if (created != null) data['created'] = this.created;
     if (arquived != null) data['arquived'] = this.arquived;
     // data.addAll({'id': this.id});
     return data;
   }
 
-  // @override
-  // String toString() {
-  //   return this.toMap().toString();
-  // }
+  Map<String, dynamic> toMapRef() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (codigo != null) data['codigo'] = this.codigo;
+    data.addAll({'id': this.id});
+    return data;
+  }
+
+  GroupModel copy() {
+    return GroupModel(
+      this.id,
+      codigo: this.codigo,
+      number: this.number,
+      userRef: this.userRef,
+      startCourse: this.startCourse,
+      endCourse: this.endCourse,
+      localCourse: this.localCourse,
+      urlFolder: this.urlFolder,
+      urlPhoto: this.urlPhoto,
+      description: this.description,
+      opened: this.opened,
+      success: this.success,
+      moduleRef: this.moduleRef,
+      workerRefMap: this.workerRefMap,
+      created: this.created,
+      arquived: this.arquived,
+    );
+  }
 }

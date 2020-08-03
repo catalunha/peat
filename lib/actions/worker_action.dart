@@ -286,11 +286,11 @@ class BatchedDocsWorkerListOnBoardAsyncWorkerAction
 
 class BatchedDocsWorkerListInModuleAsyncWorkerAction
     extends ReduxAction<AppState> {
-  final List<dynamic> workerIdList;
+  Map<String, WorkerModel> workerRefMap;
   final ModuleModel moduleRef;
 
   BatchedDocsWorkerListInModuleAsyncWorkerAction({
-    this.workerIdList,
+    this.workerRefMap,
     this.moduleRef,
   });
   @override
@@ -300,10 +300,9 @@ class BatchedDocsWorkerListInModuleAsyncWorkerAction
 
     var batch = firestore.batch();
 
-    for (var workerId in workerIdList) {
-      var c = firestore
-          .collection(WorkerModel.collection)
-          .document(workerId.toString());
+    for (var workerRef in workerRefMap.entries) {
+      var c =
+          firestore.collection(WorkerModel.collection).document(workerRef.key);
       batch.updateData(c, {
         'moduleIdList': FieldValue.arrayUnion([moduleRef.id])
       });

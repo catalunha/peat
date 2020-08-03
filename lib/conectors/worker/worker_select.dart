@@ -11,12 +11,12 @@ import 'package:peat/uis/worker/worker_select_ds.dart';
 class ViewModel extends BaseModel<AppState> {
   List<WorkerModel> workerListClean;
   GroupModel groupCurrent;
-  Function(String, bool) onSetWorkerTheGroup;
+  Function(WorkerModel, bool) onSetWorkerTheGroupSyncGroupAction;
   ViewModel();
   ViewModel.build({
     @required this.workerListClean,
     @required this.groupCurrent,
-    @required this.onSetWorkerTheGroup,
+    @required this.onSetWorkerTheGroupSyncGroupAction,
   }) : super(equals: [
           groupCurrent,
           workerListClean,
@@ -24,34 +24,34 @@ class ViewModel extends BaseModel<AppState> {
   _workerListClean() {
     List<WorkerModel> workerListClean = [];
     workerListClean.addAll(state.workerState.workerList);
-    print('workerListClean: $workerListClean');
-    //Remove todos que ja estao cadastrados para fazer este modulo nos grupos abertos e fechados
-    workerListClean.removeWhere((element) {
-      print('workerListClean0: ${element.id}');
-      if (element.moduleIdList != null && element.moduleIdList.isNotEmpty) {
-        print('workerListClean1: ${element.id}');
-        print(
-            'workerListClean2: ${state.groupState.groupCurrent.moduleRef.id}');
-        print(
-            'workerListClean3: ${element.moduleIdList.contains(state.groupState.groupCurrent.moduleRef.id)}');
-        return element.moduleIdList
-            .contains(state.groupState.groupCurrent.moduleRef.id);
-      } else {
-        return false;
-      }
-    });
-    //remove todos os que ja estao cadastrados em outras grupos deste mesmo modulo
-    for (var group in state.groupState.groupList) {
-      if (group.workerIdList != null && group.workerIdList.isNotEmpty) {
-        for (var worker in group.workerIdList) {
-          workerListClean.removeWhere((element) {
-            return element.id == worker &&
-                group.moduleRef.id ==
-                    state.groupState.groupCurrent.moduleRef.id;
-          });
-        }
-      }
-    }
+    // print('workerListClean: $workerListClean');
+    // //Remove todos que ja estao cadastrados para fazer este modulo nos grupos abertos e fechados
+    // workerListClean.removeWhere((element) {
+    //   print('workerListClean0: ${element.id}');
+    //   if (element.moduleIdList != null && element.moduleIdList.isNotEmpty) {
+    //     print('workerListClean1: ${element.id}');
+    //     print(
+    //         'workerListClean2: ${state.groupState.groupCurrent.moduleRef.id}');
+    //     print(
+    //         'workerListClean3: ${element.moduleIdList.contains(state.groupState.groupCurrent.moduleRef.id)}');
+    //     return element.moduleIdList
+    //         .contains(state.groupState.groupCurrent.moduleRef.id);
+    //   } else {
+    //     return false;
+    //   }
+    // });
+    // //remove todos os que ja estao cadastrados em outras grupos deste mesmo modulo
+    // for (var group in state.groupState.groupList) {
+    //   if (group.workerIdList != null && group.workerIdList.isNotEmpty) {
+    //     for (var worker in group.workerIdList) {
+    //       workerListClean.removeWhere((element) {
+    //         return element.id == worker &&
+    //             group.moduleRef.id ==
+    //                 state.groupState.groupCurrent.moduleRef.id;
+    //       });
+    //     }
+    //   }
+    // }
     return workerListClean;
   }
 
@@ -59,10 +59,11 @@ class ViewModel extends BaseModel<AppState> {
   ViewModel fromStore() => ViewModel.build(
         workerListClean: _workerListClean(),
         groupCurrent: state.groupState.groupCurrent,
-        onSetWorkerTheGroup: (String id, bool addOrRemove) {
-          print('id:$id addOrRemove:$addOrRemove');
+        onSetWorkerTheGroupSyncGroupAction:
+            (WorkerModel workerRef, bool addOrRemove) {
+          print('id:${workerRef.id} addOrRemove:$addOrRemove');
           dispatch(SetWorkerTheGroupSyncGroupAction(
-            id: id,
+            workerRef: workerRef,
             addOrRemove: addOrRemove,
           ));
           // dispatch(NavigateAction.pop());
@@ -80,7 +81,8 @@ class WorkerSelect extends StatelessWidget {
       builder: (context, viewModel) => WorkerSelectDS(
         workerListClean: viewModel.workerListClean,
         groupCurrent: viewModel.groupCurrent,
-        onSetWorkerTheGroup: viewModel.onSetWorkerTheGroup,
+        onSetWorkerTheGroupSyncGroupAction:
+            viewModel.onSetWorkerTheGroupSyncGroupAction,
       ),
     );
   }

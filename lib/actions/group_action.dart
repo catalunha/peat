@@ -5,6 +5,7 @@ import 'package:peat/models/group_model.dart';
 import 'package:peat/models/module_model.dart';
 import 'package:peat/models/plataform_model.dart';
 import 'package:peat/models/user_model.dart';
+import 'package:peat/models/worker_model.dart';
 import 'package:peat/states/app_state.dart';
 import 'package:peat/states/types_states.dart';
 
@@ -216,16 +217,16 @@ class UpdateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   });
   @override
   Future<AppState> reduce() async {
-    print('SetDocGroupCurrentAsyncGroupAction...');
+    print('UpdateDocGroupCurrentAsyncGroupAction...');
     Firestore firestore = Firestore.instance;
-    GroupModel groupModel = state.groupState.groupCurrent;
+    GroupModel groupModel = GroupModel(state.groupState.groupCurrent.id)
+        .fromMap(state.groupState.groupCurrent.toMap());
     groupModel.codigo = codigo;
     // groupModel.plataformRef = state.plataformState.plataformList.firstWhere(
     //     (element) =>
     //         element.id == state.loggedState.userModelLogged.plataformIdOnBoard);
-    groupModel.userRef = UserModel(state.loggedState.userModelLogged.id)
-        .fromMap(state.loggedState.userModelLogged.toMapRef());
-
+    // groupModel.userRef = UserModel(state.loggedState.userModelLogged.id)
+    //     .fromMap(state.loggedState.userModelLogged.toMapRef());
     // groupModel.userId = state.loggedState.userModelLogged.id;
     // groupModel.userDateTimeOnBoard = userDateTimeOnBoard;
     groupModel.number = number;
@@ -240,14 +241,14 @@ class UpdateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
     groupModel.arquived = arquived;
     if (arquived && success) {
       dispatch(BatchedDocsWorkerListInModuleAsyncWorkerAction(
-        workerIdList: state.groupState.groupCurrent.workerIdList,
+        workerRefMap: state.groupState.groupCurrent.workerRefMap,
         moduleRef: state.groupState.groupCurrent.moduleRef,
       ));
     }
     await firestore
         .collection(GroupModel.collection)
         .document(groupModel.id)
-        .setData(groupModel.toMap(), merge: true);
+        .updateData(groupModel.toMap());
     return state.copyWith(
       groupState: state.groupState.copyWith(
         groupCurrent: groupModel,
@@ -299,32 +300,35 @@ class SetModuleTheGroupSyncGroupAction extends ReduxAction<AppState> {
 }
 
 class SetWorkerTheGroupSyncGroupAction extends ReduxAction<AppState> {
-  final String id;
+  final WorkerModel workerRef;
   final bool addOrRemove;
   SetWorkerTheGroupSyncGroupAction({
-    this.id,
+    this.workerRef,
     this.addOrRemove,
   });
   @override
   AppState reduce() {
-    GroupModel groupModel = state.groupState.groupCurrent;
-    if (groupModel.workerIdList == null) groupModel.workerIdList = [];
+    GroupModel groupModel = GroupModel(state.groupState.groupCurrent.id)
+        .fromMap(state.groupState.groupCurrent.toMap());
+
+    if (groupModel.workerRefMap == null)
+      groupModel.workerRefMap = Map<String, WorkerModel>();
     if (addOrRemove) {
-      if (!groupModel.workerIdList.contains(id)) {
-        groupModel.workerIdList.add(id);
-        print('groupModel.workerIdList1: ${groupModel.workerIdList}');
+      if (!groupModel.workerRefMap.containsKey(workerRef.id)) {
+        groupModel.workerRefMap.addAll({workerRef.id: workerRef});
+        print('groupModel.workerRefMap1: ${groupModel.workerRefMap}');
         return state.copyWith(
           groupState: state.groupState.copyWith(
             groupCurrent: groupModel,
           ),
         );
       } else {
-        print('groupModel.workerIdList2: ${groupModel.workerIdList}');
+        print('groupModel.workerRefMap2: ${groupModel.workerRefMap}');
         return null;
       }
     } else {
-      groupModel.workerIdList.remove(id);
-      print('groupModel.workerIdList3: ${groupModel.workerIdList}');
+      groupModel.workerRefMap.remove(workerRef.id);
+      print('groupModel.workerRefMap3: ${groupModel.workerRefMap}');
       return state.copyWith(
         groupState: state.groupState.copyWith(
           groupCurrent: groupModel,
