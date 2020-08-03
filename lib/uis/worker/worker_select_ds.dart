@@ -22,7 +22,7 @@ class _WorkerSelectDSState extends State<WorkerSelectDS> {
   Widget build(BuildContext context) {
     return Dialog(
       child: Container(
-        height: 300.0,
+        height: 500.0,
         width: 400.0,
         child: ListView.builder(
           itemCount: widget.workerListClean.length,
@@ -33,8 +33,8 @@ class _WorkerSelectDSState extends State<WorkerSelectDS> {
               selected: widget.groupCurrent.workerRefMap != null
                   ? widget.groupCurrent.workerRefMap.containsKey(worker.id)
                   : false,
-              title: Text('${worker.displayName} ${worker.id}'),
-              subtitle: Text('${worker.sispat}'),
+              title: Text('${worker.displayName}'),
+              subtitle: Text('${worker.sispat}\nworkerModel: $worker'),
               onTap: () {
                 widget.onSetWorkerTheGroupSyncGroupAction(
                     worker,

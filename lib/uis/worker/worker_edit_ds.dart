@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:peat/models/plataform_model.dart';
+import 'package:peat/models/module_model.dart';
 
 class WorkerEditDS extends StatefulWidget {
   final String sispat;
@@ -7,11 +7,12 @@ class WorkerEditDS extends StatefulWidget {
   final String activity;
   final String company;
   final bool arquived;
-  final PlataformModel plataformRef;
-
+  final Map<String, ModuleModel> moduleRefMap;
   final bool isCreateOrUpdate;
+
   final Function(String, String, String, String) onCreate;
   final Function(String, String, String, String, bool) onUpdate;
+  final Function(String) onRemoveModuleSyncWorkerAction;
 
   const WorkerEditDS({
     Key key,
@@ -23,7 +24,8 @@ class WorkerEditDS extends StatefulWidget {
     this.displayName,
     this.activity,
     this.company,
-    this.plataformRef,
+    this.moduleRefMap,
+    this.onRemoveModuleSyncWorkerAction,
   }) : super(key: key);
   @override
   _WorkerEditDSState createState() => _WorkerEditDSState();
@@ -85,9 +87,6 @@ class _WorkerEditDSState extends State<WorkerEditDS> {
       key: formKey,
       child: ListView(
         children: [
-          ListTile(
-            title: Text('${widget.plataformRef}'),
-          ),
           TextFormField(
             initialValue: widget.sispat,
             decoration: InputDecoration(
@@ -140,6 +139,36 @@ class _WorkerEditDSState extends State<WorkerEditDS> {
               return null;
             },
           ),
+          widget.moduleRefMap != null && widget.moduleRefMap.isNotEmpty
+              ? ListTile(
+                  title: Text(
+                      'Há ${widget.moduleRefMap?.length} modulo(s) concluídos.'),
+                )
+              : Container(),
+          widget.moduleRefMap != null && widget.moduleRefMap.isNotEmpty
+              ? Container(
+                  width: double.infinity,
+                  height: 100,
+                  child: ListView.builder(
+                    itemCount: widget.moduleRefMap.length,
+                    itemBuilder: (context, index) {
+                      ModuleModel moduleRef =
+                          widget.moduleRefMap.entries.toList()[index].value;
+                      return ListTile(
+                        title: Text('${moduleRef.codigo} || $moduleRef'),
+                        trailing: IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              widget.onRemoveModuleSyncWorkerAction(
+                                moduleRef.id,
+                              );
+                              setState(() {});
+                            }),
+                      );
+                    },
+                  ),
+                )
+              : Container(),
           widget.isCreateOrUpdate
               ? Container()
               : SwitchListTile(

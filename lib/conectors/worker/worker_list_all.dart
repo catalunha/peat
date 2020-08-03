@@ -28,7 +28,7 @@ class ViewModel extends BaseModel<AppState> {
         },
         onModuleIdListNull: (String id) {
           dispatch(SetDocWorkerAsyncWorkerAction(
-              id: id, data: {'moduleIdList': null}));
+              id: id, data: {'moduleRefMap': null}));
         },
       );
 }

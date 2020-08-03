@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:peat/conectors/components/logout_button.dart';
-import 'package:peat/models/plataform_model.dart';
+import 'package:peat/models/user_model.dart';
 import 'package:peat/routes.dart';
 
 class HomePageDS extends StatelessWidget {
-  final String id;
-  final String displayName;
-  final String sispat;
-  final String email;
+  final UserModel userModel;
   final bool userOnBoard;
-  final PlataformModel plataformRef;
-  final dynamic userDateTimeOnBoard;
 
   const HomePageDS({
     Key key,
-    this.id,
-    this.displayName,
-    this.email,
+    this.userModel,
     this.userOnBoard,
-    this.plataformRef,
-    this.userDateTimeOnBoard,
-    this.sispat,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -33,7 +23,7 @@ class HomePageDS extends StatelessWidget {
             icon: Icon(Icons.person,
                 color: userOnBoard ? Colors.green : Colors.red),
             tooltip:
-                'Name: $displayName\nSISPAT:$sispat\nemail: $email\nPlataforma OnBoard: ${plataformRef?.codigo}\nData OnBoard: ${userDateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userDateTimeOnBoard) : userDateTimeOnBoard}\nid: ${id.substring(0, 5)}',
+                'Name: ${userModel?.displayName}\nSISPAT:${userModel?.sispat}\nemail: ${userModel?.email}\nPlataforma OnBoard: ${userModel?.plataformRef?.codigo}\nData OnBoard: ${userModel?.dateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userModel?.dateTimeOnBoard) : userModel?.dateTimeOnBoard}\nid: $userModel',
             onPressed: () {
               Navigator.pushNamed(context, Routes.userEdit);
             },
@@ -45,9 +35,8 @@ class HomePageDS extends StatelessWidget {
         children: [
           ListTile(
             enabled: false,
-            title: Text('$displayName'),
-            subtitle: Text(
-                'SISPAT:$sispat\nemail: $email\nPlataforma OnBoard: ${plataformRef?.codigo}\nData OnBoard: ${userDateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userDateTimeOnBoard) : userDateTimeOnBoard}\nid: ${id.substring(0, 5)}'),
+            title: Text('${userModel?.displayName}'),
+            subtitle: Text('$userModel'),
           ),
           ListTile(
             leading: Icon(

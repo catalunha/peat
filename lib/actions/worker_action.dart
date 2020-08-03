@@ -54,6 +54,29 @@ class SetWorkerOrderSyncUserAction extends ReduxAction<AppState> {
   }
 }
 
+class RemoveModuleSyncWorkerAction extends ReduxAction<AppState> {
+  final String moduleId;
+
+  RemoveModuleSyncWorkerAction(this.moduleId);
+
+  @override
+  AppState reduce() {
+    WorkerModel workerModel = WorkerModel(state.workerState.workerCurrent.id)
+        .fromMap(state.workerState.workerCurrent.toMap());
+    if (workerModel.moduleRefMap == null) {
+      workerModel.moduleRefMap = Map<String, ModuleModel>();
+    }
+    if (workerModel.moduleRefMap.containsKey(moduleId)) {
+      workerModel.moduleRefMap.remove(moduleId);
+    }
+    return state.copyWith(
+      workerState: state.workerState.copyWith(
+        workerCurrent: workerModel,
+      ),
+    );
+  }
+}
+
 // +++ Actions Async
 
 class GetDocsWorkerListAsyncWorkerAction extends ReduxAction<AppState> {
@@ -298,6 +321,8 @@ class BatchedDocsWorkerListInModuleAsyncWorkerAction
   @override
   Future<AppState> reduce() async {
     print('BatchedDocsWorkerListInModuleAsyncWorkerAction...');
+    print(
+        'BatchedDocsWorkerListInModuleAsyncWorkerAction2... $workerRefMap $moduleRef');
     Firestore firestore = Firestore.instance;
 
     var batch = firestore.batch();
@@ -305,9 +330,12 @@ class BatchedDocsWorkerListInModuleAsyncWorkerAction
     for (var workerRef in workerRefMap.entries) {
       var c =
           firestore.collection(WorkerModel.collection).document(workerRef.key);
-      batch.updateData(c, {
-        'moduleIdList': FieldValue.arrayUnion([moduleRef.id])
-      });
+      batch.setData(
+          c,
+          {
+            'moduleRefMap': {moduleRef.id: moduleRef.toMapRef()}
+          },
+          merge: true);
     }
 
     await batch.commit();

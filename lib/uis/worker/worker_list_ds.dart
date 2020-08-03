@@ -15,9 +15,10 @@ class WorkerListDS extends StatelessWidget {
 
   String moduleRefMapData(Map<String, ModuleModel> moduleRefMap) {
     String _return = '';
-    for (var moduleRef in moduleRefMap.entries) {
-      _return = _return + '\n${moduleRef.value.codigo} || ${moduleRef.value}';
-    }
+    if (moduleRefMap != null && moduleRefMap.isNotEmpty)
+      for (var moduleRef in moduleRefMap.entries) {
+        _return = _return + '\n${moduleRef.value.codigo} || ${moduleRef.value}';
+      }
     return _return;
   }
 
@@ -36,7 +37,7 @@ class WorkerListDS extends StatelessWidget {
             selected: worker.arquived,
             title: Text('${worker.displayName}'),
             subtitle: Text(
-                'id:${worker.id.substring(0, 5)}\nSISPAT: ${worker.sispat}\nEmpresa: ${worker.company}\nFunção: ${worker.activity}\nPlataforma OnBoard: ${worker.plataformRef}\nModulos: ${moduleRefMapData(worker.moduleRefMap)}'),
+                'SISPAT: ${worker.sispat}\nEmpresa: ${worker.company}\nFunção: ${worker.activity}\nPlataforma OnBoard: ${worker.plataformRef?.codigo}\nModulos: ${moduleRefMapData(worker.moduleRefMap)}\nworkerModel: $worker\n'),
             onTap: () {
               onEditWorkerCurrent(worker.id);
             },

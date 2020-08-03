@@ -24,6 +24,30 @@ class ViewModel extends BaseModel<AppState> {
   _workerListClean() {
     List<WorkerModel> workerListClean = [];
     workerListClean.addAll(state.workerState.workerList);
+    print('workerListClean1: $workerListClean');
+    //Remove todos os workers que ja tem este module
+    workerListClean.removeWhere((element) {
+      if (element.moduleRefMap != null && element.moduleRefMap.isNotEmpty) {
+        return element.moduleRefMap
+            .containsKey(state.groupState.groupCurrent.moduleRef.id);
+      } else {
+        return false;
+      }
+    });
+    //Remover todos os workers que ja estao cadastrados em outros groups atuais com este mesmo module
+    for (var group in state.groupState.groupList) {
+      if (group.workerRefMap != null && group.workerRefMap.isNotEmpty) {
+        for (var workerRef in group.workerRefMap.entries) {
+          workerListClean.removeWhere((element) {
+            return element.id == workerRef.value.id &&
+                group.moduleRef.id ==
+                    state.groupState.groupCurrent.moduleRef.id;
+          });
+        }
+      }
+    }
+    print('workerListClean2: $workerListClean');
+    workerListClean.sort((a, b) => a.displayName.compareTo(b.displayName));
     return workerListClean;
   }
 

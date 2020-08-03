@@ -168,7 +168,7 @@ class ViewModel extends BaseModel<AppState> {
         },
         onSetWorkerTheGroupSyncGroupAction:
             (WorkerModel workerRef, bool addOrRemove) {
-          print('id:${workerRef.id} addOrRemove:$addOrRemove');
+          // print('id:${workerRef.id} addOrRemove:$addOrRemove');
           dispatch(SetWorkerTheGroupSyncGroupAction(
               workerRef: workerRef, addOrRemove: addOrRemove));
         },
