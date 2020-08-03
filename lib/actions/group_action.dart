@@ -108,7 +108,6 @@ class GetDocsGroupListAllAsyncGroupAction extends ReduxAction<AppState> {
 
 class CreateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   final String codigo; //p65.200121.01
-  final dynamic userDateTimeOnBoard;
   final String number;
   final dynamic startCourse;
   final dynamic endCourse;
@@ -118,7 +117,6 @@ class CreateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
   final String description;
   CreateDocGroupCurrentAsyncGroupAction({
     this.codigo,
-    this.userDateTimeOnBoard,
     this.number,
     this.startCourse,
     this.endCourse,

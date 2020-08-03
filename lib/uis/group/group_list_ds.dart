@@ -25,10 +25,18 @@ class GroupListDS extends StatefulWidget {
 class _GroupListDSState extends State<GroupListDS> {
   String workerRefMapData(Map<String, WorkerModel> workerRefMap) {
     String _return = '';
-    for (var workerRef in workerRefMap.entries) {
-      _return =
-          _return + '\n${workerRef.value.displayName} || ${workerRef.value}';
+    List<WorkerModel> workerModelList = workerRefMap.values.toList();
+
+    workerModelList.sort((a, b) => a.displayName.compareTo(b.displayName));
+    for (var workerRef in workerModelList) {
+      _return = _return +
+          '\n${workerRef.displayName} || ${workerRef.id.substring(0, 5)}';
     }
+
+    // for (var workerRef in workerRefMap.entries) {
+    //   _return = _return +
+    //       '\n${workerRef.value.displayName} || ${workerRef.value.id.substring(0, 5)}';
+    // }
 
     return _return;
   }
@@ -64,7 +72,7 @@ class _GroupListDSState extends State<GroupListDS> {
                     selected: group.arquived,
                     title: Text('${group.codigo}'),
                     subtitle: Text(
-                        '\id: ${group.id.substring(0, 5)}\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${group.userRef.id}\nplataformId: ${group.userRef.plataformRef.codigo}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userRef.dateTimeOnBoard)}\nmoduleId: ${group.moduleRef.codigo}\nworkerRefMap: ${workerRefMapData(group.workerRefMap)} '),
+                        'number: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${group.userRef.id}\nplataformId: ${group.userRef.plataformRef.codigo}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userRef.dateTimeOnBoard)}\nmoduleId: ${group.moduleRef.codigo}\nworkerRefMap: ${workerRefMapData(group.workerRefMap)}'), //\ngroupModel: $group
                     // trailing: PopupMenuButton<int>(
                     //   icon: Icon(Icons.link),
                     //   itemBuilder: (context) => [

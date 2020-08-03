@@ -59,6 +59,7 @@ class GroupEditDS extends StatefulWidget {
 
 class _GroupEditDSState extends State<GroupEditDS> {
   GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
+  final codigoTextEditingController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
   String _codigo;
@@ -90,6 +91,12 @@ class _GroupEditDSState extends State<GroupEditDS> {
     _endCourseTime = widget.startCourse != null
         ? TimeOfDay.fromDateTime(widget.endCourse)
         : TimeOfDay.now();
+  }
+
+  @override
+  void dispose() {
+    codigoTextEditingController.dispose();
+    super.dispose();
   }
 
   void validateData() {

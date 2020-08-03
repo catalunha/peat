@@ -32,47 +32,23 @@ class GroupListAllDS extends StatefulWidget {
 }
 
 class _GroupListAllDSState extends State<GroupListAllDS> {
-  Future<void> _launched;
+  String workerRefMapData(Map<String, WorkerModel> workerRefMap) {
+    String _return = '';
+    List<WorkerModel> workerModelList = workerRefMap.values.toList();
 
-  // String moduleIdCodigo(String moduleId) {
-  //   String _return;
-  //   if (moduleId != null) {
-  //     ModuleModel moduleModel =
-  //         widget.moduleList.firstWhere((element) => element.id == moduleId);
-  //     _return = moduleModel.codigo;
-  //   }
-  //   return _return + ' || ' + moduleId.substring(0, 5);
-  // }
+    workerModelList.sort((a, b) => a.displayName.compareTo(b.displayName));
+    for (var workerRef in workerModelList) {
+      _return = _return +
+          '\n${workerRef.displayName} || ${workerRef.id.substring(0, 5)}';
+    }
 
-  // String plataformIdCodigo(String plataformId) {
-  //   String _return;
-  //   if (plataformId != null) {
-  //     PlataformModel plataformModel = widget.plataformList
-  //         .firstWhere((element) => element.id == plataformId);
-  //     _return = plataformModel.codigo;
-  //   }
-  //   return _return + ' || ' + plataformId.substring(0, 5);
-  // }
+    // for (var workerRef in workerRefMap.entries) {
+    //   _return = _return +
+    //       '\n${workerRef.value.displayName} || ${workerRef.value.id.substring(0, 5)}';
+    // }
 
-  // String workerRefMapData(Map<String, WorkerModel> workerRefMap) {
-  //   String _return = '';
-  //   for (var workerRef in workerRefMap.entries) {
-  //     _return = _return +
-  //         '\n${workerRef.value.displayName} || ${workerRef.value..id.substring(0, 5)}';
-  //   }
-
-  //   return _return;
-  // }
-
-  // String userIdData(String userId) {
-  //   String _return = 'Erro no userId';
-  //   if (userId == widget.userModel.id) {
-  //     _return =
-  //         '${widget.userModel.displayName} || ${widget.userModel.id.substring(0, 5)}';
-  //   }
-  //   return _return;
-  // }
-
+    return _return;
+  }
   // Future<void> _launchInBrowser(String url) async {
   //   if (await canLaunch(url)) {
   //     await launch(
@@ -101,7 +77,7 @@ class _GroupListAllDSState extends State<GroupListAllDS> {
             selected: group.arquived,
             title: Text('${group.codigo}'),
             subtitle: Text(
-                '\nnumber: ${group.id.substring(0, 5)}\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${group.userRef.id}\nplataformId: ${group.userRef.plataformRef.codigo}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userRef.dateTimeOnBoard)}\nmoduleId: ${group.moduleRef.codigo}\nworkerRefMap: ${group.workerRefMap} '),
+                '\nid: ${group.id.substring(0, 5)}\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${group.userRef.id}\nplataformId: ${group.userRef.plataformRef.codigo}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userRef.dateTimeOnBoard)}\nmoduleId: ${group.moduleRef.codigo}\nworkerRefMap: ${workerRefMapData(group.workerRefMap)}'),
             onTap: () {
               widget.onArquivedFalse(group.id);
             },

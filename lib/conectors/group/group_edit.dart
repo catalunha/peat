@@ -128,8 +128,6 @@ class ViewModel extends BaseModel<AppState> {
             localCourse: localCourse,
             urlFolder: urlFolder,
             urlPhoto: urlPhoto,
-            userDateTimeOnBoard:
-                state.loggedState.userModelLogged.dateTimeOnBoard,
           ));
           dispatch(NavigateAction.pop());
         },
