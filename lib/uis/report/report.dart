@@ -56,8 +56,7 @@ Select the valid headers:
 ```
 
 ## Images
-ola
-<iframe src="https://drive.google.com/file/d/1KbZnacybfkBAiq_8tVrxx3eTAgKDsS_0/preview" width="340" height="280"></iframe>
+Somente imagens em servidor e com acesso direto aparecem aqui.
 
 ![Foto em servidor](https://t1.uc.ltmcdn.com/pt/images/3/7/6/img_o_que_significa_pagar_o_pato_23673_orig.jpg)
 
