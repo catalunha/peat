@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:peat/conectors/worker/worker_ordering.dart';
 import 'package:peat/models/module_model.dart';
 import 'package:peat/models/worker_model.dart';
+import 'package:clipboard/clipboard.dart';
 
 class WorkerListDS extends StatelessWidget {
   final List<WorkerModel> workerList;
+  final String workerListIncsv;
   final Function(String) onEditWorkerCurrent;
 
-  const WorkerListDS({
+  WorkerListDS({
     Key key,
     this.workerList,
     this.onEditWorkerCurrent,
+    this.workerListIncsv,
   }) : super(key: key);
 
   String moduleRefMapData(Map<String, ModuleModel> moduleRefMap) {
@@ -22,12 +25,28 @@ class WorkerListDS extends StatelessWidget {
     return _return;
   }
 
+  GlobalKey<ScaffoldState> scaffoldState = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Lista com ${workerList.length} trabalhadores'),
-        actions: [WorkerOrdering()],
+        actions: [
+          IconButton(
+            icon: Icon(Icons.content_paste),
+            tooltip: 'Copiar lista em csv. Fazer um CTRL-c.',
+            onPressed: () {
+              FlutterClipboard.copy(workerListIncsv).then((value) {
+                print('copied');
+                scaffoldState.currentState.showSnackBar(SnackBar(
+                    content:
+                        Text('Lista copiada para csv. CTRL-c concluído.')));
+              });
+            },
+          ),
+          WorkerOrdering(),
+        ],
       ),
       body: ListView.builder(
         itemCount: workerList.length,
