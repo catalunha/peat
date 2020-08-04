@@ -15,6 +15,7 @@ import 'package:peat/conectors/worker/worker_list.dart';
 import 'package:peat/conectors/worker/worker_list_all.dart';
 import 'package:peat/conectors/worker/worker_onboard.dart';
 import 'package:peat/states/app_state.dart';
+import 'package:peat/uis/report/report.dart';
 
 class Routes {
   static final home = '/';
@@ -31,6 +32,7 @@ class Routes {
   static final groupListAll = '/groupListAll';
   static final groupList = '/groupList';
   static final groupEdit = '/groupEdit';
+  static final report = '/report';
 
   static final routes = {
     home: (BuildContext context) => UserExceptionDialog<AppState>(
@@ -49,6 +51,7 @@ class Routes {
     groupListAll: (BuildContext context) => GroupListAll(),
     groupList: (BuildContext context) => GroupList(),
     groupEdit: (BuildContext context) => GroupEdit(),
+    report: (BuildContext context) => Report(),
   };
 }
 

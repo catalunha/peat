@@ -97,6 +97,11 @@ class HomePageDS extends StatelessWidget {
             title: Text('Todos os trabalhadores'),
             onTap: () => Navigator.pushNamed(context, Routes.workerListAll),
           ),
+          ListTile(
+            leading: Icon(Icons.text_fields),
+            title: Text('Report'),
+            onTap: () => Navigator.pushNamed(context, Routes.report),
+          ),
         ],
       ),
     );
