@@ -60,6 +60,7 @@ Somente imagens em servidor e com acesso direto aparecem aqui.
 
 ![Foto em servidor](https://t1.uc.ltmcdn.com/pt/images/3/7/6/img_o_que_significa_pagar_o_pato_23673_orig.jpg)
 
+
 ## Tables
 
 |Syntax                                 |Result                               |
