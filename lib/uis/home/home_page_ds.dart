@@ -18,7 +18,7 @@ class HomePageDS extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            'PEAT - ${userModel?.sispat} na ${userModel?.plataformRef.codigo} em ${userModel?.dateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userModel?.dateTimeOnBoard) : userModel?.dateTimeOnBoard}'),
+            'PEAT - ${userModel?.sispat} na ${userModel?.plataformRef?.codigo} em ${userModel?.dateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userModel?.dateTimeOnBoard) : userModel?.dateTimeOnBoard}'),
         actions: [
           IconButton(
             icon: Icon(Icons.person,
