@@ -64,9 +64,9 @@ class HomePageDS extends StatelessWidget {
           ),
           Row(
             children: [
-              Expanded(child: Divider()),
+              Expanded(child: Divider(thickness: 2)),
               Text('Administradores'),
-              Expanded(child: Divider()),
+              Expanded(child: Divider(thickness: 2)),
             ],
           ),
           ListTile(
@@ -88,9 +88,9 @@ class HomePageDS extends StatelessWidget {
           ),
           Row(
             children: [
-              Expanded(child: Divider()),
+              Expanded(child: Divider(thickness: 2)),
               Text('Acesso restrito'),
-              Expanded(child: Divider()),
+              Expanded(child: Divider(thickness: 2)),
             ],
           ),
           ListTile(

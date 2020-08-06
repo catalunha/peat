@@ -15,4 +15,15 @@ Flutter channels:
 /pmsb4$ flutter build web
 
 /pmsb4$ firebase deploy --only hosting:peat
+
+~~~
+
+Todos os comandos juntos:
+
+~~~
+
+flutter clean && flutter run -d chrome
+
+flutter clean && flutter build web && firebase deploy --only hosting:peat
+
 ~~~
