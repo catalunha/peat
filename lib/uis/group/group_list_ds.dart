@@ -75,7 +75,7 @@ class _GroupListDSState extends State<GroupListDS> {
               itemCount: widget.groupList.length,
               itemBuilder: (context, index) {
                 final group = widget.groupList[index];
-                print('group.id: ${group.id}');
+                // print('group.id: ${group.id}');
                 if (group.opened) {
                   return Card(
                     child: Column(

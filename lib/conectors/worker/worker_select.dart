@@ -25,7 +25,7 @@ class ViewModel extends BaseModel<AppState> {
     List<WorkerModel> workerListClean = [];
     workerListClean.addAll(state.workerState.workerList);
     print('workerListClean1: $workerListClean');
-    //Remove todos os workers que ja tem este module
+    //Remove todos os workers que ja tem este module.
     workerListClean.removeWhere((element) {
       if (element.moduleRefMap != null && element.moduleRefMap.isNotEmpty) {
         return element.moduleRefMap
@@ -36,13 +36,15 @@ class ViewModel extends BaseModel<AppState> {
     });
     //Remover todos os workers que ja estao cadastrados em outros groups atuais com este mesmo module
     for (var group in state.groupState.groupList) {
-      if (group.workerRefMap != null && group.workerRefMap.isNotEmpty) {
-        for (var workerRef in group.workerRefMap.entries) {
-          workerListClean.removeWhere((element) {
-            return element.id == workerRef.value.id &&
-                group.moduleRef.id ==
-                    state.groupState.groupCurrent.moduleRef.id;
-          });
+      if (group.success) {
+        if (group.moduleRef.id == state.groupState.groupCurrent.moduleRef.id) {
+          if (group.workerRefMap != null && group.workerRefMap.isNotEmpty) {
+            for (var workerRef in group.workerRefMap.entries) {
+              workerListClean.removeWhere((element) {
+                return element.id == workerRef.value.id;
+              });
+            }
+          }
         }
       }
     }

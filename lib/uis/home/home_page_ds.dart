@@ -17,7 +17,8 @@ class HomePageDS extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PEAT - ${userModel?.sispat}'),
+        title: Text(
+            'PEAT - ${userModel?.sispat} na ${userModel?.plataformRef.codigo} em ${userModel?.dateTimeOnBoard != null ? DateFormat('yyyy-MM-dd').format(userModel?.dateTimeOnBoard) : userModel?.dateTimeOnBoard}'),
         actions: [
           IconButton(
             icon: Icon(Icons.person,
