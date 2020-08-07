@@ -46,58 +46,132 @@ class _GroupListAllDSState extends State<GroupListAllDS> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Lista com ${widget.groupList.length} grupos'),
-        actions: [GroupOrdering()],
-      ),
-      body: ListView.builder(
-        itemCount: widget.groupList.length,
-        itemBuilder: (context, index) {
-          final group = widget.groupList[index];
-          return Card(
-            child: Column(
-              children: [
-                ListTile(
-                  selected: group.arquived,
-                  title: Text('${group.codigo}'),
-                  subtitle: Text(
-                      '\nid: ${group.id.substring(0, 5)}\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${group.userRef.id}\nplataformId: ${group.userRef.plataformRef.codigo}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userRef.dateTimeOnBoard)}\nmoduleId: ${group.moduleRef.codigo}\nworkerRefMap: ${workerRefMapData(group.workerRefMap)}'),
-                  onTap: () {
-                    widget.onArquivedFalse(group.id);
-                  },
-                ),
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  children: [
-                    IconButton(
-                      tooltip: 'Link para a pasta deste grupo',
-                      icon: Icon(Icons.folder),
-                      onPressed: () async {
-                        if (group?.urlFolder != null) {
-                          if (await canLaunch(group.urlFolder)) {
-                            await launch(group.urlFolder);
-                          }
-                        }
-                      },
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+              'Lista com ${widget.groupList.length} grupos nesta plataforma'),
+          actions: [GroupOrdering()],
+          bottom: TabBar(
+            tabs: [
+              Tab(
+                text: 'Ativos',
+              ),
+              Tab(
+                text: 'Arquivados',
+              )
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            ListView.builder(
+              itemCount: widget.groupList.length,
+              itemBuilder: (context, index) {
+                final group = widget.groupList[index];
+                if (group.arquived == false) {
+                  return Card(
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: Text('${group.codigo}'),
+                          subtitle: Text(
+                              '\nid: ${group.id.substring(0, 5)}\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${group.userRef.id}\nplataformId: ${group.userRef.plataformRef.codigo}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userRef.dateTimeOnBoard)}\nmoduleId: ${group.moduleRef.codigo}\nworkerRefMap: ${workerRefMapData(group.workerRefMap)}'),
+                          onTap: () {
+                            widget.onArquivedFalse(group.id);
+                          },
+                        ),
+                        Wrap(
+                          alignment: WrapAlignment.center,
+                          children: [
+                            IconButton(
+                              tooltip: 'Link para a pasta deste grupo',
+                              icon: Icon(Icons.folder),
+                              onPressed: () async {
+                                if (group?.urlFolder != null) {
+                                  if (await canLaunch(group.urlFolder)) {
+                                    await launch(group.urlFolder);
+                                  }
+                                }
+                              },
+                            ),
+                            IconButton(
+                              tooltip:
+                                  'Link para a foto do encontro deste grupo',
+                              icon: Icon(Icons.people),
+                              onPressed: () async {
+                                if (group?.urlPhoto != null) {
+                                  if (await canLaunch(group.urlPhoto)) {
+                                    await launch(group.urlPhoto);
+                                  }
+                                }
+                              },
+                            ),
+                          ],
+                        )
+                      ],
                     ),
-                    IconButton(
-                      tooltip: 'Link para a foto do encontro deste grupo',
-                      icon: Icon(Icons.people),
-                      onPressed: () async {
-                        if (group?.urlPhoto != null) {
-                          if (await canLaunch(group.urlPhoto)) {
-                            await launch(group.urlPhoto);
-                          }
-                        }
-                      },
-                    ),
-                  ],
-                )
-              ],
+                  );
+                } else {
+                  return Container();
+                }
+              },
             ),
-          );
-        },
+            ListView.builder(
+              itemCount: widget.groupList.length,
+              itemBuilder: (context, index) {
+                final group = widget.groupList[index];
+                if (group.arquived == true) {
+                  return Card(
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: Text('${group.codigo}'),
+                          subtitle: Text(
+                              '\nid: ${group.id.substring(0, 5)}\nnumber: ${group.number}\ndescription: ${group.description}\nstartCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.startCourse)}\nendCourse: ${DateFormat('yyyy-MM-dd HH:mm').format(group.endCourse)}\nlocalCourse: ${group.localCourse}\nurlFolder: ${group.urlFolder}\nurlPhoto: ${group.urlPhoto}\nopened: ${group.opened}\nsuccess: ${group.success}\narquived: ${group.arquived}\nuserId: ${group.userRef.id}\nplataformId: ${group.userRef.plataformRef.codigo}\nuserDateTimeOnBoard: ${DateFormat('yyyy-MM-dd').format(group.userRef.dateTimeOnBoard)}\nmoduleId: ${group.moduleRef.codigo}\nworkerRefMap: ${workerRefMapData(group.workerRefMap)}'),
+                          onTap: () {
+                            widget.onArquivedFalse(group.id);
+                          },
+                        ),
+                        Wrap(
+                          alignment: WrapAlignment.center,
+                          children: [
+                            IconButton(
+                              tooltip: 'Link para a pasta deste grupo',
+                              icon: Icon(Icons.folder),
+                              onPressed: () async {
+                                if (group?.urlFolder != null) {
+                                  if (await canLaunch(group.urlFolder)) {
+                                    await launch(group.urlFolder);
+                                  }
+                                }
+                              },
+                            ),
+                            IconButton(
+                              tooltip:
+                                  'Link para a foto do encontro deste grupo',
+                              icon: Icon(Icons.people),
+                              onPressed: () async {
+                                if (group?.urlPhoto != null) {
+                                  if (await canLaunch(group.urlPhoto)) {
+                                    await launch(group.urlPhoto);
+                                  }
+                                }
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

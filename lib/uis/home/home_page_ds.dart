@@ -53,13 +53,13 @@ class HomePageDS extends StatelessWidget {
           ListTile(
             enabled: userOnBoard,
             leading: Icon(Icons.art_track),
-            title: Text('Grupos ativos'),
+            title: Text('Seus grupos ativos'),
             onTap: () => Navigator.pushNamed(context, Routes.groupList),
           ),
           ListTile(
             enabled: userOnBoard,
             leading: Icon(Icons.track_changes),
-            title: Text('Grupos arquivados'),
+            title: Text('Grupos desta plataforma'),
             onTap: () => Navigator.pushNamed(context, Routes.groupListAll),
           ),
           Row(
