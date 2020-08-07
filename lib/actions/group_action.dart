@@ -141,7 +141,7 @@ class CreateDocGroupCurrentAsyncGroupAction extends ReduxAction<AppState> {
     groupModel.urlPhoto = urlPhoto;
     groupModel.description = description;
     groupModel.opened = true;
-    groupModel.success = false;
+    groupModel.success = true;
     groupModel.created = FieldValue.serverTimestamp();
     groupModel.arquived = false;
     var docRef = await firestore
