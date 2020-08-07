@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:peat/conectors/group/group_ordering.dart';
 import 'package:peat/models/group_model.dart';
-import 'package:peat/models/module_model.dart';
-import 'package:peat/models/plataform_model.dart';
-import 'package:peat/models/user_model.dart';
 import 'package:peat/models/worker_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -50,8 +47,7 @@ class _GroupListAllDSState extends State<GroupListAllDS> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-              'Lista com ${widget.groupList.length} grupos nesta plataforma'),
+          title: Text('Grupos desta plataforma: ${widget.groupList.length} '),
           actions: [GroupOrdering()],
           bottom: TabBar(
             tabs: [

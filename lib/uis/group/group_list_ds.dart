@@ -56,7 +56,7 @@ class _GroupListDSState extends State<GroupListDS> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Lista com ${widget.groupList.length} grupos'),
+          title: Text('Seus grupos ativos: ${widget.groupList.length}'),
           actions: [GroupOrdering()],
           bottom: TabBar(
             tabs: [
