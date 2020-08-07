@@ -87,10 +87,10 @@ class GetDocsGroupListAllAsyncGroupAction extends ReduxAction<AppState> {
 
     final collRef = firestore
         .collection(GroupModel.collection)
-        .where('userRef.id', isEqualTo: state.loggedState.userModelLogged.id)
+        // .where('userRef.id', isEqualTo: state.loggedState.userModelLogged.id)
         .where('userRef.plataformRef.id',
-            isEqualTo: state.loggedState.userModelLogged.plataformRef.id)
-        .where('arquived', isEqualTo: true);
+            isEqualTo: state.loggedState.userModelLogged.plataformRef.id);
+    // .where('arquived', isEqualTo: true);
     final docsSnap = await collRef.getDocuments();
 
     final listDocs = docsSnap.documents
