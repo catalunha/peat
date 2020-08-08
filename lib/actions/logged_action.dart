@@ -189,12 +189,7 @@ class LogoutAsyncLoggedAction extends ReduxAction<AppState> {
     print('LogoutAsyncLoggedAction...');
     final FirebaseAuth _auth = FirebaseAuth.instance;
     try {
-      dispatch(SetUserInPlataformSyncLoggedAction(plataformModel: null));
-      store.dispatch(UpdateDocUserModelAsyncLoggedAction(
-        dateTimeOnBoard: null,
-      ));
       await _auth.signOut();
-
       store.dispatch(LogoutSuccessfulSyncLoggedAction());
       print('_userLogoutAction: Logout finalizado.');
     } catch (error) {

@@ -9,7 +9,7 @@ class UserLoggedEditDS extends StatefulWidget {
   final String plataformOnBoard;
   final dynamic dateTimeOnBoard;
 
-  final Function(dynamic) onUpdate;
+  final Function(dynamic, bool) onUpdate;
 
   const UserLoggedEditDS({
     this.email,
@@ -29,6 +29,8 @@ class _UserLoggedEditDSState extends State<UserLoggedEditDS> {
   String displayName;
   String sispat;
   DateTime selectedDate;
+  bool _desembarcar = false;
+
   @override
   void initState() {
     super.initState();
@@ -40,7 +42,7 @@ class _UserLoggedEditDSState extends State<UserLoggedEditDS> {
   void validateData() {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      widget.onUpdate(selectedDate);
+      widget.onUpdate(selectedDate, _desembarcar);
     } else {
       setState(() {});
     }
@@ -84,6 +86,15 @@ class _UserLoggedEditDSState extends State<UserLoggedEditDS> {
       key: formKey,
       child: ListView(
         children: <Widget>[
+          SwitchListTile(
+            value: _desembarcar,
+            title: _desembarcar ? Text('Desembarcar') : Text('Embarcar'),
+            onChanged: (value) {
+              setState(() {
+                _desembarcar = value;
+              });
+            },
+          ),
           ListTile(
             title: Text('${widget.plataformOnBoard}'),
             subtitle: Text('Embarcado na Plataforma'),
